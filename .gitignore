@@ -1,0 +1,12 @@
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Claude (config local com permissões da máquina)
+.claude/settings.local.json
+
+# Node / build (futuro)
+node_modules/
+dist/
+.cache/
