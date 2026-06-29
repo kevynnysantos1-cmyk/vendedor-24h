@@ -25,6 +25,10 @@ h2{font-size:25px;font-weight:800;line-height:1.15;margin-bottom:8px}
 .btn:active{transform:translateY(1px)}
 .micro{font-size:13px;color:var(--gray);text-align:center;margin-top:10px}
 .shot{border-radius:var(--radius);margin-top:22px;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.herofig{position:relative;max-width:360px;margin:16px auto 0}
+.herofig .shot{margin-top:0}
+.herobadge{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:max-content;max-width:92%;display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--yellow);color:#000;font-weight:900;font-size:15px;line-height:1.2;text-align:center;padding:10px 16px;border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.22);text-transform:uppercase;letter-spacing:.2px}
+.herobadge small{font-size:11px;font-weight:700;text-transform:none;letter-spacing:0;opacity:.85}
 .bullets{list-style:none;display:grid;gap:12px;margin-top:18px}
 .bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e3efe8;border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
 .bullets .ic{font-size:24px;line-height:1.1}
@@ -174,12 +178,14 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 </nav>
 
 <!-- HERO -->
-<header class="sec center">
+<header class="sec center" style="padding-top:18px">
   <div class="wrap">
-    <span class="eyebrow">⚡ pagamento único de R$50</span>
-    <h1 style="margin-top:16px">Não contrate um funcionário.<br><span style="color:var(--green-d)">Compre um por R$50.</span></h1>
+    <h1>Não contrate um funcionário.<br><span style="color:var(--green-d)">Compre um por R$50.</span></h1>
     <p class="lead">O <b>Zaven</b> atende e fecha venda no seu WhatsApp <b>24h</b> — sem salário, sem férias, sem mensalidade.</p>
-    <img class="shot" src="img/comprovante.jpg" alt="Lojista surpresa com comprovante de pagamento recebido pelo WhatsApp no automático" style="max-width:360px;margin:20px auto 0">
+    <div class="herofig">
+      <img class="shot" src="img/comprovante.jpg" alt="Lojista surpresa com comprovante de pagamento recebido pelo WhatsApp no automático">
+      <span class="herobadge">⚡ Pronto pra trabalhar em 5 minutos<small>rápido e fácil — em 5 min seu novo funcionário já tá vendendo</small></span>
+    </div>
     <div style="margin-top:18px"><a class="btn" href="#comprar">QUERO VENDER 24H TODOS OS DIAS!</a></div>
     <p class="micro">Pagamento único de R$50 • sem mensalidade • 7 dias de garantia</p>
   </div>
