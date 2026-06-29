@@ -456,15 +456,46 @@ fbq('track','PageView');
       }
     }).then(function(c){brickCtrl=c;}).catch(function(e){console.error('brick create',e);});
   }
+  function validarDados(){
+    var ok=true;
+    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
+    if(!validEmail())ok=false;
+    if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
+    return ok;
+  }
+  // Fallback Pix transparente — funciona só com o MP_ACCESS_TOKEN (sem chave pública).
+  function renderPixFallback(){
+    var l=$('brick-load'); if(l)l.style.display='none';
+    var c=$('brick'); if(!c)return;
+    c.innerHTML='<button type="button" id="pixbtn" class="cta" style="margin-top:0">Pagar com Pix ⚡<span class="s">QR na hora · confirmação automática</span></button>'+
+      '<p class="muted" style="margin:10px 0 0;text-align:center">💳 O cartão fica disponível quando a chave pública (MP_PUBLIC_KEY) for configurada.</p>';
+    var btn=$('pixbtn');
+    btn.addEventListener('click',function(){
+      if(!validarDados())return;
+      btn.disabled=true; btn.style.opacity=.7; btn.firstChild.textContent='Gerando Pix…';
+      if(window.fbq)fbq('track','AddPaymentInfo',{value:total(),currency:'BRL'});
+      fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,bumps:selecionados()})})
+        .then(function(r){return r.json();})
+        .then(function(res){
+          btn.disabled=false; btn.style.opacity=1; btn.firstChild.textContent='Pagar com Pix ⚡';
+          if(res.error){showRejeitado(res.error);return;}
+          if(res.pix){showPix(res);return;}
+          if(res.status==='approved'){showApproved();return;}
+          showPendente();
+        })
+        .catch(function(e){btn.disabled=false;btn.style.opacity=1;btn.firstChild.textContent='Pagar com Pix ⚡';console.error('pix',e);showRejeitado('Falha de conexão. Tente de novo.');});
+    });
+  }
   function loadBrick(){
     fetch('/api/config').then(function(r){return r.json();}).then(function(cfg){
-      var l=$('brick-load');
-      if(!cfg||!cfg.publicKey){if(l)l.textContent='Pagamento indisponível: configure MP_PUBLIC_KEY na Vercel.';return;}
-      if(typeof MercadoPago==='undefined'){if(l)l.textContent='Não foi possível carregar o pagamento. Recarregue a página.';return;}
-      mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});
-      builder=mp.bricks();
-      renderBrick();
-    }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Erro ao iniciar o pagamento.';});
+      if(cfg&&cfg.publicKey&&typeof MercadoPago!=='undefined'){
+        mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});
+        builder=mp.bricks();
+        renderBrick();          // Pix + cartão (Payment Brick)
+      } else {
+        renderPixFallback();    // Só Pix (com o token já configurado)
+      }
+    }).catch(function(e){console.error('config',e);renderPixFallback();});
   }
 
   // ---------- barra fixa: rola até o pagamento ----------
