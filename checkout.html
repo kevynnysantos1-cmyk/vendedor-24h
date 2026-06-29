@@ -87,6 +87,7 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 .bump.on input{background:var(--green);border-color:var(--green)}
 .bump input::after{content:'';position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);transition:transform .15s}
 .bump.on input::after{transform:rotate(45deg) scale(1)}
+.bump .bimg{width:52px;height:52px;border-radius:11px;object-fit:cover;flex:none;border:1px solid var(--line2);background:#fff}
 .bump .bc{flex:1;min-width:0}
 .bump .bt{font-weight:700;font-size:14px;line-height:1.25;letter-spacing:-.1px;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0}
 .bump .bd{font-size:12px;color:var(--mut);margin-top:2px;line-height:1.35}
@@ -243,8 +244,9 @@ fbq('track','PageView');
 
     <label class="bump" data-price="37" data-label="Designer 24h (IA)">
       <input type="checkbox" id="b1">
+      <img class="bimg" src="img/bump-designer.webp?v=1" alt="Designer 24h" loading="lazy" width="52" height="52">
       <span class="bc">
-        <span class="bt">🎨 Designer 24h <span class="tag">Mais pedido</span></span>
+        <span class="bt">Designer 24h <span class="tag">Mais pedido</span></span>
         <span class="bd">Cria artes, posts e logo em segundos.</span>
       </span>
       <span class="bp"><b>+R$37</b><s>economize R$60</s></span>
@@ -252,8 +254,9 @@ fbq('track','PageView');
 
     <label class="bump" data-price="27" data-label="Recuperador de Vendas 24h">
       <input type="checkbox" id="b2">
+      <img class="bimg" src="img/bump-recuperador.webp?v=1" alt="Recuperador de Vendas 24h" loading="lazy" width="52" height="52">
       <span class="bc">
-        <span class="bt">🔁 Recuperador de Vendas 24h</span>
+        <span class="bt">Recuperador de Vendas 24h</span>
         <span class="bd">Recupera o cliente que sumiu e fecha a venda.</span>
       </span>
       <span class="bp"><b>+R$27</b><s>economize R$40</s></span>
@@ -261,8 +264,9 @@ fbq('track','PageView');
 
     <label class="bump" data-price="19" data-label="Máquina de Conteúdo 24h">
       <input type="checkbox" id="b3">
+      <img class="bimg" src="img/bump-conteudo.webp?v=1" alt="Máquina de Conteúdo 24h" loading="lazy" width="52" height="52">
       <span class="bc">
-        <span class="bt">📣 Máquina de Conteúdo 24h</span>
+        <span class="bt">Máquina de Conteúdo 24h</span>
         <span class="bd">Gera 30 dias de posts que vendem.</span>
       </span>
       <span class="bp"><b>+R$19</b><s>economize R$28</s></span>
