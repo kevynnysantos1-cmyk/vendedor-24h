@@ -512,12 +512,19 @@ fbq('track','PageView');
   var PIX_CODE='00020126360014BR.GOV.BCB.PIX0114vendedor24hpag5204000053039865802BR5913VENDEDOR24H6009SAO PAULO62070503***6304AB12';
   var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
 
-  function doPay(){
-    if(!validate())return;
-    var total=recompute();
-    // Pixel: dispara Purchase ao confirmar o pagamento (protótipo). Ao integrar o gateway real,
-    // mova este evento para o callback de pagamento confirmado.
-    if(window.fbq){fbq('track','Purchase',{value:total,currency:'BRL'});}
+  function selecionados(){
+    var sel=[]; bumps.forEach(function(b){var i=b.querySelector('input'); if(i&&i.checked)sel.push(i.id);}); return sel;
+  }
+  // Só os dados pessoais são exigidos aqui — o pagamento (Pix/cartão) é finalizado no Mercado Pago.
+  function validarDados(){
+    var ok=true;
+    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
+    if(!validEmail())ok=false;
+    if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
+    return ok;
+  }
+  // Protótipo (fallback enquanto o backend do Mercado Pago não estiver publicado — ex.: GitHub Pages)
+  function protoPay(total){
     var nome=(($('nome').value.trim().split(' ')[0])||'').replace(/[<>]/g,'');
     if(method==='pix'){
       openSheet(
@@ -528,7 +535,7 @@ fbq('track','PageView');
         '<div class="bignum">'+BRL(total)+'</div>'+
         '<div class="copy"><input id="pixcode" readonly aria-label="Código Pix copia e cola" value="'+PIX_CODE+'"><button id="cp" type="button">Copiar</button></div>'+
         UPSELL+
-        '<div class="devnote">⚙️ Protótipo — aqui entra a integração do seu gateway (Mercado Pago, Pagar.me, Appmax, Kiwify…) que gera o Pix real e libera o produto automaticamente.</div>'+
+        '<div class="devnote">⚙️ Protótipo — publique o backend do Mercado Pago (veja LEIA-MERCADOPAGO.md) para gerar o Pix real e liberar o produto automaticamente.</div>'+
         '<button class="close" id="cl" type="button">fechar</button>'
       );
     } else {
@@ -539,10 +546,24 @@ fbq('track','PageView');
         '<p class="sub">Assim que o pagamento for aprovado, enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+
         '<div class="bignum" style="margin-top:10px">'+ptxt+'</div>'+
         UPSELL+
-        '<div class="devnote">⚙️ Protótipo — aqui entra a integração do seu gateway (Mercado Pago, Pagar.me, Appmax, Kiwify…) com campos de cartão tokenizados, que processa o pagamento de verdade.</div>'+
+        '<div class="devnote">⚙️ Protótipo — publique o backend do Mercado Pago (veja LEIA-MERCADOPAGO.md) para processar o pagamento de verdade.</div>'+
         '<button class="close" id="cl" type="button">fechar</button>'
       );
     }
+  }
+  function doPay(){
+    if(!validarDados())return;
+    var total=recompute();
+    var charge=BASE+bumpsTotal(); // valor cobrado no Mercado Pago (preços de lista)
+    try{sessionStorage.setItem('v24_total',String(charge));}catch(e){}
+    if(window.fbq){fbq('track','AddPaymentInfo',{value:charge,currency:'BRL'});}
+    var pay=$('pay');
+    if(pay){pay.disabled=true;pay.style.opacity=.7;}
+    // Mercado Pago real (backend). Se não existir (ex.: GitHub Pages), cai no protótipo.
+    fetch('/api/criar-preferencia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bumps:selecionados()})})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){if(d&&d.init_point){location.href=d.init_point;}else{throw 0;}})
+      .catch(function(){if(pay){pay.disabled=false;pay.style.opacity=1;}protoPay(total);});
   }
   $('pay').addEventListener('click',doPay);
   $('sticky-pay').addEventListener('click',doPay);
@@ -566,8 +587,22 @@ fbq('track','PageView');
   setTimeout(showPop,4000); setInterval(showPop,13000);
 
   recompute();
-  // Pixel: usuário chegou no checkout
-  if(window.fbq){fbq('track','InitiateCheckout',{value:recompute(),currency:'BRL'});}
+  // Retorno do Mercado Pago (back_urls) ou abertura normal do checkout
+  (function(){
+    var qs=new URLSearchParams(location.search);
+    var st=qs.get('status')||qs.get('collection_status');
+    if(st==='sucesso'||st==='approved'){
+      var v=parseFloat(sessionStorage.getItem('v24_total')||'')||undefined;
+      if(window.fbq)fbq('track','Purchase',{value:v,currency:'BRL'});
+      openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
+    } else if(st==='falha'||st==='rejected'){
+      openSheet('<div class="ok" aria-hidden="true">⚠️</div><h3 id="sheet-h">Pagamento não concluído</h3><p class="sub">Não foi dessa vez — você pode tentar de novo, é rápido.</p><button class="close" id="cl" type="button">fechar</button>');
+    } else if(st==='pendente'||st==='pending'||st==='in_process'){
+      openSheet('<div class="ok" aria-hidden="true">⏳</div><h3 id="sheet-h">Pagamento pendente</h3><p class="sub">Estamos processando. Assim que aprovar, liberamos seu acesso por e-mail.</p><button class="close" id="cl" type="button">fechar</button>');
+    } else {
+      if(window.fbq)fbq('track','InitiateCheckout',{value:recompute(),currency:'BRL'});
+    }
+  })();
 })();
 </script>
 </body>
