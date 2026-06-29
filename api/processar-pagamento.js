@@ -3,17 +3,7 @@
 // nunca passa pelo servidor) e cria o pagamento em /v1/payments.
 // A chave secreta fica em MP_ACCESS_TOKEN (Environment Variables da Vercel).
 
-const PRECOS = {
-  base: { title: 'Vendedor 24h — seu WhatsApp vendendo sozinho', price: 50.0 },
-  b1:   { title: 'Designer 24h (IA)',         price: 37.0 },
-  b2:   { title: 'Recuperador de Vendas 24h', price: 27.0 },
-  b3:   { title: 'Máquina de Conteúdo 24h',   price: 19.0 },
-};
-function calcTotal(bumps) {
-  let t = PRECOS.base.price;
-  (bumps || []).forEach(function (id) { if (PRECOS[id]) t += PRECOS[id].price; });
-  return Math.round(t * 100) / 100;
-}
+const { calcTotal, buildMetadata } = require('../lib/order-meta.js');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método não permitido' }); return; }
@@ -25,11 +15,13 @@ module.exports = async (req, res) => {
     const amount = calcTotal(body.bumps);
 
     // O valor é SEMPRE recalculado no servidor (não confia no front).
+    const fdCpf = (fd.payer && fd.payer.identification && fd.payer.identification.number) || body.cpf;
     const payment = {
       transaction_amount: amount,
       description: 'Vendedor 24h',
       payment_method_id: fd.payment_method_id,
       payer: fd.payer || {},
+      metadata: buildMetadata({ req: req, nome: body.nome, cpf: fdCpf, email: (fd.payer && fd.payer.email) || body.email, phone: body.phone, bumps: body.bumps, meta: body.meta, utms: body.utms, amount: amount }),
     };
     if (fd.token) payment.token = fd.token;                 // cartão tokenizado
     if (fd.installments) payment.installments = fd.installments;

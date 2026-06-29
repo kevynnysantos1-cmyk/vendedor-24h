@@ -1,17 +1,6 @@
 // Cria um pagamento Pix transparente (QR direto na página) usando SÓ o MP_ACCESS_TOKEN.
-// Não precisa de chave pública nem de SDK no navegador — funciona com o token já configurado.
-
-const PRECOS = {
-  base: { title: 'Vendedor 24h — seu WhatsApp vendendo sozinho', price: 50.0 },
-  b1:   { title: 'Designer 24h (IA)',         price: 37.0 },
-  b2:   { title: 'Recuperador de Vendas 24h', price: 27.0 },
-  b3:   { title: 'Máquina de Conteúdo 24h',   price: 19.0 },
-};
-function calcTotal(bumps) {
-  let t = PRECOS.base.price;
-  (bumps || []).forEach(function (id) { if (PRECOS[id]) t += PRECOS[id].price; });
-  return Math.round(t * 100) / 100;
-}
+// Grava no metadata os dados de tracking (fbc/fbp/UTMs/cliente) pro webhook reconstruir.
+const { calcTotal, buildMetadata } = require('../lib/order-meta.js');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método não permitido' }); return; }
@@ -35,6 +24,7 @@ module.exports = async (req, res) => {
       description: 'Vendedor 24h',
       payment_method_id: 'pix',
       payer: payer,
+      metadata: buildMetadata({ req: req, nome: nome, cpf: cpf, email: body.email, phone: body.phone, bumps: body.bumps, meta: body.meta, utms: body.utms, amount: amount }),
     };
 
     const mp = await fetch('https://api.mercadopago.com/v1/payments', {
