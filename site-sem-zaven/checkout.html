@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--green:#00a884;--green-d:#008069;--green-dd:#046c54;--ink:#111b21;--ink2:#3b4a54;--mut:#667781;--soft:#f7f9fa;--line:#e9edef;--line2:#dfe5e7;--bg:#f0f2f5;--blue:#1d7efd;--tintp:#e9f8f3}
+:root{--green:#00a884;--green-d:#008069;--green-dd:#046c54;--ink:#111b21;--ink2:#3b4a54;--mut:#667781;--soft:#f7f9fa;--line:#e9edef;--line2:#dfe5e7;--bg:#f0f2f5;--blue:#1d7efd;--tintp:#e9f8f3;--cream:#f2ebe0;--wabeige:#efe7de;--wahead:#008069}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:92px}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream) url('img/bg-doodle.jpg?v=2') repeat;background-size:440px auto;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:92px}
 .wrap{max-width:460px;margin:0 auto;padding:0 14px 28px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 :focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
@@ -21,10 +21,22 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--
 .brand .logo{width:30px;height:30px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
 .brand b{font-family:'Poppins';font-weight:800;color:var(--ink)}
 .brand img.v24{height:42px;width:auto;display:block}
-.timer{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--mut);font-size:13px;font-weight:500;margin:4px 0 20px}
+/* Cabeçalho estilo conversa do WhatsApp */
+.wa-topbar{display:flex;align-items:center;gap:10px;background:var(--wahead);color:#fff;margin:0 -14px;padding:9px 13px calc(9px + env(safe-area-inset-top))}
+.wa-back{background:none;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:2px;flex:none;margin-right:-2px}
+.wa-ava{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.wa-ava img{width:26px;height:26px;display:block}
+.wa-meta{min-width:0;flex:1;line-height:1.2}
+.wa-name{font-weight:700;font-size:16px;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-pres{font-size:12px;opacity:.92;display:flex;align-items:center;gap:5px;margin-top:1px}
+.wa-pres .dot{width:7px;height:7px;border-radius:50%;background:#8fe7b6;display:inline-block;flex:none}
+.wa-acts{display:flex;align-items:center;gap:19px;opacity:.96;flex:none}
+.wa-acts svg{display:block}
+.timer{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--mut);font-size:13px;font-weight:500;margin:16px 0 18px}
 .timer b{font-variant-numeric:tabular-nums;color:var(--green-d);font-weight:700}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 1px 2px rgba(11,20,26,.04)}
-.prod-card{background:var(--soft);border-color:transparent;box-shadow:none}
+.prod-card{background:var(--wabeige);border:1px solid #ddd1c0;box-shadow:0 4px 14px rgba(11,20,26,.13),inset 0 1px 0 rgba(255,255,255,.55)}
+.prod-card .inc{border-top-color:#dccfbd}
 .step{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-bottom:14px;letter-spacing:-.2px}
 .step .n{width:24px;height:24px;border-radius:50%;background:var(--tintp);color:var(--green-d);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex:none}
 .muted{font-size:13px;color:var(--mut);margin:-6px 0 14px;line-height:1.45}
@@ -135,7 +147,23 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 
 <div class="wrap">
 
-  <h1 class="brand"><img class="v24" src="img/v24h-logo.png" alt="Vendedor 24h — no seu WhatsApp"></h1>
+  <header class="wa-topbar">
+    <button class="wa-back" type="button" aria-label="Voltar" onclick="if(history.length>1){history.back()}else{location.href='index.html'}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="wa-ava"><img src="img/icon-vendedor.svg" alt=""></span>
+    <div class="wa-meta">
+      <div class="wa-name">Vendedor 24h</div>
+      <div class="wa-pres"><span class="dot"></span> online</div>
+    </div>
+    <div class="wa-acts" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 3.5V7l-4 3.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.3 15.3 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.3 2.2z"/></svg>
+      <svg width="6" height="22" viewBox="0 0 6 24" fill="currentColor"><circle cx="3" cy="4" r="2.1"/><circle cx="3" cy="12" r="2.1"/><circle cx="3" cy="20" r="2.1"/></svg>
+    </div>
+  </header>
+
+  <h1 class="sr">Vendedor 24h — finalizar compra</h1>
 
   <div class="timer" aria-live="off"><span id="timer-label">Preço de lançamento · termina em</span> <b id="timer">10:00</b></div>
 
