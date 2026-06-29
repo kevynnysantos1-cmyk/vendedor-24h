@@ -1,6 +1,6 @@
 // Cria um pagamento Pix transparente (QR direto na página) usando SÓ o MP_ACCESS_TOKEN.
 // Grava no metadata os dados de tracking (fbc/fbp/UTMs/cliente) pro webhook reconstruir.
-const { calcTotal, buildMetadata } = require('../lib/order-meta.js');
+const { pixTotal, buildMetadata } = require('../lib/order-meta.js');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método não permitido' }); return; }
@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   if (!token) { res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' }); return; }
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const amount = calcTotal(body.bumps);
+    const amount = pixTotal(body.bumps); // Pix com 5% de desconto
     const nome = (body.nome || '').trim();
     const cpf = (body.cpf || '').replace(/\D/g, '');
 

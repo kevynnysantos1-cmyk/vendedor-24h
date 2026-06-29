@@ -44,6 +44,25 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--
 .wa-msg-bubble b{color:var(--green-dd);font-weight:700}
 .wa-msg-meta{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:2px;font-size:10.5px;color:var(--mut)}
 .wa-msg-meta svg{display:block}
+/* Seletor de pagamento — 2 cards lado a lado (Pix | Cartão) */
+.pm-tabs{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:4px 0 14px}
+.pm{position:relative;border:1.8px solid var(--line2);border-radius:14px;padding:15px 10px 12px;background:#fff;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color .15s,background .15s,box-shadow .15s}
+.pm:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+.pm-pix[aria-checked=true]{border-color:var(--green);background:#eefaf5;box-shadow:0 0 0 1px var(--green) inset}
+.pm-card[aria-checked=true]{border-color:#1d7efd;background:#eef4ff;box-shadow:0 0 0 1px #1d7efd inset}
+.pm-ic{height:30px;display:flex;align-items:center;justify-content:center}
+.pm-ic svg{height:27px;width:auto;display:block}
+.pm-name{font-weight:700;font-size:14.5px;color:var(--ink2)}
+.pm-price{font-weight:800;font-size:18px;letter-spacing:-.4px;line-height:1}
+.pm-pix .pm-price{color:var(--green-d)}
+.pm-card .pm-price{color:#1d7efd}
+.pm-sub{font-size:10.5px;font-weight:800;letter-spacing:.3px}
+.pm-pix .pm-sub{color:var(--green-d)}
+.pm-card .pm-sub{color:#1d7efd}
+.pm-check{position:absolute;top:7px;right:7px;width:19px;height:19px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.pm-pix .pm-check{background:var(--green)}
+.pm-card .pm-check{background:#1d7efd}
+.pm[aria-checked=true] .pm-check{display:flex}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 1px 2px rgba(11,20,26,.04)}
 .prod-card{background:var(--wabeige);border:1px solid #ddd1c0;box-shadow:0 4px 14px rgba(11,20,26,.13),inset 0 1px 0 rgba(255,255,255,.55);padding:13px}
 .prod-bubble{background:#fff;border-radius:13px;padding:15px 16px;box-shadow:0 1px 1.5px rgba(11,20,26,.14)}
@@ -282,8 +301,29 @@ fbq('track','PageView');
   <div class="card">
     <h2 class="step"><span class="n" aria-hidden="true">3</span> Pagamento</h2>
     <p class="muted">Pague com <b>Pix</b> ou <b>cartão</b> sem sair desta página.</p>
-    <div id="brick"></div>
-    <div id="brick-load" class="muted" style="text-align:center;margin:10px 0 0">Carregando formas de pagamento…</div>
+    <div class="pm-tabs" role="radiogroup" aria-label="Forma de pagamento" id="pm-group">
+      <button type="button" class="pm pm-pix" id="pm-pix" role="radio" aria-checked="true">
+        <span class="pm-check" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M1 6.5l3 3 7-7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pm-ic"><svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#32BCAD" d="M112.57 391.19c20.06 0 38.93-7.81 53.12-22l76.69-76.69c5.39-5.4 14.77-5.38 20.15 0l76.99 76.99c14.19 14.17 33.04 21.98 53.12 21.98h15.1l-97.14 97.14c-30.33 30.34-79.5 30.34-109.85 0l-97.42-97.42h9.23z"/><path fill="#32BCAD" d="M400.74 120.3c-20.06 0-38.93 7.81-53.12 22l-76.97 76.99c-5.55 5.53-14.6 5.57-20.15-.02l-76.71-76.69c-14.19-14.19-33.05-22-53.12-22h-9.23l97.42-97.42c30.33-30.34 79.5-30.34 109.85 0l97.14 97.14h-15.1z"/><path fill="#32BCAD" d="M22.22 200.67l58.76-58.76h31.58c13.85 0 27.41 5.6 37.18 15.37l76.71 76.69c7.18 7.16 16.61 10.76 26.04 10.76 9.43 0 18.85-3.59 26.03-10.76l76.99-76.99c9.77-9.77 23.34-15.37 37.18-15.37h31.58l58.77 58.76c30.34 30.33 30.34 79.51 0 109.85l-58.77 58.77h-31.58c-13.84 0-27.41-5.61-37.18-15.37l-76.99-76.99c-13.94-13.94-38.13-13.94-52.07 0l-76.71 76.69c-9.77 9.77-23.33 15.37-37.18 15.37h-31.58l-58.76-58.76c-30.34-30.33-30.34-79.51 0-109.85z"/></svg></span>
+        <span class="pm-name">Pix</span>
+        <span class="pm-price" id="pm-pix-price">R$47,50</span>
+        <span class="pm-sub">5% OFF</span>
+      </button>
+      <button type="button" class="pm pm-card" id="pm-card" role="radio" aria-checked="false" tabindex="-1">
+        <span class="pm-check" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M1 6.5l3 3 7-7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pm-ic"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.6" stroke="#1d7efd" stroke-width="1.8"/><path d="M2 9.5h20" stroke="#1d7efd" stroke-width="1.8"/><rect x="5" y="14" width="6" height="2" rx="1" fill="#1d7efd"/></svg></span>
+        <span class="pm-name">Cartão</span>
+        <span class="pm-price" id="pm-card-price">R$50,00</span>
+        <span class="pm-sub">em até 12×</span>
+      </button>
+    </div>
+    <div id="pane-pix">
+      <button type="button" id="pixbtn" class="cta" style="margin-top:2px">Pagar com Pix ⚡<span class="s">QR na hora · 5% de desconto · liberação automática</span></button>
+    </div>
+    <div id="pane-card" style="display:none">
+      <div id="brick"></div>
+      <div id="brick-load" class="muted" style="text-align:center;margin:10px 0 0">Carregando o cartão…</div>
+    </div>
     <div class="under">🔒 Pagamento seguro · 🛡️ dados protegidos · 7 dias de garantia</div>
     <div class="logos">
       <span>⚡ Pix</span><span>VISA</span><span>MASTERCARD</span><span>ELO</span><span>HIPERCARD</span><span>AMEX</span>
@@ -340,6 +380,8 @@ fbq('track','PageView');
   // ---------- preços ----------
   function bumpsTotal(){return bumps.reduce(function(a,b){return a+(b.querySelector('input').checked?parseFloat(b.dataset.price):0);},0);}
   function total(){return BASE+bumpsTotal();}
+  function pixPrice(){return Math.round(total()*95)/100;} // 5% OFF no Pix
+  var method='pix';
   function selecionados(){var sel=[];bumps.forEach(function(b){var i=b.querySelector('input');if(i&&i.checked)sel.push(i.id);});return sel;}
   function recompute(){
     var bl=$('bump-lines'); bl.innerHTML='';
@@ -354,6 +396,8 @@ fbq('track','PageView');
     var t=total();
     $('total').textContent=BRL(t);
     var st=$('sticky-total'); if(st)st.textContent=BRL(t);
+    var pp=$('pm-pix-price'); if(pp)pp.textContent=BRL(pixPrice());
+    var cp=$('pm-card-price'); if(cp)cp.textContent=BRL(t);
     return t;
   }
   var brickTimer=null;
@@ -425,7 +469,7 @@ fbq('track','PageView');
   }
   function enrichPixel(){ if(window.fbq){ try{ fbq('init',PIXEL_ID,amData()); }catch(e){} } }
   function selBumpIds(){ try{ return ['base'].concat(selecionados()); }catch(e){ return ['base']; } }
-  function purchaseParams(){ var ids=selBumpIds(); return {value:total(),currency:'BRL',content_type:'product',content_ids:ids,num_items:ids.length}; }
+  function purchaseParams(){ var ids=selBumpIds(); return {value:(method==='card'?total():pixPrice()),currency:'BRL',content_type:'product',content_ids:ids,num_items:ids.length}; }
   // Dispara Purchase no máximo 1x por pedido (trava local) + eventID pra dedup no Meta.
   function firePurchaseOnce(id,params){
     if(!window.fbq)return;
@@ -496,7 +540,7 @@ fbq('track','PageView');
     try{if(brickCtrl&&brickCtrl.unmount)brickCtrl.unmount();}catch(e){}
     builder.create('payment','brick',{
       initialization:{amount:total(),payer:{email:email}},
-      customization:{paymentMethods:{creditCard:'all',debitCard:'all',bankTransfer:'all',maxInstallments:12}},
+      customization:{paymentMethods:{creditCard:'all',maxInstallments:12}},
       callbacks:{
         onReady:function(){var l=$('brick-load');if(l)l.style.display='none';},
         onError:function(err){console.error('brick',err);},
@@ -511,13 +555,9 @@ fbq('track','PageView');
     if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
     return ok;
   }
-  // Fallback Pix transparente — funciona só com o MP_ACCESS_TOKEN (sem chave pública).
-  function renderPixFallback(){
-    var l=$('brick-load'); if(l)l.style.display='none';
-    var c=$('brick'); if(!c)return;
-    c.innerHTML='<button type="button" id="pixbtn" class="cta" style="margin-top:0">Pagar com Pix ⚡<span class="s">QR na hora · confirmação automática</span></button>'+
-      '<p class="muted" style="margin:10px 0 0;text-align:center">💳 O cartão fica disponível quando a chave pública (MP_PUBLIC_KEY) for configurada.</p>';
-    var btn=$('pixbtn');
+  // Botão do Pix (painel Pix) — usa só o MP_ACCESS_TOKEN. O cartão fica no Payment Brick (painel Cartão).
+  function wirePixButton(){
+    var btn=$('pixbtn'); if(!btn||btn._wired)return; btn._wired=true;
     btn.addEventListener('click',function(){
       if(!validarDados())return;
       btn.disabled=true; btn.style.opacity=.7; btn.firstChild.textContent='Gerando Pix…';
@@ -534,21 +574,36 @@ fbq('track','PageView');
         .catch(function(e){btn.disabled=false;btn.style.opacity=1;btn.firstChild.textContent='Pagar com Pix ⚡';console.error('pix',e);showRejeitado('Falha de conexão. Tente de novo.');});
     });
   }
+  function ensureBrick(){ if(builder && !brickCtrl) renderBrick(); }
+  // Alterna entre os 2 cards (Pix | Cartão)
+  function setMethod(m){
+    method=m; var isPix=(m==='pix');
+    var pPix=$('pm-pix'), pCard=$('pm-card');
+    pPix.setAttribute('aria-checked',isPix?'true':'false'); pPix.tabIndex=isPix?0:-1;
+    pCard.setAttribute('aria-checked',isPix?'false':'true'); pCard.tabIndex=isPix?-1:0;
+    $('pane-pix').style.display=isPix?'block':'none';
+    $('pane-card').style.display=isPix?'none':'block';
+    if(!isPix) ensureBrick();
+  }
+  $('pm-pix').addEventListener('click',function(){setMethod('pix');});
+  $('pm-card').addEventListener('click',function(){setMethod('card');});
+  $('pm-group').addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setMethod(method==='pix'?'card':'pix');(method==='pix'?$('pm-pix'):$('pm-card')).focus();}});
   function loadBrick(){
+    wirePixButton();
     fetch('/api/config').then(function(r){return r.json();}).then(function(cfg){
       if(cfg&&cfg.publicKey&&typeof MercadoPago!=='undefined'){
         mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});
         builder=mp.bricks();
-        renderBrick();          // Pix + cartão (Payment Brick)
+        renderBrick();                 // cartão de crédito (Payment Brick, sem débito CAIXA)
       } else {
-        renderPixFallback();    // Só Pix (com o token já configurado)
+        var l=$('brick-load'); if(l)l.textContent='Cartão indisponível no momento — use o Pix acima ⚡';
       }
-    }).catch(function(e){console.error('config',e);renderPixFallback();});
+    }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Cartão indisponível — use o Pix ⚡';});
   }
 
   // ---------- barra fixa: rola até o pagamento ----------
   var paybar=$('paybar');
-  var sp=$('sticky-pay'); if(sp)sp.addEventListener('click',function(){var b=$('brick');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});});
+  var sp=$('sticky-pay'); if(sp)sp.addEventListener('click',function(){var b=$('pm-group');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});});
   window.addEventListener('scroll',function(){if(paybar)paybar.classList.toggle('show',window.scrollY>500);},{passive:true});
 
   // ---------- prova social ----------
