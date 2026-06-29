@@ -411,11 +411,49 @@ fbq('track','PageView');
 
   var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
 
+  // ---------- Meta Pixel — Advanced Matching + Purchase robusto (sem CAPI) ----------
+  var PIXEL_ID='1055527824036523';
+  // Advanced Matching: o Pixel hasheia (SHA-256) no navegador os dados passados ao init.
+  function amData(){
+    var d={};
+    var em=(($('email')&&$('email').value)||'').trim().toLowerCase(); if(em)d.em=em;
+    var ph=(($('tel')&&$('tel').value)||'').replace(/\D/g,''); if(ph&&(ph.length===10||ph.length===11))ph='55'+ph; if(ph)d.ph=ph;
+    var nm=(($('nome')&&$('nome').value)||'').trim(); var pp=nm.split(/\s+/);
+    if(pp[0])d.fn=pp[0].toLowerCase(); if(pp.length>1)d.ln=pp.slice(1).join(' ').toLowerCase();
+    var cpf=(($('cpf')&&$('cpf').value)||'').replace(/\D/g,''); if(cpf)d.external_id=cpf;
+    return d;
+  }
+  function enrichPixel(){ if(window.fbq){ try{ fbq('init',PIXEL_ID,amData()); }catch(e){} } }
+  function selBumpIds(){ try{ return ['base'].concat(selecionados()); }catch(e){ return ['base']; } }
+  function purchaseParams(){ var ids=selBumpIds(); return {value:total(),currency:'BRL',content_type:'product',content_ids:ids,num_items:ids.length}; }
+  // Dispara Purchase no máximo 1x por pedido (trava local) + eventID pra dedup no Meta.
+  function firePurchaseOnce(id,params){
+    if(!window.fbq)return;
+    var key='v24_pur_'+(id||'');
+    try{ if(id&&localStorage.getItem(key))return; }catch(e){}
+    enrichPixel();
+    fbq('track','Purchase',params,id?{eventID:'purchase_'+id}:undefined);
+    try{ if(id)localStorage.setItem(key,'1'); }catch(e){}
+  }
+  // PIX com aba fechada: guarda o pendente e reconfere quando o cliente reabre o checkout.
+  function savePendingPix(id){ try{ localStorage.setItem('v24_pix_pend',JSON.stringify({id:id,value:total(),ids:selBumpIds(),ts:Date.now()})); }catch(e){} }
+  function clearPendingPix(){ try{ localStorage.removeItem('v24_pix_pend'); }catch(e){} }
+  function checkPendingPixOnLoad(){
+    var raw; try{ raw=localStorage.getItem('v24_pix_pend'); }catch(e){ return; }
+    if(!raw)return; var p; try{ p=JSON.parse(raw); }catch(e){ clearPendingPix(); return; }
+    if(!p||!p.id||(Date.now()-(p.ts||0)>86400000)){ clearPendingPix(); return; }
+    fetch('/api/status-pagamento?id='+encodeURIComponent(p.id)).then(function(r){return r.json();}).then(function(s){
+      if(s&&s.status==='approved'){ firePurchaseOnce(p.id,{value:p.value,currency:'BRL',content_type:'product',content_ids:p.ids||['base'],num_items:(p.ids||['base']).length}); clearPendingPix(); }
+      else if(s&&(s.status==='cancelled'||s.status==='expired'||s.status==='rejected')){ clearPendingPix(); }
+    }).catch(function(){});
+  }
+
   // ---------- Mercado Pago — Checkout Transparente (Payment Brick) ----------
   var mp=null, builder=null, brickCtrl=null, pollIv=null;
-  function showApproved(){
+  function showApproved(id){
     clearInterval(pollIv);
-    if(window.fbq)fbq('track','Purchase',{value:total(),currency:'BRL'});
+    clearPendingPix();
+    firePurchaseOnce(id,purchaseParams());
     openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
   }
   function showPendente(){
@@ -428,20 +466,20 @@ fbq('track','PageView');
     var img=res.pix&&res.pix.qr_code_base64?'<img class="qr" alt="QR Code Pix" src="data:image/png;base64,'+res.pix.qr_code_base64+'">':'';
     var code=(res.pix&&res.pix.qr_code)||'';
     openSheet('<div class="ok" aria-hidden="true">⚡</div><h3 id="sheet-h">Quase lá! Pague o Pix 🔓</h3><p class="sub">Escaneie o QR no app do seu banco ou use o Pix copia e cola. A confirmação é automática.</p>'+img+'<div class="bignum">'+BRL(res.amount||total())+'</div><div class="copy"><input id="pixcode" readonly aria-label="Pix copia e cola" value="'+code+'"><button id="cp" type="button">Copiar</button></div><button class="close" id="cl" type="button">fechar</button>');
-    if(res.id){clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id);},5000);}
+    if(res.id){savePendingPix(res.id);clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id);},5000);}
   }
   function checarStatus(id){
-    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved();}).catch(function(){});
+    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved(id);}).catch(function(){});
   }
   function onSubmit(arg){
     var formData=arg&&arg.formData;
-    if(window.fbq)fbq('track','AddPaymentInfo',{value:total(),currency:'BRL'});
+    enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams());
     return fetch('/api/processar-pagamento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formData:formData,bumps:selecionados()})})
       .then(function(r){return r.json();})
       .then(function(res){
         if(res.error){showRejeitado(res.error);return;}
         if(res.pix){showPix(res);return;}
-        if(res.status==='approved'){showApproved();return;}
+        if(res.status==='approved'){showApproved(res.id);return;}
         if(res.status==='in_process'||res.status==='pending'){showPendente();return;}
         showRejeitado();
       })
@@ -478,14 +516,14 @@ fbq('track','PageView');
     btn.addEventListener('click',function(){
       if(!validarDados())return;
       btn.disabled=true; btn.style.opacity=.7; btn.firstChild.textContent='Gerando Pix…';
-      if(window.fbq)fbq('track','AddPaymentInfo',{value:total(),currency:'BRL'});
+      enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams());
       fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,bumps:selecionados()})})
         .then(function(r){return r.json();})
         .then(function(res){
           btn.disabled=false; btn.style.opacity=1; btn.firstChild.textContent='Pagar com Pix ⚡';
           if(res.error){showRejeitado(res.error);return;}
           if(res.pix){showPix(res);return;}
-          if(res.status==='approved'){showApproved();return;}
+          if(res.status==='approved'){showApproved(res.id);return;}
           showPendente();
         })
         .catch(function(e){btn.disabled=false;btn.style.opacity=1;btn.firstChild.textContent='Pagar com Pix ⚡';console.error('pix',e);showRejeitado('Falha de conexão. Tente de novo.');});
@@ -521,7 +559,8 @@ fbq('track','PageView');
   setTimeout(showPop,4000); setInterval(showPop,13000);
 
   recompute();
-  if(window.fbq)fbq('track','InitiateCheckout',{value:total(),currency:'BRL'});
+  if(window.fbq)fbq('track','InitiateCheckout',purchaseParams());
+  checkPendingPixOnLoad();
   loadBrick();
 })();
 </script>
