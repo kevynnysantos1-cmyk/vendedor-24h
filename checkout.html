@@ -147,6 +147,14 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 .sheet .close{display:block;width:100%;text-align:center;margin-top:15px;color:var(--mut);font-size:13px;background:none;border:none;cursor:pointer;min-height:44px}
 .devnote{font-size:11px;color:var(--mut);text-align:center;margin-top:13px;line-height:1.5;background:var(--soft);border-radius:9px;padding:9px}
 </style>
+<!-- Meta Pixel - Infoproduto -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1055527824036523');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1055527824036523&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -507,6 +515,9 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
   function doPay(){
     if(!validate())return;
     var total=recompute();
+    // Pixel: dispara Purchase ao confirmar o pagamento (protótipo). Ao integrar o gateway real,
+    // mova este evento para o callback de pagamento confirmado.
+    if(window.fbq){fbq('track','Purchase',{value:total,currency:'BRL'});}
     var nome=(($('nome').value.trim().split(' ')[0])||'').replace(/[<>]/g,'');
     if(method==='pix'){
       openSheet(
@@ -555,6 +566,8 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
   setTimeout(showPop,4000); setInterval(showPop,13000);
 
   recompute();
+  // Pixel: usuário chegou no checkout
+  if(window.fbq){fbq('track','InitiateCheckout',{value:recompute(),currency:'BRL'});}
 })();
 </script>
 </body>
