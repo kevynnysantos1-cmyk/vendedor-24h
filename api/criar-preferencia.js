@@ -11,7 +11,12 @@ const PRECOS = {
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Método não permitido' });
+    // Diagnóstico via navegador (GET): informa se a variável MP_ACCESS_TOKEN chegou ao servidor.
+    res.status(200).json({
+      ok: true,
+      mensagem: 'Função no ar',
+      token_configurado: Boolean(process.env.MP_ACCESS_TOKEN),
+    });
     return;
   }
   const token = process.env.MP_ACCESS_TOKEN;
