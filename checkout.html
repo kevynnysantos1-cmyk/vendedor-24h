@@ -141,14 +141,6 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 .pop .pt b{font-weight:700}
 .pop .pt small{color:#9fadb3;font-size:11px}
 .pop .x{position:absolute;top:5px;right:7px;width:26px;height:26px;border:none;background:none;color:#c2cacd;font-size:17px;cursor:pointer;line-height:1}
-.paybar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 20px rgba(11,20,26,.07);z-index:55;transform:translateY(130%);transition:transform .3s ease}
-.paybar.show{transform:translateY(0)}
-.pb-in{max-width:460px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:11px 16px calc(11px + env(safe-area-inset-bottom))}
-.pb-left{display:flex;flex-direction:column;line-height:1.15}
-.pb-cap{font-size:11px;color:var(--mut);font-weight:500}
-.pb-total{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.4px}
-.pb-btn{margin-left:auto;background:var(--green);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:15.5px;padding:13px 30px;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(0,168,132,.28)}
-.pb-btn:active{transform:translateY(1px)}
 .ov{position:fixed;inset:0;background:rgba(11,20,26,.55);display:none;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(2px)}
 .ov.show{display:flex}
 .sheet{background:#fff;width:100%;max-width:460px;border-radius:20px 20px 0 0;padding:24px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .35s cubic-bezier(.2,.8,.2,1)}
@@ -346,14 +338,6 @@ fbq('track','PageView');
   <span class="pic" aria-hidden="true">🟢</span><div class="pt" id="pop-txt"></div>
 </div>
 
-<!-- BARRA DE PAGAMENTO FIXA -->
-<div class="paybar" id="paybar">
-  <div class="pb-in">
-    <div class="pb-left"><span class="pb-cap">Total</span><span class="pb-total" id="sticky-total">R$47,50</span></div>
-    <button class="pb-btn" id="sticky-pay" type="button">Pagar</button>
-  </div>
-</div>
-
 <!-- OVERLAY -->
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
   <div class="sheet" id="sheet" tabindex="-1"></div>
@@ -384,7 +368,6 @@ fbq('track','PageView');
     });
     var t=total();
     $('total').textContent=BRL(t);
-    var st=$('sticky-total'); if(st)st.textContent=BRL(t);
     var pp=$('pm-pix-price'); if(pp)pp.textContent=BRL(pixPrice());
     var cp=$('pm-card-price'); if(cp)cp.textContent=BRL(t);
     return t;
@@ -589,11 +572,6 @@ fbq('track','PageView');
       }
     }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Cartão indisponível — use o Pix ⚡';});
   }
-
-  // ---------- barra fixa: rola até o pagamento ----------
-  var paybar=$('paybar');
-  var sp=$('sticky-pay'); if(sp)sp.addEventListener('click',function(){var b=$('pm-group');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});});
-  window.addEventListener('scroll',function(){if(paybar)paybar.classList.toggle('show',window.scrollY>500);},{passive:true});
 
   // ---------- prova social ----------
   var people=[['Joana','Recife'],['Rafael','Curitiba'],['Patrícia','Salvador'],['Diego','Belo Horizonte'],['Camila','Fortaleza'],['Bruno','Porto Alegre'],['Larissa','Goiânia']];
