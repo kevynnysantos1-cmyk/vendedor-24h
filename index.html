@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zaven — seu Vendedor 24h no WhatsApp vendendo sozinho</title>
+<title>Vendedor 24h — seu WhatsApp vendendo sozinho</title>
 <link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--green:#25D366;--green-d:#0e8c54;--ink:#0f1f17;--gray:#5b6b62;--bg:#fff;--bg2:#f1faf5;--cream:#f2ebe0;--yellow:#FFD400;--navy:#0f1c2e;--gold:#ffc107;--radius:18px}
+:root{--green:#25D366;--green-d:#0e8c54;--ink:#0f1f17;--gray:#5b6b62;--bg:#fff;--bg2:#f1faf5;--cream:#f2ebe0;--yellow:#FFD400;--radius:18px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);background:var(--cream) url('img/bg-doodle.jpg?v=2') repeat;background-size:440px auto;line-height:1.45;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
@@ -25,10 +25,6 @@ h2{font-size:25px;font-weight:800;line-height:1.15;margin-bottom:8px}
 .btn:active{transform:translateY(1px)}
 .micro{font-size:13px;color:var(--gray);text-align:center;margin-top:10px}
 .shot{border-radius:var(--radius);margin-top:22px;box-shadow:0 12px 30px rgba(0,0,0,.12)}
-.herofig{position:relative;max-width:360px;margin:16px auto 0}
-.herofig .shot{margin-top:0}
-.herobadge{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:max-content;max-width:92%;display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--yellow);color:#000;font-weight:900;font-size:15px;line-height:1.2;text-align:center;padding:10px 16px;border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.22);text-transform:uppercase;letter-spacing:.2px}
-.herobadge small{font-size:11px;font-weight:700;text-transform:none;letter-spacing:0;opacity:.85}
 .bullets{list-style:none;display:grid;gap:12px;margin-top:18px}
 .bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e3efe8;border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
 .bullets .ic{font-size:24px;line-height:1.1}
@@ -132,60 +128,26 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 .serve .check li::before{content:'✅';flex:none}
 .chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
 .chip{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#1f3a2c;background:#eaf9f1;border:1px solid #cdeede;border-radius:12px;padding:9px 11px;line-height:1.2;min-height:44px}
-/* ===== Marca Zaven ===== */
-.znav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid #e7efe9}
-.znav .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:9px 18px}
-.zlogo{display:flex;align-items:center;gap:9px;text-decoration:none}
-.zlogo img{width:36px;height:36px;display:block;flex:none}
-.zlogo .wt{display:flex;flex-direction:column;line-height:1}
-.zlogo .w{font-weight:800;font-size:20px;color:var(--navy);letter-spacing:-.6px}
-.zlogo .t{font-size:8.5px;font-weight:800;letter-spacing:1.8px;color:var(--green-d);text-transform:uppercase;margin-top:2px}
-.znav .ncta{margin-left:auto;background:var(--green-d);color:#fff;font-weight:800;font-size:12.5px;text-decoration:none;padding:9px 15px;border-radius:10px;white-space:nowrap;box-shadow:0 4px 12px rgba(16,160,88,.25)}
-@media(max-width:400px){.znav .ncta{display:none}}
-.zhero-meet{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px auto 0;background:#fff;border:1px solid #e3efe8;border-radius:16px;padding:10px 16px 10px 12px;width:fit-content;max-width:100%;box-shadow:0 8px 22px rgba(0,0,0,.06)}
-.zhero-meet img{width:56px;height:56px;flex:none}
-.zhero-meet .mt{text-align:left;font-size:13.5px;color:var(--gray);line-height:1.32}
-.zhero-meet .mt b{color:var(--navy);font-size:15.5px;display:block}
-.zoffer-mascot{width:78px;height:78px;margin:0 auto 4px;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.12))}
-.zfloat{position:fixed;right:14px;bottom:16px;z-index:58;display:flex;flex-direction:column;align-items:flex-end;gap:8px;border:none;background:none;padding:0;cursor:pointer;font-family:inherit;transition:bottom .3s ease}
-.zfloat.up{bottom:86px}
-.zfloat .bubble{background:#fff;border:1px solid #e3efe8;border-radius:14px;border-bottom-right-radius:4px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--navy);box-shadow:0 10px 26px rgba(0,0,0,.16);max-width:180px;line-height:1.3;text-align:left;opacity:0;transform:translateY(8px) scale(.95);transform-origin:bottom right;transition:opacity .3s,transform .3s;pointer-events:none}
-.zfloat.say .bubble{opacity:1;transform:translateY(0) scale(1)}
-.zfloat .bubble small{display:block;color:var(--green-d);font-size:11px;font-weight:800;margin-top:2px}
-.zfloat .avwrap{position:relative;display:inline-flex;align-self:flex-end}
-.zfloat .pulse{position:absolute;inset:8px;border-radius:50%;background:var(--green);opacity:.35;z-index:0;animation:zpulse 2.4s ease-out infinite}
-.zfloat .av{position:relative;z-index:1;width:68px;height:68px;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.22));animation:zbob 3s ease-in-out infinite}
-@keyframes zbob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
-@keyframes zpulse{0%{transform:scale(.7);opacity:.4}100%{transform:scale(1.7);opacity:0}}
-@media(prefers-reduced-motion:reduce){.zfloat .av{animation:none}.zfloat .pulse{display:none}}
-.zfoot{background:var(--navy);text-align:center;padding:32px 18px 30px}
-.zfoot img{width:188px;max-width:70%;margin:0 auto 12px;display:block}
-.zfoot p{font-size:12.5px;line-height:1.75;color:#9fb0a6}
-.zfoot a{color:#dfe9e3;font-weight:700;text-decoration:underline}
+.v24nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid #e7efe9;text-align:center;padding:7px 0}
+.v24nav img{height:40px;width:auto;margin:0 auto;display:block}
+.v24foot{background:#0f1c2e;text-align:center;padding:28px 18px 30px}
+.v24foot img{height:50px;width:auto;max-width:82%;margin:0 auto 12px;display:block}
+.v24foot p{font-size:12.5px;line-height:1.7;color:#9fb0a6}
+.v24foot a{color:#dfe9e3;font-weight:700;text-decoration:underline}
 </style>
 </head>
 <body>
 
-<!-- NAV / MARCA -->
-<nav class="znav">
-  <div class="in">
-    <a class="zlogo" href="#" aria-label="Vendedor 24h no seu WhatsApp">
-      <img src="img/icon-vendedor.svg" alt="">
-      <span class="wt"><span class="w">Vendedor 24h</span><span class="t">no seu WhatsApp</span></span>
-    </a>
-    <a class="ncta" href="#comprar">Quero o meu »</a>
-  </div>
-</nav>
+<!-- LOGO -->
+<nav class="v24nav"><a href="#"><img src="img/v24h-logo.png" alt="Vendedor 24h — no seu WhatsApp"></a></nav>
 
 <!-- HERO -->
-<header class="sec center" style="padding-top:18px">
+<header class="sec center">
   <div class="wrap">
-    <h1>Não contrate um funcionário.<br><span style="color:var(--green-d)">Compre um por R$50.</span></h1>
-    <p class="lead">O <b>Zaven</b> atende e fecha venda no seu WhatsApp <b>24h</b> — sem salário, sem férias, sem mensalidade.</p>
-    <div class="herofig">
-      <img class="shot" src="img/comprovante.jpg" alt="Lojista surpresa com comprovante de pagamento recebido pelo WhatsApp no automático">
-      <span class="herobadge">⚡ Pronto pra trabalhar em 5 minutos<small>rápido e fácil — em 5 min seu novo funcionário já tá vendendo</small></span>
-    </div>
+    <span class="eyebrow">⚡ pagamento único de R$50</span>
+    <h1 style="margin-top:16px">Não contrate um funcionário.<br><span style="color:var(--green-d)">Compre um por R$50.</span></h1>
+    <p class="lead">Ele atende e fecha venda no seu WhatsApp <b>24h</b> — sem salário, sem férias, sem mensalidade.</p>
+    <img class="shot" src="img/comprovante.jpg" alt="Lojista surpresa com comprovante de pagamento recebido pelo WhatsApp no automático" style="max-width:360px;margin:20px auto 0">
     <div style="margin-top:18px"><a class="btn" href="#comprar">QUERO VENDER 24H TODOS OS DIAS!</a></div>
     <p class="micro">Pagamento único de R$50 • sem mensalidade • 7 dias de garantia</p>
   </div>
@@ -272,7 +234,7 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 
     <div class="serve">
       <p class="serve-q">“Será que serve pro <u>meu</u> negócio?”</p>
-      <p class="serve-a">Serve pra qualquer um. Do <b>pedreiro</b> que vende material à <b>clínica</b> cheia, do <b>salão de bairro</b> à <b>loja grande</b> — não importa o ramo nem o tamanho. Se o seu cliente chama no WhatsApp, o <b>Zaven atende e vende por você</b>.</p>
+      <p class="serve-a">Serve pra qualquer um. Do <b>pedreiro</b> que vende material à <b>clínica</b> cheia, do <b>salão de bairro</b> à <b>loja grande</b> — não importa o ramo nem o tamanho. Se o seu cliente chama no WhatsApp, o Vendedor 24h <b>atende e vende por você</b>.</p>
       <div class="chips">
         <span class="chip">🏗️ Pedreiro &amp; autônomo</span>
         <span class="chip">🧱 Material de construção</span>
@@ -294,7 +256,7 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 <!-- O QUE FAZ -->
 <section class="sec bg2">
   <div class="wrap">
-    <h2 class="center">O que o Zaven faz por você</h2>
+    <h2 class="center">O que ele faz por você</h2>
     <ul class="bullets">
       <li><span class="ic">⚡</span><div><b>Responde na hora, 24h</b><span>Nenhum cliente fica no vácuo — nem de madrugada.</span></div></li>
       <li><span class="ic">🛒</span><div><b>Recomenda e vende</b><span>Mostra seus produtos e conduz o cliente até fechar.</span></div></li>
@@ -322,7 +284,7 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
   <div class="wrap">
     <h2 class="center">Faça a conta</h2>
     <table class="cmp">
-      <tr><th>&nbsp;</th><th>Atendente</th><th>Zaven</th></tr>
+      <tr><th>&nbsp;</th><th>Atendente</th><th>Vendedor 24h</th></tr>
       <tr><td>Custo</td><td>~R$2.000/mês</td><td class="win">R$50 uma vez</td></tr>
       <tr><td>Trabalha 24h</td><td>❌</td><td class="win">✅</td></tr>
       <tr><td>Tira férias / falta</td><td>sim 😩</td><td class="win">nunca</td></tr>
@@ -353,9 +315,7 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
   <div class="wrap">
     <div class="offer">
       <div class="wabrand"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#25D366" d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.6 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3z"/><path fill="#fff" d="M22.6 18.4c-.3-.2-2-1-2.3-1.1-.3-.1-.6-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6 0-.2-.8-1.9-1.1-2.6-.3-.6-.5-.5-.8-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.4 3.7 5.8 5.2.8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>Funciona direto no seu WhatsApp</div>
-      <img class="zoffer-mascot" src="img/zaven-mascote.png" alt="Mascote do Zaven">
-      <h2 class="center">Ative seu Zaven hoje</h2>
-      <p class="center" style="color:var(--gray);font-size:14px;margin:-2px 0 2px;font-weight:600">seu Vendedor 24h pra fechar venda sozinho</p>
+      <h2 class="center">Ative seu Vendedor 24h hoje</h2>
       <ul class="inc">
         <li>Passo a passo simples pra ativar — sem saber nada de tecnologia</li>
         <li>Pacote de respostas prontas pro seu tipo de negócio</li>
@@ -378,7 +338,7 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
         <div class="pu">pagamento único • sem mensalidade</div>
       </div>
       <div class="perday"><span class="pd-big">menos de R$0,20 por dia 🤯</span><span class="pd-sub">pra ter um vendedor trabalhando 24h pra você</span></div>
-      <a class="btn" href="checkout.html">QUERO MEU ZAVEN — R$50 »</a>
+      <a class="btn" href="checkout.html">QUERO MEU VENDEDOR 24H »</a>
       <div class="paywrap"><span class="sec">🔒 Pagamento 100% seguro</span><div class="mbadges"><span class="mb-pix">Pix</span><span class="mb-card">Cartão</span><span class="mb-mp">Mercado Pago</span></div></div>
       <p class="micro">Acesso imediato • 7 dias de garantia</p>
       <p class="fineprint">*Parcelamento no cartão com juros do Mercado Pago. O valor exato das parcelas aparece no checkout.</p>
@@ -410,27 +370,21 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 <!-- CTA FINAL -->
 <section class="sec center">
   <div class="wrap">
-    <h2>Continuar perdendo venda… ou ligar seu Zaven hoje?</h2>
-    <div style="margin-top:18px"><a class="btn" href="checkout.html">ATIVAR MEU ZAVEN — R$50 »</a></div>
+    <h2>Continuar perdendo venda… ou ligar seu Vendedor 24h hoje?</h2>
+    <div style="margin-top:18px"><a class="btn" href="checkout.html">ATIVAR POR R$50 »</a></div>
     <p class="micro">pagamento único • sem mensalidade • 7 dias de garantia</p>
   </div>
   <div class="spacer"></div>
 </section>
 
-<!-- FOOTER MARCA -->
-<footer class="zfoot">
-  <img src="img/zaven-logo-dark.png" alt="Zaven — Vendedor 24h">
-  <p>O funcionário de IA que atende e vende no seu WhatsApp 24h.<br>Pagamento único de R$50 · sem mensalidade · 7 dias de garantia.<br><a href="#comprar">Quero meu Zaven »</a></p>
+<!-- FOOTER -->
+<footer class="v24foot">
+  <img src="img/v24h-logo-dark.png" alt="Vendedor 24h — no seu WhatsApp">
+  <p>Atende e vende no seu WhatsApp 24h.<br>Pagamento único de R$50 · sem mensalidade · 7 dias de garantia.<br><a href="#comprar">Garantir agora »</a></p>
 </footer>
 
-<!-- MASCOTE FLUTUANTE -->
-<button class="zfloat" id="zfloat" type="button" aria-label="Ir para a oferta do Zaven">
-  <span class="bubble" id="zbubble">Psiu! Bora vender 24h? <small>toca aqui 👇</small></span>
-  <span class="avwrap"><span class="pulse" aria-hidden="true"></span><img class="av" src="img/zaven-mascote.png" alt="Mascote do Zaven"></span>
-</button>
-
 <!-- STICKY CTA (mobile) -->
-<div class="sticky"><div class="wrap"><a class="btn" href="#comprar">QUERO MEU ZAVEN — R$50 »</a></div></div>
+<div class="sticky"><div class="wrap"><a class="btn" href="#comprar">QUERO MEU VENDEDOR — R$50 »</a></div></div>
 
 <script>
 (function(){
@@ -492,25 +446,6 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
     });});
     update();
   });
-})();
-</script>
-
-<script>
-/* mascote flutuante Zaven */
-(function(){
-  var zf=document.getElementById('zfloat'),sticky=document.querySelector('.sticky');
-  if(!zf)return;
-  zf.addEventListener('click',function(){
-    var t=document.getElementById('comprar');
-    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
-  });
-  if(sticky&&'MutationObserver' in window){
-    new MutationObserver(function(){zf.classList.toggle('up',sticky.classList.contains('show'));})
-      .observe(sticky,{attributes:true,attributeFilter:['class']});
-  }
-  function say(ms){zf.classList.add('say');clearTimeout(zf._t);zf._t=setTimeout(function(){zf.classList.remove('say');},ms||6000);}
-  setTimeout(function(){say(7000);},3200);
-  setInterval(function(){say(6000);},22000);
 })();
 </script>
 
