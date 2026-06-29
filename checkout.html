@@ -36,14 +36,6 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--
 .wa-acts svg{display:block}
 .timer{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--mut);font-size:13px;font-weight:500;margin:16px 0 18px}
 .timer b{font-variant-numeric:tabular-nums;color:var(--green-d);font-weight:700}
-/* Aviso estilo mensagem recebida do WhatsApp */
-.wa-msg{display:flex;align-items:flex-start;gap:8px;margin:15px 2px 18px;animation:waPop .45s cubic-bezier(.2,.8,.2,1) both}
-@keyframes waPop{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:none}}
-.wa-msg-ico{width:30px;height:30px;flex:none;display:block;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.18))}
-.wa-msg-bubble{position:relative;background:#fff;border-radius:4px 13px 13px 13px;padding:9px 12px 7px;max-width:82%;box-shadow:0 1px 1.5px rgba(11,20,26,.16);font-size:13.5px;line-height:1.5;color:var(--ink2)}
-.wa-msg-bubble b{color:var(--green-dd);font-weight:700}
-.wa-msg-meta{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:2px;font-size:10.5px;color:var(--mut)}
-.wa-msg-meta svg{display:block}
 /* Seletor de pagamento — 2 cards lado a lado (Pix | Cartão) */
 .pm-tabs{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:4px 0 14px}
 .pm{position:relative;border:1.8px solid var(--line2);border-radius:14px;padding:15px 10px 12px;background:#fff;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color .15s,background .15s,box-shadow .15s}
