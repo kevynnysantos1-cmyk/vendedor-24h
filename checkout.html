@@ -155,6 +155,8 @@ fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1055527824036523&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
+<!-- SDK Mercado Pago (Checkout Transparente) -->
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
 
@@ -250,63 +252,22 @@ fbq('track','PageView');
     </label>
   </div>
 
-  <!-- PAGAMENTO -->
-  <div class="card">
-    <h2 class="step"><span class="n" aria-hidden="true">3</span> Pagamento</h2>
-
-    <div class="pm-tabs" role="radiogroup" aria-label="Forma de pagamento" id="pm-group">
-      <button type="button" class="pm" role="radio" aria-checked="true" id="pm-pix" data-m="pix">
-        <span class="badge">5% OFF</span>
-        <span class="ic" aria-hidden="true">⚡</span> Pix
-        <small>liberação automática</small>
-      </button>
-      <button type="button" class="pm" role="radio" aria-checked="false" id="pm-card" data-m="card" tabindex="-1">
-        <span class="ic" aria-hidden="true">💳</span> Cartão
-        <small>parcele sua compra</small>
-      </button>
-    </div>
-
-    <div id="pane-pix">
-      <div class="pix-box"><span class="pi" aria-hidden="true">⚡</span><div>Pague pelo <b>Pix</b> e seu acesso libera <b>automaticamente</b> assim que o pagamento confirma (costuma levar segundos). Ainda ganha <b>5% de desconto</b> à vista.</div></div>
-    </div>
-
-    <div id="pane-card" style="display:none">
-      <label for="cnum">Número do cartão</label>
-      <input class="fld" id="cnum" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000">
-      <label for="cname">Nome impresso no cartão</label>
-      <input class="fld" id="cname" autocomplete="cc-name" placeholder="Como está no cartão">
-      <div class="row2">
-        <div>
-          <label for="cexp">Validade</label>
-          <input class="fld" id="cexp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA">
-        </div>
-        <div>
-          <label for="ccvv">CVV</label>
-          <input class="fld" id="ccvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123">
-        </div>
-      </div>
-      <label for="parc">Parcelas</label>
-      <select class="fld" id="parc"></select>
-      <div class="card-note" id="card-loss">No Pix você economiza R$2,50 e o acesso libera na hora.</div>
-    </div>
-  </div>
-
-  <!-- RESUMO + CTA -->
+  <!-- RESUMO -->
   <div class="card">
     <div class="anchor">Um atendente custaria <b>~R$2.000/mês</b>. Aqui é <b>R$50</b>, uma vez só.</div>
     <div class="totals" aria-live="polite">
       <div class="tr">Vendedor 24h <b>R$50,00</b></div>
       <div id="bump-lines"></div>
-      <div class="tr disc" id="disc-line">Desconto no Pix <b id="disc-val">– R$2,50</b></div>
-      <div class="tr grand">Total <b id="total">R$47,50</b></div>
-      <div class="parc" id="parc-info"></div>
+      <div class="tr grand">Total <b id="total">R$50,00</b></div>
     </div>
+  </div>
 
-    <button class="cta" id="pay">
-      Pagar com segurança
-      <span class="s" id="cta-sub">No Pix · acesso imediato</span>
-    </button>
-
+  <!-- PAGAMENTO (Checkout Transparente Mercado Pago) -->
+  <div class="card">
+    <h2 class="step"><span class="n" aria-hidden="true">3</span> Pagamento</h2>
+    <p class="muted">Pague com <b>Pix</b> ou <b>cartão</b> sem sair desta página.</p>
+    <div id="brick"></div>
+    <div id="brick-load" class="muted" style="text-align:center;margin:10px 0 0">Carregando formas de pagamento…</div>
     <div class="under">🔒 Pagamento seguro · 🛡️ dados protegidos · 7 dias de garantia</div>
     <div class="logos">
       <span>⚡ Pix</span><span>VISA</span><span>MASTERCARD</span><span>ELO</span><span>HIPERCARD</span><span>AMEX</span>
@@ -355,9 +316,8 @@ fbq('track','PageView');
 
 <script>
 (function(){
-  var BASE=50, PIX_OFF=0.05, MIN_PARC=5;
+  var BASE=50;
   var bumps=[].slice.call(document.querySelectorAll('.bump'));
-  var method='pix';
   var BRL=function(v){return 'R$'+v.toFixed(2).replace('.',',');};
   var $=function(id){return document.getElementById(id);};
 
@@ -372,17 +332,11 @@ fbq('track','PageView');
     tEl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
   },500);
 
-  // ---------- pricing ----------
-  var parcSel=$('parc'), chosenParc=1;
-  parcSel.addEventListener('change',function(){chosenParc=parseInt(parcSel.value,10)||1;recompute();});
-
+  // ---------- preços ----------
   function bumpsTotal(){return bumps.reduce(function(a,b){return a+(b.querySelector('input').checked?parseFloat(b.dataset.price):0);},0);}
-
+  function total(){return BASE+bumpsTotal();}
+  function selecionados(){var sel=[];bumps.forEach(function(b){var i=b.querySelector('input');if(i&&i.checked)sel.push(i.id);});return sel;}
   function recompute(){
-    var subtotal=BASE+bumpsTotal();
-    var disc = method==='pix' ? BASE*PIX_OFF : 0;
-    var total=subtotal-disc;
-
     var bl=$('bump-lines'); bl.innerHTML='';
     bumps.forEach(function(b){
       if(b.querySelector('input').checked){
@@ -392,62 +346,21 @@ fbq('track','PageView');
         div.appendChild(nm); div.appendChild(pr); bl.appendChild(div);
       }
     });
-
-    var dl2=$('disc-line');
-    if(method==='pix'){dl2.style.display='flex';$('disc-val').textContent='– '+BRL(disc);}
-    else{dl2.style.display='none';}
-
-    $('total').textContent=BRL(total);
-    $('sticky-total').textContent=BRL(total);
-
-    var pinfo=$('parc-info');
-    if(method==='card'){
-      var max=Math.max(1,Math.min(12,Math.floor(total/MIN_PARC)));
-      parcSel.innerHTML='';
-      for(var n=1;n<=max;n++){
-        var v=total/n;
-        var o=document.createElement('option');
-        o.value=n; o.textContent=n+'x de '+BRL(v)+(n===1?' à vista':' sem juros');
-        parcSel.appendChild(o);
-      }
-      var keep=Math.min(chosenParc,max); parcSel.value=String(keep); chosenParc=keep;
-      pinfo.textContent='em até '+max+'x sem juros';
-      $('card-loss').textContent='No Pix você economiza '+BRL(BASE*PIX_OFF)+' e o acesso libera na hora.';
-    } else {
-      pinfo.textContent='no Pix · liberação automática';
-    }
-
-    $('cta-sub').textContent = method==='pix'
-      ? 'No Pix · acesso imediato'
-      : 'No cartão · acesso imediato · 7 dias de garantia';
-    return total;
+    var t=total();
+    $('total').textContent=BRL(t);
+    var st=$('sticky-total'); if(st)st.textContent=BRL(t);
+    return t;
   }
-
+  var brickTimer=null;
+  function agendarBrick(){if(brickTimer)clearTimeout(brickTimer);brickTimer=setTimeout(renderBrick,400);}
   bumps.forEach(function(b){
     var inp=b.querySelector('input');
-    inp.addEventListener('change',function(){b.classList.toggle('on',inp.checked);recompute();});
-  });
-
-  // ---------- pagamento (radiogroup acessível) ----------
-  var pmPix=$('pm-pix'), pmCard=$('pm-card');
-  function setMethod(m,focus){
-    method=m; var pix=m==='pix';
-    pmPix.setAttribute('aria-checked',pix?'true':'false'); pmPix.tabIndex=pix?0:-1;
-    pmCard.setAttribute('aria-checked',pix?'false':'true'); pmCard.tabIndex=pix?-1:0;
-    $('pane-pix').style.display=pix?'block':'none';
-    $('pane-card').style.display=pix?'none':'block';
-    if(focus)(pix?pmPix:pmCard).focus();
-    recompute();
-  }
-  pmPix.addEventListener('click',function(){setMethod('pix');});
-  pmCard.addEventListener('click',function(){setMethod('card');});
-  $('pm-group').addEventListener('keydown',function(e){
-    if(e.key==='ArrowLeft'||e.key==='ArrowRight'||e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();setMethod(method==='pix'?'card':'pix',true);}
+    inp.addEventListener('change',function(){b.classList.toggle('on',inp.checked);recompute();agendarBrick();});
   });
 
   // ---------- máscaras (cursor preservado) ----------
   function mask(id,fn){
-    var e=$(id);
+    var e=$(id); if(!e)return;
     e.addEventListener('input',function(){
       var p=e.selectionStart;
       var before=e.value.slice(0,p).replace(/\D/g,'').length;
@@ -462,23 +375,13 @@ fbq('track','PageView');
     if(v.length<=6)return '('+v.slice(0,2)+') '+v.slice(2);
     if(v.length<=10)return '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
     return '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);});
-  mask('cnum',function(v){return v.replace(/\D/g,'').slice(0,16).replace(/(\d{4})(?=\d)/g,'$1 ').trim();});
-  mask('cexp',function(v){v=v.replace(/\D/g,'').slice(0,4);return v.length>2?v.replace(/(\d{2})(\d{1,2})/,'$1/$2'):v;});
-  mask('ccvv',function(v){return v.replace(/\D/g,'').slice(0,4);});
 
-  // ---------- validação ----------
+  // ---------- validação leve ----------
   function need(id){var e=$(id);var ok=e.value.trim().length>0;e.classList.toggle('err',!ok);return ok;}
   function validEmail(){var e=$('email');var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e.value.trim());e.classList.toggle('err',!ok);return ok;}
-  ['nome','tel','cpf'].forEach(function(id){$(id).addEventListener('blur',function(){if($(id).value)need(id);});});
-  $('email').addEventListener('blur',function(){if($('email').value)validEmail();});
-  function validate(){
-    var ok=true;
-    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
-    if(!validEmail())ok=false;
-    if(method==='card'){['cnum','cname','cexp','ccvv'].forEach(function(id){if(!need(id))ok=false;});}
-    if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
-    return ok;
-  }
+  ['nome','tel','cpf'].forEach(function(id){var el=$(id);if(el)el.addEventListener('blur',function(){if(el.value)need(id);});});
+  var emailEl=$('email');
+  if(emailEl)emailEl.addEventListener('blur',function(){if(emailEl.value){validEmail();renderBrick();}});
 
   // ---------- overlay acessível ----------
   var ov=$('ov'), sheet=$('sheet'), lastFocus=null;
@@ -491,17 +394,9 @@ fbq('track','PageView');
   }
   function closeSheet(){ov.classList.remove('show');document.body.style.overflow='';if(lastFocus)try{lastFocus.focus();}catch(e){}}
   ov.addEventListener('click',function(e){if(e.target===ov)closeSheet();});
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&ov.classList.contains('show'))closeSheet();
-    if(e.key==='Tab'&&ov.classList.contains('show')){
-      var f=sheet.querySelectorAll('button,input,a,[tabindex]');
-      if(!f.length)return; var first=f[0],last=f[f.length-1];
-      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
-    }
-  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('show'))closeSheet();});
   function copyPix(){
-    var i=$('pixcode'), cp=$('cp');
+    var i=$('pixcode'), cp=$('cp'); if(!i||!cp)return;
     function ok(){cp.textContent='Copiado ✓';}
     function fail(){cp.textContent='Selecione e copie';}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(i.value).then(ok,function(){tryExec();});}
@@ -509,70 +404,73 @@ fbq('track','PageView');
     function tryExec(){i.focus();i.select();try{i.setSelectionRange(0,99999);}catch(e){}var d=false;try{d=document.execCommand('copy');}catch(e){}d?ok():fail();}
   }
 
-  var PIX_CODE='00020126360014BR.GOV.BCB.PIX0114vendedor24hpag5204000053039865802BR5913VENDEDOR24H6009SAO PAULO62070503***6304AB12';
   var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
 
-  function selecionados(){
-    var sel=[]; bumps.forEach(function(b){var i=b.querySelector('input'); if(i&&i.checked)sel.push(i.id);}); return sel;
+  // ---------- Mercado Pago — Checkout Transparente (Payment Brick) ----------
+  var mp=null, builder=null, brickCtrl=null, pollIv=null;
+  function showApproved(){
+    clearInterval(pollIv);
+    if(window.fbq)fbq('track','Purchase',{value:total(),currency:'BRL'});
+    openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
   }
-  // Só os dados pessoais são exigidos aqui — o pagamento (Pix/cartão) é finalizado no Mercado Pago.
-  function validarDados(){
-    var ok=true;
-    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
-    if(!validEmail())ok=false;
-    if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
-    return ok;
+  function showPendente(){
+    openSheet('<div class="ok" aria-hidden="true">⏳</div><h3 id="sheet-h">Pagamento em análise</h3><p class="sub">Assim que for aprovado, liberamos seu acesso por e-mail.</p><button class="close" id="cl" type="button">fechar</button>');
   }
-  // Protótipo (fallback enquanto o backend do Mercado Pago não estiver publicado — ex.: GitHub Pages)
-  function protoPay(total){
-    var nome=(($('nome').value.trim().split(' ')[0])||'').replace(/[<>]/g,'');
-    if(method==='pix'){
-      openSheet(
-        '<div class="ok" aria-hidden="true">⚡</div>'+
-        '<h3 id="sheet-h">Quase lá, '+nome+'! Pague o Pix pra liberar 🔓</h3>'+
-        '<p class="sub">Abra o app do seu banco, escaneie o QR ou use o Pix copia e cola. O acesso é liberado automaticamente após a confirmação.</p>'+
-        '<img class="qr" src="img/qr-pix.png" alt="QR Code para pagamento Pix">'+
-        '<div class="bignum">'+BRL(total)+'</div>'+
-        '<div class="copy"><input id="pixcode" readonly aria-label="Código Pix copia e cola" value="'+PIX_CODE+'"><button id="cp" type="button">Copiar</button></div>'+
-        UPSELL+
-        '<div class="devnote">⚙️ Protótipo — publique o backend do Mercado Pago (veja LEIA-MERCADOPAGO.md) para gerar o Pix real e liberar o produto automaticamente.</div>'+
-        '<button class="close" id="cl" type="button">fechar</button>'
-      );
-    } else {
-      var ps=$('parc'); var ptxt=(ps&&ps.options[ps.selectedIndex])?ps.options[ps.selectedIndex].textContent:'à vista';
-      openSheet(
-        '<div class="ok" aria-hidden="true">✅</div>'+
-        '<h3 id="sheet-h">Tudo certo, '+nome+'! 🎉</h3>'+
-        '<p class="sub">Assim que o pagamento for aprovado, enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+
-        '<div class="bignum" style="margin-top:10px">'+ptxt+'</div>'+
-        UPSELL+
-        '<div class="devnote">⚙️ Protótipo — publique o backend do Mercado Pago (veja LEIA-MERCADOPAGO.md) para processar o pagamento de verdade.</div>'+
-        '<button class="close" id="cl" type="button">fechar</button>'
-      );
-    }
+  function showRejeitado(msg){
+    openSheet('<div class="ok" aria-hidden="true">⚠️</div><h3 id="sheet-h">Pagamento não aprovado</h3><p class="sub">'+(msg||'Não foi dessa vez. Confira os dados ou tente outro método.')+'</p><button class="close" id="cl" type="button">tentar de novo</button>');
   }
-  function doPay(){
-    if(!validarDados())return;
-    var total=recompute();
-    var charge=BASE+bumpsTotal(); // valor cobrado no Mercado Pago (preços de lista)
-    try{sessionStorage.setItem('v24_total',String(charge));}catch(e){}
-    if(window.fbq){fbq('track','AddPaymentInfo',{value:charge,currency:'BRL'});}
-    var pay=$('pay');
-    if(pay){pay.disabled=true;pay.style.opacity=.7;}
-    // Mercado Pago real (backend). Se não existir (ex.: GitHub Pages), cai no protótipo.
-    fetch('/api/criar-preferencia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bumps:selecionados()})})
-      .then(function(r){if(!r.ok)throw 0;return r.json();})
-      .then(function(d){if(d&&d.init_point){location.href=d.init_point;}else{throw 0;}})
-      .catch(function(){if(pay){pay.disabled=false;pay.style.opacity=1;}protoPay(total);});
+  function showPix(res){
+    var img=res.pix&&res.pix.qr_code_base64?'<img class="qr" alt="QR Code Pix" src="data:image/png;base64,'+res.pix.qr_code_base64+'">':'';
+    var code=(res.pix&&res.pix.qr_code)||'';
+    openSheet('<div class="ok" aria-hidden="true">⚡</div><h3 id="sheet-h">Quase lá! Pague o Pix 🔓</h3><p class="sub">Escaneie o QR no app do seu banco ou use o Pix copia e cola. A confirmação é automática.</p>'+img+'<div class="bignum">'+BRL(res.amount||total())+'</div><div class="copy"><input id="pixcode" readonly aria-label="Pix copia e cola" value="'+code+'"><button id="cp" type="button">Copiar</button></div><button class="close" id="cl" type="button">fechar</button>');
+    if(res.id){clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id);},5000);}
   }
-  $('pay').addEventListener('click',doPay);
-  $('sticky-pay').addEventListener('click',doPay);
+  function checarStatus(id){
+    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved();}).catch(function(){});
+  }
+  function onSubmit(arg){
+    var formData=arg&&arg.formData;
+    if(window.fbq)fbq('track','AddPaymentInfo',{value:total(),currency:'BRL'});
+    return fetch('/api/processar-pagamento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formData:formData,bumps:selecionados()})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(res.error){showRejeitado(res.error);return;}
+        if(res.pix){showPix(res);return;}
+        if(res.status==='approved'){showApproved();return;}
+        if(res.status==='in_process'||res.status==='pending'){showPendente();return;}
+        showRejeitado();
+      })
+      .catch(function(e){console.error('pagamento',e);showRejeitado('Falha de conexão. Tente de novo.');});
+  }
+  function renderBrick(){
+    if(!builder)return;
+    var email=(emailEl&&emailEl.value.trim())||'';
+    try{if(brickCtrl&&brickCtrl.unmount)brickCtrl.unmount();}catch(e){}
+    builder.create('payment','brick',{
+      initialization:{amount:total(),payer:{email:email}},
+      customization:{paymentMethods:{creditCard:'all',debitCard:'all',bankTransfer:'all',maxInstallments:12}},
+      callbacks:{
+        onReady:function(){var l=$('brick-load');if(l)l.style.display='none';},
+        onError:function(err){console.error('brick',err);},
+        onSubmit:function(a){return onSubmit(a);}
+      }
+    }).then(function(c){brickCtrl=c;}).catch(function(e){console.error('brick create',e);});
+  }
+  function loadBrick(){
+    fetch('/api/config').then(function(r){return r.json();}).then(function(cfg){
+      var l=$('brick-load');
+      if(!cfg||!cfg.publicKey){if(l)l.textContent='Pagamento indisponível: configure MP_PUBLIC_KEY na Vercel.';return;}
+      if(typeof MercadoPago==='undefined'){if(l)l.textContent='Não foi possível carregar o pagamento. Recarregue a página.';return;}
+      mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});
+      builder=mp.bricks();
+      renderBrick();
+    }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Erro ao iniciar o pagamento.';});
+  }
 
-  // ---------- barra fixa: aparece quando o botão principal sai da tela ----------
+  // ---------- barra fixa: rola até o pagamento ----------
   var paybar=$('paybar');
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(en){paybar.classList.toggle('show',!en[0].isIntersecting);},{rootMargin:'0px 0px -8% 0px'}).observe($('pay'));
-  } else { paybar.classList.add('show'); }
+  var sp=$('sticky-pay'); if(sp)sp.addEventListener('click',function(){var b=$('brick');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});});
+  window.addEventListener('scroll',function(){if(paybar)paybar.classList.toggle('show',window.scrollY>500);},{passive:true});
 
   // ---------- prova social ----------
   var people=[['Joana','Recife'],['Rafael','Curitiba'],['Patrícia','Salvador'],['Diego','Belo Horizonte'],['Camila','Fortaleza'],['Bruno','Porto Alegre'],['Larissa','Goiânia']];
@@ -587,22 +485,8 @@ fbq('track','PageView');
   setTimeout(showPop,4000); setInterval(showPop,13000);
 
   recompute();
-  // Retorno do Mercado Pago (back_urls) ou abertura normal do checkout
-  (function(){
-    var qs=new URLSearchParams(location.search);
-    var st=qs.get('status')||qs.get('collection_status');
-    if(st==='sucesso'||st==='approved'){
-      var v=parseFloat(sessionStorage.getItem('v24_total')||'')||undefined;
-      if(window.fbq)fbq('track','Purchase',{value:v,currency:'BRL'});
-      openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
-    } else if(st==='falha'||st==='rejected'){
-      openSheet('<div class="ok" aria-hidden="true">⚠️</div><h3 id="sheet-h">Pagamento não concluído</h3><p class="sub">Não foi dessa vez — você pode tentar de novo, é rápido.</p><button class="close" id="cl" type="button">fechar</button>');
-    } else if(st==='pendente'||st==='pending'||st==='in_process'){
-      openSheet('<div class="ok" aria-hidden="true">⏳</div><h3 id="sheet-h">Pagamento pendente</h3><p class="sub">Estamos processando. Assim que aprovar, liberamos seu acesso por e-mail.</p><button class="close" id="cl" type="button">fechar</button>');
-    } else {
-      if(window.fbq)fbq('track','InitiateCheckout',{value:recompute(),currency:'BRL'});
-    }
-  })();
+  if(window.fbq)fbq('track','InitiateCheckout',{value:total(),currency:'BRL'});
+  loadBrick();
 })();
 </script>
 </body>
