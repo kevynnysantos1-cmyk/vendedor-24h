@@ -11,24 +11,7 @@ const PRECOS = {
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
-    // Diagnóstico via navegador (GET): testa a chave direto no Mercado Pago.
-    const t = process.env.MP_ACCESS_TOKEN;
-    if (!t) { res.status(200).json({ ok: true, token_configurado: false }); return; }
-    try {
-      const teste = await fetch('https://api.mercadopago.com/checkout/preferences', {
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: [{ title: 'Teste', quantity: 1, currency_id: 'BRL', unit_price: 1 }] }),
-      });
-      const data = await teste.json();
-      if (teste.ok) {
-        res.status(200).json({ ok: true, token_configurado: true, mercado_pago: 'OK', cobranca_funciona: Boolean(data.init_point) });
-      } else {
-        res.status(200).json({ ok: true, token_configurado: true, mercado_pago: 'ERRO', status: teste.status, detalhe: data });
-      }
-    } catch (e) {
-      res.status(200).json({ ok: true, token_configurado: true, erro: String((e && e.message) || e) });
-    }
+    res.status(405).json({ error: 'Método não permitido' });
     return;
   }
   const token = process.env.MP_ACCESS_TOKEN;
