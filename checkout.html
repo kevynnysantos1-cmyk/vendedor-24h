@@ -165,10 +165,10 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 <!-- Meta Pixel - Infoproduto -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1055527824036523');
+fbq('init','1395668239054238');
 fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1055527824036523&ev=PageView&noscript=1"/></noscript>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1395668239054238&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
 <!-- SDK Mercado Pago (Checkout Transparente) -->
 <script src="https://sdk.mercadopago.com/js/v2"></script>
@@ -428,7 +428,7 @@ fbq('track','PageView');
   var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
 
   // ---------- Meta Pixel — Advanced Matching + Purchase robusto (sem CAPI) ----------
-  var PIXEL_ID='1055527824036523';
+  var PIXEL_ID='1395668239054238';
   // Advanced Matching: o Pixel hasheia (SHA-256) no navegador os dados passados ao init.
   function amData(){
     var d={};
@@ -468,6 +468,8 @@ fbq('track','PageView');
   function getCookie(n){var m=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)');return m?m.pop():null;}
   function trkUtms(){var u={};try{var qs=new URLSearchParams(location.search);['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid','src','sck'].forEach(function(k){var v=qs.get(k);if(v)u[k]=v;});}catch(e){}return u;}
   function trkMeta(){return {fbc:getCookie('_fbc'),fbp:getCookie('_fbp'),user_agent:navigator.userAgent,event_source_url:location.href};}
+  // eventID compartilhado Pixel<->CAPI pro AddPaymentInfo (o Meta deduplica navegador vs servidor)
+  function genId(){ return 'api_'+Date.now()+'_'+Math.random().toString(36).slice(2,10); }
 
   // ---------- Mercado Pago — Checkout Transparente (Payment Brick) ----------
   var mp=null, builder=null, brickCtrl=null, pollIv=null;
@@ -494,8 +496,9 @@ fbq('track','PageView');
   }
   function onSubmit(arg){
     var formData=arg&&arg.formData;
-    enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams());
-    return fetch('/api/processar-pagamento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formData:formData,bumps:selecionados(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,email:$('email').value.trim(),meta:trkMeta(),utms:trkUtms()})})
+    var apiId=genId();
+    enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams(),{eventID:apiId});
+    return fetch('/api/processar-pagamento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formData:formData,bumps:selecionados(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,email:$('email').value.trim(),meta:trkMeta(),utms:trkUtms(),apiEventId:apiId})})
       .then(function(r){return r.json();})
       .then(function(res){
         if(res.error){showRejeitado(res.error);return;}
@@ -533,8 +536,9 @@ fbq('track','PageView');
     btn.addEventListener('click',function(){
       if(!validarDados())return;
       btn.disabled=true; btn.style.opacity=.7; btn.firstChild.textContent='Gerando Pix…';
-      enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams());
-      fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,bumps:selecionados(),meta:trkMeta(),utms:trkUtms()})})
+      var apiId=genId();
+      enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams(),{eventID:apiId});
+      fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,bumps:selecionados(),meta:trkMeta(),utms:trkUtms(),apiEventId:apiId})})
         .then(function(r){return r.json();})
         .then(function(res){
           btn.disabled=false; btn.style.opacity=1; btn.firstChild.textContent='Pagar com Pix ⚡';

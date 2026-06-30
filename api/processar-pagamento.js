@@ -3,7 +3,8 @@
 // nunca passa pelo servidor) e cria o pagamento em /v1/payments.
 // A chave secreta fica em MP_ACCESS_TOKEN (Environment Variables da Vercel).
 
-const { calcTotal, buildMetadata } = require('../lib/order-meta.js');
+const { calcTotal, buildMetadata, productsFor, clientIp } = require('../lib/order-meta.js');
+const { trackAddPaymentInfoCapi } = require('../lib/meta-capi.js');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método não permitido' }); return; }
@@ -16,6 +17,16 @@ module.exports = async (req, res) => {
 
     // O valor é SEMPRE recalculado no servidor (não confia no front).
     const fdCpf = (fd.payer && fd.payer.identification && fd.payer.identification.number) || body.cpf;
+
+    // AddPaymentInfo via CAPI (server-side, dedup com o Pixel via apiEventId). Roda em paralelo ao MP.
+    const meta = body.meta || {}, utms = body.utms || {};
+    const capiP = body.apiEventId ? trackAddPaymentInfoCapi({
+      eventId: body.apiEventId, eventSourceUrl: meta.event_source_url,
+      customer: { fullName: body.nome, email: (fd.payer && fd.payer.email) || body.email, phone: body.phone, cpf: fdCpf },
+      total: amount, currency: 'BRL', products: productsFor(body.bumps),
+      fbc: meta.fbc, fbclid: utms.fbclid, fbp: meta.fbp, ip: clientIp(req), userAgent: meta.user_agent
+    }).catch(function () { return null; }) : Promise.resolve();
+
     const payment = {
       transaction_amount: amount,
       description: 'Vendedor 24h',
@@ -37,6 +48,7 @@ module.exports = async (req, res) => {
       body: JSON.stringify(payment),
     });
     const data = await mp.json();
+    await capiP;
     if (!mp.ok) {
       res.status(mp.status).json({ error: (data && data.message) || 'Erro Mercado Pago', detalhe: data });
       return;

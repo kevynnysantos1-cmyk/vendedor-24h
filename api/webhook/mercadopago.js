@@ -48,7 +48,8 @@ function reconstruct(p) {
       ip: meta.client_ip || null
     },
     userAgent: meta.user_agent || null,
-    fbc: meta.fbc || null, fbp: meta.fbp || null,
+    fbc: meta.fbc || null, fbp: meta.fbp || null, fbclid: meta.fbclid || null,
+    eventSourceUrl: meta.event_source_url || null,
     tracking: {
       utm_source: meta.utm_source || null, utm_medium: meta.utm_medium || null,
       utm_campaign: meta.utm_campaign || null, utm_content: meta.utm_content || null,
@@ -83,7 +84,8 @@ module.exports = async (req, res) => {
       trackPurchaseCapi({
         orderId: paymentId, customer: { fullName: order.customer.name, email: order.customer.email, phone: order.customer.phone, cpf: order.customer.cpf },
         total: order.amount, currency: 'BRL', products: order.products.map(x => ({ id: x.sku || x.id })),
-        fbc: order.fbc, fbp: order.fbp, ip: order.customer.ip, userAgent: order.userAgent
+        fbc: order.fbc, fbclid: order.fbclid, fbp: order.fbp, ip: order.customer.ip, userAgent: order.userAgent,
+        eventSourceUrl: order.eventSourceUrl
       }).catch(e => console.error('[Webhook CAPI]', e.message));
       // Utmify — paid
       try {

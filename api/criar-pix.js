@@ -1,6 +1,7 @@
 // Cria um pagamento Pix transparente (QR direto na página) usando SÓ o MP_ACCESS_TOKEN.
 // Grava no metadata os dados de tracking (fbc/fbp/UTMs/cliente) pro webhook reconstruir.
-const { pixTotal, buildMetadata } = require('../lib/order-meta.js');
+const { pixTotal, buildMetadata, productsFor, clientIp } = require('../lib/order-meta.js');
+const { trackAddPaymentInfoCapi } = require('../lib/meta-capi.js');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método não permitido' }); return; }
@@ -11,6 +12,15 @@ module.exports = async (req, res) => {
     const amount = pixTotal(body.bumps); // Pix com 5% de desconto
     const nome = (body.nome || '').trim();
     const cpf = (body.cpf || '').replace(/\D/g, '');
+
+    // AddPaymentInfo via CAPI (server-side, dedup com o Pixel via apiEventId). Roda em paralelo ao MP.
+    const meta = body.meta || {}, utms = body.utms || {};
+    const capiP = body.apiEventId ? trackAddPaymentInfoCapi({
+      eventId: body.apiEventId, eventSourceUrl: meta.event_source_url,
+      customer: { fullName: nome, email: body.email, phone: body.phone, cpf: cpf },
+      total: amount, currency: 'BRL', products: productsFor(body.bumps),
+      fbc: meta.fbc, fbclid: utms.fbclid, fbp: meta.fbp, ip: clientIp(req), userAgent: meta.user_agent
+    }).catch(function () { return null; }) : Promise.resolve();
 
     const payer = {
       email: body.email,
@@ -37,6 +47,7 @@ module.exports = async (req, res) => {
       body: JSON.stringify(payment),
     });
     const data = await mp.json();
+    await capiP;
     if (!mp.ok) { res.status(mp.status).json({ error: (data && data.message) || 'Erro Mercado Pago', detalhe: data }); return; }
     const poi = data.point_of_interaction && data.point_of_interaction.transaction_data;
     res.status(200).json({
