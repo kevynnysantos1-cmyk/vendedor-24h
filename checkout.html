@@ -105,6 +105,9 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 .pix-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:13px;font-size:13px;color:var(--ink2);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
 .pix-box .pi{font-size:17px}
 .pix-box b{color:var(--green-dd);font-weight:700}
+.paysp{font-size:12.5px;color:var(--ink2);background:var(--tintp);border-radius:10px;padding:9px 12px;margin:-6px 0 14px;line-height:1.45}
+.paysp .st{color:#f5b400;font-size:11px;letter-spacing:1px}
+.paysp b{color:var(--mut);font-weight:600}
 .card-note{font-size:12.5px;color:var(--green-dd);background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;font-weight:500}
 .anchor{font-size:12.5px;color:var(--mut);text-align:center;padding:2px 0 14px;line-height:1.5}
 .anchor b{color:var(--ink);font-weight:700}
@@ -134,13 +137,6 @@ select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:im
 .mini b{font-weight:700}
 .foot{text-align:center;font-size:11.5px;color:var(--mut);line-height:1.8;margin-top:14px}
 .foot a{color:var(--mut)}
-.pop{position:fixed;left:14px;bottom:104px;max-width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(11,20,26,.15);padding:12px 13px;display:flex;gap:11px;align-items:center;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s;z-index:40}
-.pop.show{transform:translateY(0);opacity:1;pointer-events:auto}
-.pop .pic{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
-.pop .pt{font-size:12.5px;line-height:1.35}
-.pop .pt b{font-weight:700}
-.pop .pt small{color:#9fadb3;font-size:11px}
-.pop .x{position:absolute;top:5px;right:7px;width:26px;height:26px;border:none;background:none;color:#c2cacd;font-size:17px;cursor:pointer;line-height:1}
 .ov{position:fixed;inset:0;background:rgba(11,20,26,.55);display:none;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(2px)}
 .ov.show{display:flex}
 .sheet{background:#fff;width:100%;max-width:460px;border-radius:20px 20px 0 0;padding:24px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .35s cubic-bezier(.2,.8,.2,1)}
@@ -193,6 +189,9 @@ fbq('track','PageView');
 
   <h1 class="sr">Vendedor 24h — finalizar compra</h1>
 
+  <!-- CONTAGEM DA OFERTA (some sozinha quando o prazo passa) -->
+  <div class="timer" id="promo-timer" hidden>⏳ Preço de lançamento (R$50) termina em&nbsp;<b id="promo-count">—</b></div>
+
   <!-- RESUMO -->
   <div class="card prod-card">
     <div class="prod-bubble">
@@ -214,6 +213,7 @@ fbq('track','PageView');
   <!-- DADOS -->
   <div class="card">
     <h2 class="step"><span class="n" aria-hidden="true">1</span> Seus dados</h2>
+    <p class="muted">Só nome e e-mail são obrigatórios — leva 20 segundos.</p>
     <form id="form" novalidate>
       <label for="nome">Nome completo</label>
       <input class="fld" id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome">
@@ -221,11 +221,11 @@ fbq('track','PageView');
       <input class="fld" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="voce@email.com">
       <div class="row2">
         <div>
-          <label for="tel">WhatsApp</label>
+          <label for="tel">WhatsApp (opcional)</label>
           <input class="fld" id="tel" name="tel" type="tel" autocomplete="tel" inputmode="numeric" placeholder="(11) 99999-9999">
         </div>
         <div>
-          <label for="cpf">CPF</label>
+          <label for="cpf">CPF (opcional)</label>
           <input class="fld" id="cpf" name="cpf" type="text" inputmode="numeric" placeholder="000.000.000-00">
         </div>
       </div>
@@ -237,14 +237,14 @@ fbq('track','PageView');
     <h2 class="step"><span class="n" aria-hidden="true">2</span> Monte seu time 24h</h2>
     <p class="muted">Adicione ao seu pedido (opcional):</p>
 
-    <label class="bump" data-price="37" data-label="Designer 24h (IA)">
+    <label class="bump" data-price="27" data-label="Designer 24h (IA)">
       <input type="checkbox" id="b1">
       <img class="bimg" src="img/bump-designer.webp?v=1" alt="Designer 24h" loading="lazy" width="52" height="52">
       <span class="bc">
         <span class="bt">Designer 24h <span class="tag">Mais pedido</span></span>
         <span class="bd">Cria artes, posts e logo em segundos.</span>
       </span>
-      <span class="bp"><b>+R$37</b><s>economize R$60</s></span>
+      <span class="bp"><b>+R$27</b><s>economize R$70</s></span>
     </label>
 
     <label class="bump" data-price="27" data-label="Recuperador de Vendas 24h">
@@ -282,6 +282,7 @@ fbq('track','PageView');
   <div class="card">
     <h2 class="step"><span class="n" aria-hidden="true">3</span> Pagamento</h2>
     <p class="muted">Pague com <b>Pix</b> ou <b>cartão</b> sem sair desta página.</p>
+    <p class="paysp"><span class="st" aria-hidden="true">★★★★★</span> “2h da manhã fechando venda sozinho. Surreal.” <b>— Marcos, materiais de construção</b></p>
     <div class="pm-tabs" role="radiogroup" aria-label="Forma de pagamento" id="pm-group">
       <button type="button" class="pm pm-pix" id="pm-pix" role="radio" aria-checked="true">
         <span class="pm-check" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M1 6.5l3 3 7-7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -326,16 +327,10 @@ fbq('track','PageView');
   </div>
 
   <div class="foot">
-    Vendedor 24h · CNPJ 00.000.000/0001-00 · <a href="#">Política de Privacidade</a> · <a href="#">Termos de Uso</a><br>
+    Vendedor 24h · <a href="politica-privacidade.html">Política de Privacidade</a> · <a href="termos-de-uso.html">Termos de Uso</a><br>
     <a href="index.html">‹ voltar para a oferta</a>
   </div>
 
-</div>
-
-<!-- POPUP PROVA SOCIAL -->
-<div class="pop" id="pop" role="status" aria-live="off">
-  <button class="x" id="pop-x" aria-label="Fechar aviso">×</button>
-  <span class="pic" aria-hidden="true">🟢</span><div class="pt" id="pop-txt"></div>
 </div>
 
 <!-- OVERLAY -->
@@ -349,6 +344,22 @@ fbq('track','PageView');
   var bumps=[].slice.call(document.querySelectorAll('.bump'));
   var BRL=function(v){return 'R$'+v.toFixed(2).replace('.',',');};
   var $=function(id){return document.getElementById(id);};
+
+  // ---------- prazo da oferta (fonte única: PROMO_ENDS — ajuste a data quando renovar a promo) ----------
+  var PROMO_ENDS=new Date('2026-07-06T23:59:59-03:00');
+  (function(){
+    var el=$('promo-timer'),c=$('promo-count'); if(!el||!c)return;
+    function p2(n){return (n<10?'0':'')+n;}
+    function tick(){
+      var ms=PROMO_ENDS-new Date();
+      if(ms<=0){el.hidden=true;return;}
+      var d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+      c.textContent=(d>0?d+'d ':'')+p2(h)+'h '+p2(m)+'m '+p2(s)+'s';
+      el.hidden=false;
+      setTimeout(tick,1000);
+    }
+    tick();
+  })();
 
   // ---------- preços ----------
   function bumpsTotal(){return bumps.reduce(function(a,b){return a+(b.querySelector('input').checked?parseFloat(b.dataset.price):0);},0);}
@@ -411,7 +422,7 @@ fbq('track','PageView');
     ov.classList.add('show'); document.body.style.overflow='hidden'; sheet.focus();
     var cl=$('cl'); if(cl)cl.onclick=closeSheet;
     var cp=$('cp'); if(cp)cp.onclick=copyPix;
-    var ub=$('ups-btn'); if(ub)ub.onclick=function(){ub.textContent='Adicionado! ✓';ub.disabled=true;ub.style.opacity=.7;};
+    var ub=$('ups-btn'); if(ub)ub.onclick=buyUpsell;
   }
   function closeSheet(){ov.classList.remove('show');document.body.style.overflow='';if(lastFocus)try{lastFocus.focus();}catch(e){}}
   ov.addEventListener('click',function(e){if(e.target===ov)closeSheet();});
@@ -425,7 +436,25 @@ fbq('track','PageView');
     function tryExec(){i.focus();i.select();try{i.setSelectionRange(0,99999);}catch(e){}var d=false;try{d=document.execCommand('copy');}catch(e){}d?ok():fail();}
   }
 
-  var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
+  var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b> num Pix rápido.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
+  // Compra do upsell: gera um segundo Pix de R$47 (produto up1) reaproveitando os dados do formulário.
+  var UPSELL_PUR={value:47,ids:['up1'],upsell:true};
+  function buyUpsell(){
+    var ub=$('ups-btn'); if(!ub||ub.disabled)return;
+    ub.disabled=true; ub.style.opacity=.7; ub.textContent='Gerando Pix de R$47…';
+    var apiId=genId();
+    enrichPixel();
+    if(window.fbq)fbq('track','AddPaymentInfo',{value:UPSELL_PUR.value,currency:'BRL',content_type:'product',content_ids:UPSELL_PUR.ids,num_items:1},{eventID:apiId});
+    fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({upsell:true,email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,meta:trkMeta(),utms:trkUtms(),apiEventId:apiId})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(res.error){ub.disabled=false;ub.style.opacity=1;ub.textContent='Sim, configurar pra mim (+R$47)';showRejeitado(res.error);return;}
+        if(res.pix){showPix(res,UPSELL_PUR);return;}
+        if(res.status==='approved'){showApproved(res.id,UPSELL_PUR);return;}
+        showPendente();
+      })
+      .catch(function(){ub.disabled=false;ub.style.opacity=1;ub.textContent='Sim, configurar pra mim (+R$47)';showRejeitado('Falha de conexão. Tente de novo.');});
+  }
 
   // ---------- Meta Pixel — Advanced Matching + Purchase robusto (sem CAPI) ----------
   var PIXEL_ID='1395668239054238';
@@ -452,7 +481,8 @@ fbq('track','PageView');
     try{ if(id)localStorage.setItem(key,'1'); }catch(e){}
   }
   // PIX com aba fechada: guarda o pendente e reconfere quando o cliente reabre o checkout.
-  function savePendingPix(id){ try{ localStorage.setItem('v24_pix_pend',JSON.stringify({id:id,value:total(),ids:selBumpIds(),ts:Date.now()})); }catch(e){} }
+  // `pur` = contexto da compra ({value, ids}) — o pedido normal ou o upsell de R$47.
+  function savePendingPix(id,pur){ try{ localStorage.setItem('v24_pix_pend',JSON.stringify({id:id,value:pur.value,ids:pur.ids,ts:Date.now()})); }catch(e){} }
   function clearPendingPix(){ try{ localStorage.removeItem('v24_pix_pend'); }catch(e){} }
   function checkPendingPixOnLoad(){
     var raw; try{ raw=localStorage.getItem('v24_pix_pend'); }catch(e){ return; }
@@ -473,10 +503,14 @@ fbq('track','PageView');
 
   // ---------- Mercado Pago — Checkout Transparente (Payment Brick) ----------
   var mp=null, builder=null, brickCtrl=null, pollIv=null;
-  function showApproved(id){
+  function showApproved(id,pur){
     clearInterval(pollIv);
     clearPendingPix();
-    firePurchaseOnce(id,purchaseParams());
+    firePurchaseOnce(id,pur?{value:pur.value,currency:'BRL',content_type:'product',content_ids:pur.ids,num_items:pur.ids.length}:purchaseParams());
+    if(pur&&pur.upsell){
+      openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Ativação garantida! 🎉</h3><p class="sub">Pagamento confirmado. Nossa equipe entra em contato pelo seu e-mail/WhatsApp pra deixar seu Vendedor 24h configurado e rodando.</p><button class="close" id="cl" type="button">fechar</button>');
+      return;
+    }
     openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
   }
   function showPendente(){
@@ -485,14 +519,15 @@ fbq('track','PageView');
   function showRejeitado(msg){
     openSheet('<div class="ok" aria-hidden="true">⚠️</div><h3 id="sheet-h">Pagamento não aprovado</h3><p class="sub">'+(msg||'Não foi dessa vez. Confira os dados ou tente outro método.')+'</p><button class="close" id="cl" type="button">tentar de novo</button>');
   }
-  function showPix(res){
+  function showPix(res,pur){
+    pur=pur||{value:pixPrice(),ids:selBumpIds()};
     var img=res.pix&&res.pix.qr_code_base64?'<img class="qr" alt="QR Code Pix" src="data:image/png;base64,'+res.pix.qr_code_base64+'">':'';
     var code=(res.pix&&res.pix.qr_code)||'';
     openSheet('<div class="ok" aria-hidden="true">⚡</div><h3 id="sheet-h">Quase lá! Pague o Pix 🔓</h3><p class="sub">Escaneie o QR no app do seu banco ou use o Pix copia e cola. A confirmação é automática.</p>'+img+'<div class="bignum">'+BRL(res.amount||total())+'</div><div class="copy"><input id="pixcode" readonly aria-label="Pix copia e cola" value="'+code+'"><button id="cp" type="button">Copiar</button></div><button class="close" id="cl" type="button">fechar</button>');
-    if(res.id){savePendingPix(res.id);clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id);},5000);}
+    if(res.id){savePendingPix(res.id,pur);clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id,pur);},5000);}
   }
-  function checarStatus(id){
-    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved(id);}).catch(function(){});
+  function checarStatus(id,pur){
+    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved(id,pur);}).catch(function(){});
   }
   function onSubmit(arg){
     var formData=arg&&arg.formData;
@@ -525,7 +560,7 @@ fbq('track','PageView');
   }
   function validarDados(){
     var ok=true;
-    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
+    if(!need('nome'))ok=false;
     if(!validEmail())ok=false;
     if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
     return ok;
@@ -576,18 +611,6 @@ fbq('track','PageView');
       }
     }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Cartão indisponível — use o Pix ⚡';});
   }
-
-  // ---------- prova social ----------
-  var people=[['Joana','Recife'],['Rafael','Curitiba'],['Patrícia','Salvador'],['Diego','Belo Horizonte'],['Camila','Fortaleza'],['Bruno','Porto Alegre'],['Larissa','Goiânia']];
-  var pop=$('pop'), pi=0, hideT, popOff=false;
-  $('pop-x').addEventListener('click',function(){popOff=true;pop.classList.remove('show');});
-  function showPop(){
-    if(popOff)return;
-    var p=people[pi%people.length]; pi++;
-    $('pop-txt').innerHTML='<b>'+p[0]+' de '+p[1]+'</b> ativou o Vendedor 24h.<br><small>há poucos minutos</small>';
-    pop.classList.add('show'); clearTimeout(hideT); hideT=setTimeout(function(){pop.classList.remove('show');},4500);
-  }
-  setTimeout(showPop,4000); setInterval(showPop,13000);
 
   recompute();
   if(window.fbq)fbq('track','InitiateCheckout',purchaseParams());

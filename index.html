@@ -67,6 +67,12 @@ table.cmp .win{background:#e7fff1;font-weight:800;color:var(--green-d)}
 .price .inst{font-size:15px;font-weight:700;color:var(--ink);margin-top:6px}
 .price .inst b{color:var(--green-d);font-size:16px}
 .price .pu{font-size:13.5px;color:var(--gray);font-weight:600;margin-top:5px}
+.pd-deadline{text-align:center;font-size:13px;font-weight:800;color:#c2410c;margin-top:9px}
+.steps{list-style:none;display:grid;gap:12px;margin-top:18px}
+.steps li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e3efe8;border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04);text-align:left}
+.steps .sn{width:30px;height:30px;border-radius:50%;background:var(--green-d);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none}
+.steps b{display:block;font-size:16px}
+.steps li div span{font-size:14px;color:var(--gray)}
 .perday{display:flex;flex-direction:column;align-items:center;gap:1px;background:#eafbf1;border:1px dashed var(--green);border-radius:14px;padding:11px 12px;margin:14px 0 2px}
 .perday .pd-big{font-size:18px;font-weight:900;color:var(--green-d)}
 .perday .pd-sub{font-size:12.5px;font-weight:600;color:var(--gray)}
@@ -321,6 +327,19 @@ fbq('track','PageView');
   </div>
 </section>
 
+<!-- COMO FUNCIONA (3 passos) -->
+<section class="sec bg2 center">
+  <div class="wrap">
+    <h2>Ativar é mais fácil do que criar um grupo no WhatsApp</h2>
+    <ol class="steps">
+      <li><span class="sn">1</span><div><b>Pague e receba o acesso</b><span>Chega no seu e-mail em instantes, com o passo a passo guiado.</span></div></li>
+      <li><span class="sn">2</span><div><b>Ative em ~5 minutos</b><span>É copiar e colar, sem instalar nada e sem entender de tecnologia.</span></div></li>
+      <li><span class="sn">3</span><div><b>Seu WhatsApp começa a vender</b><span>Ele atende, recomenda e fecha — 24h, todos os dias.</span></div></li>
+    </ol>
+    <p class="micro">Travou em algum passo? A gente te ajuda a ativar 🤝</p>
+  </div>
+</section>
+
 <!-- OFERTA -->
 <section class="sec" id="comprar">
   <div class="wrap">
@@ -345,10 +364,11 @@ fbq('track','PageView');
         <div class="txt"><div class="stars">★★★★★</div><div class="cnt"><b>+1.200</b> negócios já ativaram</div></div>
       </div>
       <div class="price">
-        <div class="old">um atendente custaria R$2.000/mês</div>
+        <div class="old">de R$197</div>
         <div class="now">R$50<small> à vista</small></div>
         <div class="inst">ou <b>12x de R$5,46</b> no cartão*</div>
         <div class="pu">pagamento único • sem mensalidade</div>
+        <div class="pd-deadline" id="promo-deadline" hidden>⏳ preço de lançamento — termina em <b id="promo-count">—</b></div>
       </div>
       <div class="perday"><span class="pd-big">menos de R$0,20 por dia 🤯</span><span class="pd-sub">pra ter um vendedor trabalhando 24h pra você</span></div>
       <a class="btn" href="checkout.html">QUERO MEU VENDEDOR 24H »</a>
@@ -376,6 +396,10 @@ fbq('track','PageView');
     <details><summary>Preciso saber mexer com tecnologia?</summary><p>Não. São 3 passos simples e ele já fica no ar. Se você sabe usar o WhatsApp, já sabe ativar — qualquer pessoa consegue em poucos minutos.</p></details>
     <details><summary>É mensalidade?</summary><p>Não. Você paga R$50 uma vez e pronto. Sem cobrança recorrente.</p></details>
     <details><summary>Funciona pro meu negócio?</summary><p>Sim. Loja, lanchonete, salão, clínica, e-commerce — qualquer negócio que atende ou vende pelo WhatsApp.</p></details>
+    <details><summary>Funciona no WhatsApp normal e no Business?</summary><p>Sim, funciona nos dois. Você não precisa trocar de número nem criar conta nova — ele trabalha no WhatsApp que você já usa.</p></details>
+    <details><summary>Preciso ficar com o celular na mão o dia todo?</summary><p>Não. Depois de ativado, ele responde os clientes por você. Você só acompanha as conversas e entra quando quiser — inclusive pra só fechar a venda.</p></details>
+    <details><summary>Ele atende vários clientes ao mesmo tempo?</summary><p>Sim. Diferente de um atendente, ele não tem fila: responde todo mundo na hora, mesmo de madrugada ou no fim de semana.</p></details>
+    <details><summary>Tem mensalidade ou custo escondido?</summary><p>Não. O Vendedor 24h é pagamento único de R$50 — sem assinatura e sem taxa por mensagem.</p></details>
     <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Não gostou, devolvemos seu dinheiro.</p></details>
   </div>
 </section>
@@ -393,11 +417,52 @@ fbq('track','PageView');
 <!-- FOOTER -->
 <footer class="v24foot">
   <img src="img/v24h-logo-dark.png" alt="Vendedor 24h — no seu WhatsApp">
-  <p>Atende e vende no seu WhatsApp 24h.<br>Pagamento único de R$50 · sem mensalidade · 7 dias de garantia.<br><a href="#comprar">Garantir agora »</a></p>
+  <p>Atende e vende no seu WhatsApp 24h.<br>Pagamento único de R$50 · sem mensalidade · 7 dias de garantia.<br><a href="#comprar">Garantir agora »</a><br><a href="politica-privacidade.html">Política de Privacidade</a> · <a href="termos-de-uso.html">Termos de Uso</a></p>
 </footer>
 
 <!-- STICKY CTA (mobile) -->
 <div class="sticky"><div class="wrap"><a class="btn" href="#comprar">QUERO MEU VENDEDOR — R$50 »</a></div></div>
+
+<script>
+(function(){
+  // ---------- prazo da oferta (fonte única: PROMO_ENDS — ajuste a data quando renovar a promo) ----------
+  var PROMO_ENDS=new Date('2026-07-06T23:59:59-03:00');
+  var el=document.getElementById('promo-deadline'),c=document.getElementById('promo-count');
+  if(el&&c){
+    var p2=function(n){return (n<10?'0':'')+n;};
+    (function tick(){
+      var ms=PROMO_ENDS-new Date();
+      if(ms<=0){el.hidden=true;return;}
+      var d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+      c.textContent=(d>0?d+'d ':'')+p2(h)+'h '+p2(m)+'m';
+      el.hidden=false;
+      setTimeout(tick,15000);
+    })();
+  }
+
+  // ---------- Meta: AddToCart no 1º clique em qualquer CTA (degrau entre PageView e InitiateCheckout) ----------
+  var atc=false;
+  document.addEventListener('click',function(e){
+    var a=e.target&&e.target.closest?e.target.closest('a.btn'):null;
+    if(!a||atc||!window.fbq)return;
+    atc=true;
+    fbq('track','AddToCart',{value:50,currency:'BRL',content_type:'product',content_ids:['base']});
+  },true);
+
+  // ---------- teste A/B da headline: ?hv=b esconde o preço até a seção de oferta ----------
+  // Variante A (padrão): preço no hero. Variante B: link do anúncio com ?hv=b.
+  try{
+    if(new URLSearchParams(location.search).get('hv')==='b'){
+      var h1=document.querySelector('h1');
+      if(h1)h1.innerHTML='Não contrate um funcionário.<br><span style="color:var(--green-d)">Tenha um vendendo por você 24h.</span>';
+      var micro=document.querySelector('header .micro');
+      if(micro)micro.textContent='⚡ Pronto em 5 min • pagamento único • 7 dias de garantia';
+      var stbtn=document.querySelector('.sticky .btn');
+      if(stbtn)stbtn.textContent='QUERO MEU VENDEDOR 24H »';
+    }
+  }catch(_){}
+})();
+</script>
 
 <script>
 (function(){

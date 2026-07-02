@@ -1,6 +1,6 @@
 // Cria um pagamento Pix transparente (QR direto na página) usando SÓ o MP_ACCESS_TOKEN.
 // Grava no metadata os dados de tracking (fbc/fbp/UTMs/cliente) pro webhook reconstruir.
-const { pixTotal, buildMetadata, productsFor, clientIp } = require('../lib/order-meta.js');
+const { PRECOS, pixTotal, buildMetadata, productsFor, clientIp } = require('../lib/order-meta.js');
 const { trackAddPaymentInfoCapi } = require('../lib/meta-capi.js');
 
 module.exports = async (req, res) => {
@@ -9,7 +9,10 @@ module.exports = async (req, res) => {
   if (!token) { res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' }); return; }
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const amount = pixTotal(body.bumps); // Pix com 5% de desconto
+    // Upsell pós-compra (Ativação Feita Pra Você): pagamento avulso de R$47, sem desconto Pix.
+    const isUpsell = body.upsell === true;
+    const amount = isUpsell ? PRECOS.up1.price : pixTotal(body.bumps); // Pix com 5% de desconto
+    const products = isUpsell ? [Object.assign({ qty: 1 }, PRECOS.up1)] : productsFor(body.bumps);
     const nome = (body.nome || '').trim();
     const cpf = (body.cpf || '').replace(/\D/g, '');
 
@@ -18,7 +21,7 @@ module.exports = async (req, res) => {
     const capiP = body.apiEventId ? trackAddPaymentInfoCapi({
       eventId: body.apiEventId, eventSourceUrl: meta.event_source_url,
       customer: { fullName: nome, email: body.email, phone: body.phone, cpf: cpf },
-      total: amount, currency: 'BRL', products: productsFor(body.bumps),
+      total: amount, currency: 'BRL', products: products,
       fbc: meta.fbc, fbclid: utms.fbclid, fbp: meta.fbp, ip: clientIp(req), userAgent: meta.user_agent
     }).catch(function () { return null; }) : Promise.resolve();
 
@@ -31,10 +34,10 @@ module.exports = async (req, res) => {
 
     const payment = {
       transaction_amount: amount,
-      description: 'Vendedor 24h',
+      description: isUpsell ? 'Vendedor 24h — Ativação Feita Pra Você' : 'Vendedor 24h',
       payment_method_id: 'pix',
       payer: payer,
-      metadata: buildMetadata({ req: req, nome: nome, cpf: cpf, email: body.email, phone: body.phone, bumps: body.bumps, meta: body.meta, utms: body.utms, amount: amount }),
+      metadata: buildMetadata({ req: req, nome: nome, cpf: cpf, email: body.email, phone: body.phone, bumps: body.bumps, products: products, meta: body.meta, utms: body.utms, amount: amount }),
     };
 
     const mp = await fetch('https://api.mercadopago.com/v1/payments', {
