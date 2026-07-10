@@ -112,7 +112,7 @@ fbq('track','PageView');
     <span class="eyebrow">🔒 A função escondida do WhatsApp</span>
     <h1>Existe uma função <span>escondida no seu WhatsApp</span> que atende e vende por você. E ela está desligada agora.</h1>
     <p>97% dos empresários nem sabem que ela existe. Quem descobre, ativa em <b>5 minutos</b> e é como colocar <b>um funcionário novo pra trabalhar 24h</b> — sem instalar nenhum app, sem esperar nada.</p>
-    <p style="font-size:14px;font-weight:700;color:var(--green-d);margin-top:10px">Responda 6 perguntas e veja se o seu WhatsApp está pronto pra destravar 👇</p>
+    <p style="font-size:14px;font-weight:700;color:var(--green-d);margin-top:10px">Responda 7 perguntas e veja quanto essa função pode recuperar pro seu negócio 👇</p>
     <div class="qcard" style="margin-top:20px">
       <button class="btn" id="startBtn" type="button">VER SE MEU WHATSAPP DESTRAVA »</button>
       <p class="micro">Grátis, sem cadastro, sem e-mail — resultado na hora.</p>
@@ -214,6 +214,18 @@ fbq('track','PageView');
       boost:function(){return '💡 A maioria dos empresários responde igual. O detalhe: <b>essas vendas a função escondida fecharia no automático</b>, sem você encostar no celular.';}
     },
     {
+      q:'Quanto vale, em média, <span>uma venda sua</span>?',
+      sub:'Pode ser aproximado — entra no cálculo do seu resultado.',
+      two:true,
+      opts:[
+        {em:'💵',t:'Até R$50',v:35},
+        {em:'💰',t:'R$50 a R$150',v:100},
+        {em:'💎',t:'R$150 a R$500',v:300},
+        {em:'🏆',t:'Mais de R$500',v:700}
+      ],
+      boost:function(){return '💡 Guarda esse número — no final eu te mostro <b>quanto isso vira por mês</b> em vendas escapando do seu WhatsApp.';}
+    },
+    {
       q:'Quem <span>atende o WhatsApp</span> do negócio hoje?',
       opts:[
         {em:'🙋',t:'Eu mesmo, no meio de tudo'},
@@ -306,6 +318,13 @@ fbq('track','PageView');
 
     var biz=QS[0].opts[answers[0]||0];
     var slowIdx=answers[2]||0, lostIdx=answers[3]||0;
+    var ticket=(QS[4].opts[answers[4]||0].v)||100;
+
+    // estimativa de perda: vendas/semana pelo nível de dor × ticket médio
+    var porSemana=(slowIdx>=2||lostIdx<=1)?8:(slowIdx===1?5:3);
+    var porMes=ticket*porSemana*4;
+    var perda=porMes>=1000?Math.round(porMes/100)*100:Math.round(porMes/10)*10;
+    var perdaFmt=perda.toLocaleString('pt-BR');
 
     document.getElementById('resTitle').innerHTML=biz.em+' Seu WhatsApp <span>tem a função escondida</span> — e ela está DESLIGADA';
 
@@ -318,20 +337,24 @@ fbq('track','PageView');
     }else{
       pain='⚠️ Você responde rápido — mas ninguém aguenta 24h no celular. Enquanto a função estiver desligada, <b>toda mensagem sem resposta imediata é uma venda em risco</b>, principalmente fora do horário.';
     }
+    pain+='<br><br>💸 Com o seu ticket médio, isso dá algo em torno de <b>R$'+perdaFmt+' por mês escapando</b>. Destravar a função custa R$50 — <b>uma vez</b>.';
     document.getElementById('resPain').innerHTML=pain;
 
     // score animado
-    var score=answers[5]===0?96:92;
+    var quer=answers[6]===0; // respondeu "quero destravar agora"
+    var score=quer?96:92;
     setTimeout(function(){
       document.getElementById('scoreFill').style.width=score+'%';
       document.getElementById('scoreNum').textContent=score+'%';
     },250);
 
-    // leva os UTMs junto pra LP
+    // leva os UTMs + resultado junto pra LP; lead quente cai direto na oferta
     var link=document.getElementById('resBtn');
-    link.href='index.html'+(location.search||'');
+    var p=new URLSearchParams(location.search);
+    p.set('quiz',score);p.set('perda',perda);
+    link.href='index.html?'+p.toString()+(quer?'#comprar':'');
 
-    track('QuizComplete',{business:biz.t,score:score});
+    track('QuizComplete',{business:biz.t,score:score,perda_mes:perda});
     try{if(window.fbq)fbq('track','Lead');}catch(e){}
   }
 })();

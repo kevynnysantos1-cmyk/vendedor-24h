@@ -151,6 +151,19 @@ fbq('track','PageView');
 <!-- LOGO -->
 <nav class="v24nav"><a href="#"><img src="img/v24h-logo.png" alt="Vendedor 24h — no seu WhatsApp"></a></nav>
 
+<!-- BARRA DO RESULTADO DO QUIZ (só aparece vindo do quiz) -->
+<div id="quizbar" hidden style="background:linear-gradient(90deg,#0e8c54,#10a058);color:#fff;text-align:center;font-size:13px;font-weight:700;padding:9px 16px;line-height:1.4"></div>
+<script>
+(function(){try{
+  var q=new URLSearchParams(location.search);
+  var sc=q.get('quiz'); if(!sc)return;
+  var el=document.getElementById('quizbar');
+  var perda=parseInt(q.get('perda'),10);
+  el.innerHTML='🔓 Seu diagnóstico: <b>'+sc+'% pronto pra destravar</b>'+(perda?' · ~R$'+perda.toLocaleString('pt-BR')+'/mês escapando com a função desligada':'');
+  el.hidden=false;
+}catch(e){}})();
+</script>
+
 <!-- HERO -->
 <header class="sec center" style="padding-top:8px">
   <div class="wrap">
@@ -362,6 +375,7 @@ fbq('track','PageView');
       </div>
       <div class="price">
         <div class="old">um atendente custaria R$2.000/mês</div>
+        <div style="font-size:15px;font-weight:700;color:var(--gray);margin-top:7px">hoje: de <s style="color:#c00">R$197</s> por</div>
         <div class="now">R$50<small> à vista</small></div>
         <div class="inst">ou <b>12x de R$5,46</b> no cartão*</div>
         <div class="pu">pagamento único • sem mensalidade</div>
