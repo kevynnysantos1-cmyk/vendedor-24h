@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu WhatsApp pode vender 24h? Descubra em 1 minuto</title>
+<link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--green:#25D366;--green-d:#0e8c54;--ink:#0f1f17;--gray:#5b6b62;--bg2:#f1faf5;--cream:#f2ebe0;--yellow:#FFD400;--radius:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);background:var(--cream) url('img/bg-doodle.jpg?v=2') repeat;background-size:440px auto;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}
+img{max-width:100%;display:block}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px}
+.v24nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid #e7efe9;text-align:center;padding:7px 0}
+.v24nav img{height:40px;width:auto;margin:0 auto;display:block}
+.eyebrow{display:inline-block;background:var(--yellow);color:#000;font-weight:800;font-size:12.5px;padding:6px 13px;border-radius:999px;letter-spacing:.4px;text-transform:uppercase}
+.btn{display:block;width:100%;background:linear-gradient(180deg,#2bdc6e,#10a058);color:#fff;font-weight:800;font-size:18px;text-align:center;text-decoration:none;padding:17px 20px;border-radius:14px;box-shadow:0 8px 22px rgba(16,160,88,.35);border:none;cursor:pointer;font-family:inherit}
+.btn:active{transform:translateY(1px)}
+.micro{font-size:13px;color:var(--gray);text-align:center;margin-top:10px}
+
+/* barra de progresso */
+.qprog{max-width:560px;margin:14px auto 0;padding:0 18px}
+.qprog .bar{height:8px;background:#e2ede6;border-radius:99px;overflow:hidden}
+.qprog .fill{height:100%;width:0%;background:linear-gradient(90deg,#2bdc6e,#10a058);border-radius:99px;transition:width .35s ease}
+.qprog .lbl{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;color:var(--gray);margin-top:5px}
+
+/* cartão do quiz */
+.qcard{background:#fff;border:1px solid #e3efe8;border-radius:22px;padding:24px 20px 22px;margin-top:14px;box-shadow:0 14px 34px rgba(0,0,0,.1)}
+.qstep{display:none;animation:qin .28s ease}
+.qstep.on{display:block}
+@keyframes qin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.qh{font-size:21px;font-weight:800;line-height:1.2;text-align:center}
+.qh span{color:var(--green-d)}
+.qsub{font-size:14px;color:var(--gray);text-align:center;margin-top:7px;line-height:1.45}
+.qopts{display:grid;gap:10px;margin-top:18px}
+.qopts.two{grid-template-columns:1fr 1fr}
+.qopt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#f7fbf8;border:2px solid #e3efe8;border-radius:14px;padding:13px 14px;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;line-height:1.3;min-height:52px;transition:border-color .15s,background .15s}
+.qopt .em{font-size:22px;flex:none;line-height:1}
+.qopt:active,.qopt.sel{border-color:var(--green);background:#eafbf1}
+.qback{display:block;margin:14px auto 0;background:none;border:none;font-family:inherit;font-size:13px;font-weight:700;color:var(--gray);cursor:pointer;text-decoration:underline;padding:6px}
+
+/* mensagem de aquecimento entre perguntas */
+.qboost{display:none;margin-top:14px;background:#eafbf1;border:1px dashed var(--green);border-radius:14px;padding:12px 14px;font-size:13.5px;font-weight:600;color:#1f3a2c;line-height:1.45;animation:qin .3s ease}
+.qboost.on{display:block}
+.qboost b{color:var(--green-d)}
+
+/* hero do quiz */
+.qhero{text-align:center;padding:22px 0 4px}
+.qhero h1{font-size:27px;font-weight:900;line-height:1.12;letter-spacing:-.4px;margin-top:10px}
+.qhero h1 span{color:var(--green-d)}
+.qhero p{font-size:15px;font-weight:600;color:#34433c;margin-top:10px}
+.qhero .who{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px}
+.qhero .who span{font-size:12px;font-weight:700;background:#fff;border:1px solid #dcebe2;border-radius:99px;padding:6px 11px;color:#1f3a2c}
+@media(min-width:560px){.qhero h1{font-size:33px}.qh{font-size:23px}}
+
+/* tela de análise */
+.qload{text-align:center;padding:8px 0 4px}
+.qload .spin{width:52px;height:52px;border:5px solid #e2ede6;border-top-color:var(--green-d);border-radius:50%;margin:8px auto 16px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.qload ul{list-style:none;display:grid;gap:9px;margin-top:16px;text-align:left}
+.qload li{display:flex;gap:9px;align-items:flex-start;font-size:14px;font-weight:600;color:#9aa6a0;line-height:1.35;transition:color .3s}
+.qload li::before{content:'○';flex:none;color:#cdd6d0}
+.qload li.ok{color:var(--ink)}
+.qload li.ok::before{content:'✅'}
+
+/* resultado */
+.qres{display:none}
+.qres.on{display:block;animation:qin .35s ease}
+.rtag{display:flex;align-items:center;justify-content:center;gap:7px;background:#eafff3;border:1px solid #bfeccd;color:var(--green-d);font-weight:800;font-size:12.5px;padding:7px 14px;border-radius:999px;width:fit-content;margin:0 auto 12px;text-transform:uppercase;letter-spacing:.3px}
+.rscore{margin:16px 0 4px}
+.rscore .lbl{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;margin-bottom:5px}
+.rscore .lbl b{color:var(--green-d)}
+.rscore .bar{height:14px;background:#e2ede6;border-radius:99px;overflow:hidden}
+.rscore .fill{height:100%;width:0%;background:linear-gradient(90deg,#2bdc6e,#10a058);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.7,.3,1)}
+.rpain{background:#fff7e6;border:1px dashed #e6b800;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;color:#5c4a00;line-height:1.5;margin-top:14px}
+.rpain b{color:#a67c00}
+.rfix{list-style:none;display:grid;gap:10px;margin-top:16px}
+.rfix li{display:flex;gap:10px;align-items:flex-start;background:#f7fbf8;border:1px solid #e3efe8;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.4}
+.rfix li .em{font-size:21px;flex:none;line-height:1.1}
+.rfix b{display:block;font-size:14.5px}
+.rfix span.d{font-size:13px;color:var(--gray)}
+.rarrow{text-align:center;font-size:13px;font-weight:700;color:var(--gray);margin:16px 0 10px}
+.qfoot{text-align:center;padding:26px 18px 34px;font-size:12px;color:#9aa6a0;line-height:1.6}
+</style>
+<!-- Utmify — captura e persiste os UTMs (atribuição) e propaga pra LP/checkout -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+<!-- Meta Pixel - Infoproduto -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1395668239054238');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1395668239054238&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<nav class="v24nav"><img src="img/v24h-logo.png" alt="Vendedor 24h — no seu WhatsApp"></nav>
+
+<div class="qprog" id="prog" hidden>
+  <div class="bar"><div class="fill" id="progFill"></div></div>
+  <div class="lbl"><span id="progTxt">Pergunta 1 de 6</span><span>⚡ leva menos de 1 min</span></div>
+</div>
+
+<main class="wrap">
+
+  <!-- ABERTURA -->
+  <section class="qhero" id="heroStep">
+    <span class="eyebrow">📋 Diagnóstico grátis · 1 minuto</span>
+    <h1>Quantas vendas o seu WhatsApp está <span>deixando escapar</span> todo dia?</h1>
+    <p>Responda 6 perguntas rápidas e descubra se o seu negócio está pronto pra ter um <b>atendente trabalhando 24h dentro do seu WhatsApp</b> — sem instalar nenhum app e ativando em 5 minutos.</p>
+    <div class="qcard" style="margin-top:20px">
+      <button class="btn" id="startBtn" type="button">FAZER O DIAGNÓSTICO GRÁTIS »</button>
+      <p class="micro">Sem cadastro, sem e-mail — resultado na hora.</p>
+    </div>
+    <div class="who">
+      <span>🍕 Lanchonete</span><span>👗 Loja</span><span>💈 Salão</span><span>🦷 Clínica</span><span>🛒 E-commerce</span><span>🔧 Serviços</span>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="qcard" id="quizCard" hidden>
+    <div id="steps"></div>
+    <div class="qboost" id="boost"></div>
+    <button class="qback" id="backBtn" type="button" hidden>← voltar</button>
+  </section>
+
+  <!-- ANÁLISE -->
+  <section class="qcard qload" id="loadStep" hidden>
+    <div class="spin"></div>
+    <p class="qh">Analisando suas respostas…</p>
+    <ul>
+      <li id="ld1">Medindo as vendas que escapam no seu atendimento</li>
+      <li id="ld2">Verificando se o seu ramo combina com atendimento automático</li>
+      <li id="ld3">Confirmando: funciona direto no seu WhatsApp, sem apps</li>
+    </ul>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="qcard qres" id="resStep">
+    <div class="rtag">✅ Diagnóstico pronto</div>
+    <p class="qh" id="resTitle">Seu negócio está pronto pra vender 24h no WhatsApp</p>
+    <div class="rscore">
+      <div class="lbl"><span>Compatibilidade com atendimento 24h</span><b id="scoreNum">0%</b></div>
+      <div class="bar"><div class="fill" id="scoreFill"></div></div>
+    </div>
+    <p class="rpain" id="resPain"></p>
+    <ul class="rfix">
+      <li><span class="em">💬</span><div><b>Funciona direto no seu WhatsApp</b><span class="d">O mesmo número que você já usa. Nada muda pro seu cliente.</span></div></li>
+      <li><span class="em">📵</span><div><b>Sem instalar nenhum app</b><span class="d">Zero download, zero programa, zero técnico mexendo no seu celular.</span></div></li>
+      <li><span class="em">⚡</span><div><b>Ativa em 5 minutos e já trabalha</b><span class="d">Você paga, segue o passo a passo e ele já começa a atender hoje — sem demora, sem espera.</span></div></li>
+    </ul>
+    <p class="rarrow">👇 Veja como colocar ele pra trabalhar agora</p>
+    <a class="btn" id="resBtn" href="index.html">VER MEU VENDEDOR 24H »</a>
+    <p class="micro">⚡ pronto em 5 min • pagamento único de R$50 • 7 dias de garantia</p>
+  </section>
+
+</main>
+
+<footer class="qfoot">Vendedor 24h · atende e vende no seu WhatsApp, 24 horas por dia.</footer>
+
+<script>
+(function(){
+  var QS = [
+    {
+      q:'Qual é o <span>seu tipo de negócio</span>?',
+      sub:'Isso ajuda a calibrar o seu diagnóstico.',
+      two:true,
+      opts:[
+        {em:'🍕',t:'Lanchonete / comida'},
+        {em:'👗',t:'Loja / comércio'},
+        {em:'💈',t:'Salão / barbearia / estética'},
+        {em:'🦷',t:'Clínica / consultório'},
+        {em:'🛒',t:'E-commerce'},
+        {em:'🔧',t:'Serviços / outro'}
+      ],
+      boost:function(a){return '💡 Boa! Negócios de <b>'+a.t.toLowerCase()+'</b> são dos que mais recuperam vendas quando o WhatsApp responde na hora.';}
+    },
+    {
+      q:'Por onde os seus clientes <span>mais chamam</span> você?',
+      opts:[
+        {em:'💬',t:'Quase tudo pelo WhatsApp'},
+        {em:'📸',t:'Instagram, mas fecho no WhatsApp'},
+        {em:'📞',t:'Ligação e WhatsApp'},
+        {em:'🏪',t:'Mais no balcão, WhatsApp cresce'}
+      ],
+      boost:function(){return '💡 Faz sentido: hoje <b>o WhatsApp é o balcão</b> da maioria dos negócios no Brasil — quem responde primeiro, vende.';}
+    },
+    {
+      q:'Quanto tempo o cliente costuma <span>esperar por resposta</span>?',
+      opts:[
+        {em:'⚡',t:'Respondo quase na hora'},
+        {em:'⏱️',t:'Alguns minutos'},
+        {em:'🕐',t:'Às vezes leva horas'},
+        {em:'😅',t:'Já esqueci cliente no vácuo'}
+      ],
+      boost:function(a,i){
+        if(i===0)return '💡 Ótimo reflexo! Mas e <b>de madrugada, no almoço, no fim de semana</b>? É aí que as vendas escapam.';
+        return '💡 Normal — você não é robô. Só que <b>o cliente que espera compra do concorrente</b> que respondeu primeiro.';
+      }
+    },
+    {
+      q:'Você sente que <span>já perdeu venda</span> por demorar a responder?',
+      opts:[
+        {em:'😤',t:'Sim, várias'},
+        {em:'😕',t:'Algumas, com certeza'},
+        {em:'🤔',t:'Acho que sim'},
+        {em:'🤷',t:'Nunca parei pra medir'}
+      ],
+      boost:function(){return '💡 A maioria dos empresários responde igual. O detalhe: <b>essas vendas dava pra fechar no automático</b>, sem você fazer nada.';}
+    },
+    {
+      q:'Quem <span>atende o WhatsApp</span> do negócio hoje?',
+      opts:[
+        {em:'🙋',t:'Eu mesmo, no meio de tudo'},
+        {em:'👥',t:'Eu + funcionário quando dá'},
+        {em:'💼',t:'Funcionário só no horário comercial'},
+        {em:'📴',t:'Ninguém fixo, respondemos quando dá'}
+      ],
+      boost:function(){return '💡 Um atendente de verdade custa <b>~R$2.000/mês</b> — e mesmo assim dorme, folga e tira férias. Um automático trabalha 24h e custa <b>R$50 uma vez</b>.';}
+    },
+    {
+      q:'Se você pudesse ativar um atendente 24h <span>dentro do seu WhatsApp</span>, sem instalar nada, em 5 minutos…',
+      sub:'…você colocaria ele pra trabalhar hoje?',
+      opts:[
+        {em:'🔥',t:'Com certeza, quero agora'},
+        {em:'👀',t:'Quero ver como funciona primeiro'}
+      ],
+      boost:null
+    }
+  ];
+
+  var hero=document.getElementById('heroStep'),card=document.getElementById('quizCard'),
+      prog=document.getElementById('prog'),progFill=document.getElementById('progFill'),progTxt=document.getElementById('progTxt'),
+      stepsBox=document.getElementById('steps'),boost=document.getElementById('boost'),backBtn=document.getElementById('backBtn'),
+      loadStep=document.getElementById('loadStep'),resStep=document.getElementById('resStep');
+  var cur=0,answers=[],started=false;
+
+  // monta as perguntas
+  QS.forEach(function(s,i){
+    var div=document.createElement('div');div.className='qstep';div.dataset.i=i;
+    var h='<p class="qh">'+s.q+'</p>';
+    if(s.sub)h+='<p class="qsub">'+s.sub+'</p>';
+    h+='<div class="qopts'+(s.two?' two':'')+'">';
+    s.opts.forEach(function(o,k){h+='<button class="qopt" type="button" data-k="'+k+'"><span class="em">'+o.em+'</span><span>'+o.t+'</span></button>';});
+    h+='</div>';
+    div.innerHTML=h;stepsBox.appendChild(div);
+  });
+  var steps=stepsBox.querySelectorAll('.qstep');
+
+  function track(ev,data){try{if(window.fbq)fbq('trackCustom',ev,data||{});}catch(e){}}
+
+  function show(i){
+    cur=i;
+    steps.forEach(function(s,k){s.classList.toggle('on',k===i);});
+    progFill.style.width=((i)/QS.length*100)+'%';
+    progTxt.textContent='Pergunta '+(i+1)+' de '+QS.length;
+    backBtn.hidden=(i===0);
+    boost.classList.remove('on');
+    // restaura seleção se voltou
+    steps[i].querySelectorAll('.qopt').forEach(function(b){b.classList.toggle('sel',answers[i]===+b.dataset.k);});
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  document.getElementById('startBtn').addEventListener('click',function(){
+    hero.hidden=true;card.hidden=false;prog.hidden=false;
+    if(!started){started=true;track('QuizStart');}
+    show(0);
+  });
+  hero.hidden=false;
+
+  backBtn.addEventListener('click',function(){if(cur>0)show(cur-1);});
+
+  stepsBox.addEventListener('click',function(e){
+    var btn=e.target.closest('.qopt');if(!btn)return;
+    var i=+btn.closest('.qstep').dataset.i,k=+btn.dataset.k;
+    answers[i]=k;
+    steps[i].querySelectorAll('.qopt').forEach(function(b){b.classList.toggle('sel',b===btn);});
+    track('QuizStep',{step:i+1,answer:QS[i].opts[k].t});
+    var s=QS[i];
+    if(s.boost){boost.innerHTML=s.boost(s.opts[k],k);boost.classList.add('on');}
+    // avança com uma pausinha pra ler o aquecimento
+    var delay=s.boost?1500:350;
+    setTimeout(function(){
+      if(cur!==i)return; // usuário voltou/clicou de novo
+      if(i<QS.length-1)show(i+1);else finish();
+    },delay);
+  });
+
+  function finish(){
+    card.hidden=true;prog.hidden=true;loadStep.hidden=false;
+    window.scrollTo({top:0,behavior:'smooth'});
+    ['ld1','ld2','ld3'].forEach(function(id,k){
+      setTimeout(function(){document.getElementById(id).classList.add('ok');},600+k*750);
+    });
+    setTimeout(showResult,3100);
+  }
+
+  function showResult(){
+    loadStep.hidden=true;resStep.classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+
+    var biz=QS[0].opts[answers[0]||0];
+    var slowIdx=answers[2]||0, lostIdx=answers[3]||0;
+
+    document.getElementById('resTitle').innerHTML='Resultado: '+biz.em+' o seu negócio tem o perfil <span>ideal</span> pra vender 24h no WhatsApp';
+
+    // dor personalizada pelo tempo de resposta / perda
+    var pain;
+    if(slowIdx>=2||lostIdx<=1){
+      pain='⚠️ Pelo seu ritmo de resposta hoje, negócios como o seu deixam escapar <b>de 5 a 15 vendas por semana</b> — clientes que chamaram, cansaram de esperar e compraram do concorrente.';
+    }else if(slowIdx===1){
+      pain='⚠️ Mesmo respondendo em minutos, é fora do horário — <b>madrugada, almoço, domingo</b> — que as vendas escapam. É exatamente aí que um atendente 24h fecha por você.';
+    }else{
+      pain='⚠️ Você responde rápido — mas ninguém aguenta 24h no celular. <b>Toda mensagem sem resposta imediata é uma venda em risco</b>, principalmente fora do horário.';
+    }
+    document.getElementById('resPain').innerHTML=pain;
+
+    // score animado
+    var score=answers[5]===0?96:92;
+    setTimeout(function(){
+      document.getElementById('scoreFill').style.width=score+'%';
+      document.getElementById('scoreNum').textContent=score+'%';
+    },250);
+
+    // leva os UTMs junto pra LP
+    var link=document.getElementById('resBtn');
+    link.href='index.html'+(location.search||'');
+
+    track('QuizComplete',{business:biz.t,score:score});
+    try{if(window.fbq)fbq('track','Lead');}catch(e){}
+  }
+})();
+</script>
+
+</body>
+</html>
