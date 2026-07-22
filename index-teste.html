@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Vendedor 24h — nova versão visual da página</title>
+  <meta name="description" content="Ative e configure a função de IA do WhatsApp Business para atender clientes e ajudar a vender 24 horas.">
+  <link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy:#071522;--navy-2:#0d2233;--green:#20df72;--green-d:#0b9e50;
+      --lime:#a9f52b;--yellow:#ffd928;--red:#e9403a;--cream:#f4efe6;
+      --ink:#102119;--muted:#56645d;--line:#dfe8e2;--white:#fff;--r:22px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:var(--cream) url('img/bg-doodle.jpg?v=2') repeat;background-size:440px auto;line-height:1.42;-webkit-font-smoothing:antialiased}
+    img{display:block;max-width:100%}
+    a{color:inherit}
+    .wrap{width:min(100% - 32px,680px);margin-inline:auto}
+    .section{padding:42px 0}
+    .center{text-align:center}
+    .dark{background:linear-gradient(160deg,#06111c 0%,#0b2230 64%,#0e3929 100%);color:#fff}
+    .white{background:rgba(255,255,255,.94)}
+    .eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--yellow);color:#111;font-size:12px;font-weight:900;letter-spacing:.45px;text-transform:uppercase;border-radius:999px;padding:8px 13px}
+    h1,h2,h3{font-family:'Archivo Black',Poppins,sans-serif;text-transform:uppercase;letter-spacing:-.7px}
+    h1{font-size:clamp(34px,9.2vw,52px);line-height:.99;margin-top:14px}
+    h2{font-size:clamp(27px,7vw,38px);line-height:1.04}
+    h3{font-size:18px;line-height:1.08;letter-spacing:-.2px}
+    .green{color:var(--lime)}
+    .yellow{color:var(--yellow)}
+    .lead{font-size:17px;font-weight:600;color:#d7e5de;margin:16px auto 0;max-width:610px}
+    .sub{font-size:16px;color:var(--muted);margin-top:11px}
+    .nav{position:sticky;top:0;z-index:80;background:rgba(7,21,34,.96);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);padding:8px 0}
+    .nav img{height:40px;width:auto;margin:auto}
+    .hero{padding:18px 0 36px;overflow:hidden}
+    .hero-art,.visual-card{position:relative;margin-top:22px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.18);box-shadow:0 20px 46px rgba(0,0,0,.28)}
+    .hero-art img,.visual-card img{width:100%;aspect-ratio:4/5;object-fit:cover}
+    .hero-art:after,.visual-card:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(4,13,22,.68) 0,transparent 23%,transparent 72%,rgba(4,13,22,.78) 100%)}
+    .status{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;display:flex;align-items:center;justify-content:center;gap:9px;background:rgba(7,21,34,.9);border:1px solid rgba(169,245,43,.65);box-shadow:0 0 22px rgba(32,223,114,.23);border-radius:14px;padding:11px 12px;color:#fff;font-size:13px;font-weight:900;text-transform:uppercase}
+    .status i{width:10px;height:10px;background:var(--lime);border-radius:50%;box-shadow:0 0 12px var(--lime)}
+    .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;margin-top:17px;padding:15px 18px;border:0;border-radius:15px;background:linear-gradient(180deg,#31eb7d,#10aa58);box-shadow:0 10px 26px rgba(11,158,80,.36);color:#fff;text-decoration:none;text-align:center;font-size:18px;font-weight:900;line-height:1.15;text-transform:uppercase}
+    .btn:active{transform:translateY(1px)}
+    .micro{font-size:12px;color:#aabbb2;text-align:center;margin-top:9px;font-weight:600}
+    .proofline{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:15px}
+    .proofline span{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:11px;padding:9px 5px;color:#dbe8e1;font-size:10.5px;font-weight:700;text-align:center}
+    .headline-mark{display:inline;background:linear-gradient(transparent 54%,rgba(255,217,40,.72) 54%)}
+    .pain-title{font-size:clamp(28px,7.4vw,40px);color:var(--navy)}
+    .pain-title b{color:var(--red)}
+    .visual-card{border-color:#cfdad3;background:var(--navy)}
+    .visual-copy{position:absolute;z-index:2;left:14px;right:14px;top:14px;background:rgba(7,21,34,.88);border-left:5px solid var(--yellow);border-radius:12px;padding:12px 13px;color:#fff;font-family:'Archivo Black',Poppins,sans-serif;font-size:20px;line-height:1.08;text-transform:uppercase;text-align:left}
+    .visual-copy em{display:block;color:var(--yellow);font-style:normal}
+    .turning{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+    .turning div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;box-shadow:0 5px 15px rgba(7,21,34,.06)}
+    .turning strong{display:block;color:var(--green-d);font-size:12px;line-height:1.2}
+    .turning span{display:block;font-size:22px;margin-bottom:4px}
+    .early-offer{padding:34px 0;background:linear-gradient(145deg,#071522,#103324);color:#fff}
+    .offer-card{position:relative;background:#fff;color:var(--ink);border:3px solid var(--green);border-radius:24px;padding:22px 18px;box-shadow:0 18px 50px rgba(0,0,0,.3)}
+    .offer-tag{width:max-content;max-width:100%;margin:-38px auto 14px;background:var(--yellow);color:#101010;border:2px solid #111;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:900;text-transform:uppercase;transform:rotate(-1deg)}
+    .compare{font-size:13px;color:#69736e;text-align:center;margin-top:10px}
+    .compare s{color:#b92222;font-weight:800}
+    .price{text-align:center;margin:3px 0}
+    .price small{display:block;font-size:13px;font-weight:700;color:#4c5b54}
+    .price strong{font-family:'Archivo Black',Poppins,sans-serif;font-size:58px;line-height:.95;color:var(--green-d);letter-spacing:-2px}
+    .price strong span{font-family:Poppins,sans-serif;font-size:17px;letter-spacing:0;color:var(--ink)}
+    .single{display:inline-block;margin-top:7px;background:#e9fff3;border:1px solid #b8ebcf;color:#08733d;border-radius:999px;padding:6px 11px;font-size:12px;font-weight:900;text-transform:uppercase}
+    .mini-list{list-style:none;display:grid;gap:8px;margin:15px 0}
+    .mini-list li{display:flex;gap:8px;align-items:flex-start;font-size:14px;font-weight:600}
+    .mini-list li:before{content:'✓';flex:none;color:var(--green-d);font-size:18px;font-weight:900;line-height:1}
+    .section-head{text-align:center;margin-bottom:20px}
+    .benefits{display:grid;gap:11px}
+    .benefit{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:0 7px 18px rgba(7,21,34,.06)}
+    .benefit .ico{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#e8fff1;font-size:24px}
+    .benefit p{font-size:13.5px;color:var(--muted);margin-top:3px}
+    .benefit h3{font-family:Poppins,sans-serif;text-transform:none;font-weight:900}
+    .steps{display:grid;gap:12px;margin-top:18px}
+    .step{display:grid;grid-template-columns:42px 1fr;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}
+    .step b:first-child{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--yellow);font-family:'Archivo Black',sans-serif;font-size:20px}
+    .step p{font-size:13.5px;color:var(--muted);margin-top:2px}
+    .product-shot{position:relative;border-radius:22px;overflow:hidden;background:var(--navy);box-shadow:0 16px 36px rgba(7,21,34,.22);margin-top:18px}
+    .product-shot img{width:100%;aspect-ratio:4/5;object-fit:cover}
+    .product-shot .caption{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.94);border-radius:14px;padding:11px;text-align:center;font-size:13px;font-weight:900;color:var(--navy)}
+    .chat{background:#e9e2d8;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(7,21,34,.13);margin-top:18px;text-align:left}
+    .chat-head{background:#087861;color:#fff;padding:11px 14px;font-weight:800;font-size:14px}
+    .chat-body{display:grid;gap:8px;padding:14px}
+    .msg{width:84%;border-radius:11px;padding:9px 11px;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+    .msg.in{background:#fff}
+    .msg.out{background:#d9fdd3;margin-left:auto}
+    .table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 10px 25px rgba(7,21,34,.08);font-size:13px;margin-top:18px}
+    .table th,.table td{padding:13px 8px;text-align:center;border-bottom:1px solid #e8eeea}
+    .table th{background:var(--navy);color:#fff}
+    .table td:first-child{text-align:left;color:var(--muted)}
+    .table .win{background:#e7fff0;color:#08713c;font-weight:900}
+    .guarantee{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:center;background:#fff;border:2px dashed var(--green-d);border-radius:18px;padding:17px}
+    .guarantee .shield{font-size:46px}
+    .guarantee p{font-size:13.5px;color:var(--muted);margin-top:3px}
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:2px 15px;margin-top:10px}
+    summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:10px;padding:15px 0;font-weight:800;font-size:14px}
+    summary::-webkit-details-marker{display:none}
+    summary:after{content:'+';color:var(--green-d);font-size:20px;line-height:1}
+    details[open] summary:after{content:'–'}
+    details p{padding:0 0 15px;color:var(--muted);font-size:13.5px}
+    .final{padding:44px 0 118px;background:linear-gradient(155deg,#071522,#123a29);color:#fff}
+    .footer{background:#04101a;color:#93aaa0;text-align:center;padding:26px 18px 28px;font-size:12px}
+    .footer img{height:46px;width:auto;margin:0 auto 10px}
+    .sticky{position:fixed;z-index:90;left:0;right:0;bottom:0;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);border-top:1px solid #d9e4dd;box-shadow:0 -6px 20px rgba(0,0,0,.12);transform:translateY(120%);transition:.25s ease}
+    .sticky.show{transform:translateY(0)}
+    .sticky .btn{margin:0;min-height:52px;font-size:16px}
+    @media(min-width:720px){.hero{padding-top:28px}.benefits{grid-template-columns:1fr 1fr}.benefit:last-child{grid-column:1/-1}.wrap{width:min(100% - 40px,680px)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sticky{transition:none}}
+  </style>
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1395668239054238');fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1395668239054238&ev=PageView&noscript=1" alt=""></noscript>
+</head>
+<body>
+  <nav class="nav"><div class="wrap"><a href="#top" aria-label="Voltar ao início"><img src="img/v24h-logo-dark.png" alt="Vendedor 24h — no seu WhatsApp"></a></div></nav>
+
+  <main id="top">
+    <header class="hero dark center">
+      <div class="wrap">
+        <span class="eyebrow">⚡ Nova função do WhatsApp Business</span>
+        <h1>Seu WhatsApp pode ter um <span class="green">funcionário 24h.</span><br>Mas ele ainda está desativado.</h1>
+        <p class="lead">Ative a função de IA que atende clientes, responde dúvidas, recomenda produtos e ajuda a vender por você — <b>sem instalar outro app e sem saber nada de tecnologia.</b></p>
+        <div class="hero-art">
+          <img src="img/lp-teste/hero-vendedor-ativado.webp" width="1023" height="1537" fetchpriority="high" alt="Comerciante brasileira usando no celular um atendimento automático para clientes">
+          <div class="status"><i></i> Pronto para ser ativado</div>
+        </div>
+        <a class="btn" href="#oferta">Quero ativar meu Vendedor 24h »</a>
+        <p class="micro">Pagamento único de R$50 • sem mensalidade • 7 dias de garantia</p>
+        <div class="proofline"><span>✓ PASSO A PASSO</span><span>✓ SEM CÓDIGO</span><span>✓ ACESSO IMEDIATO</span></div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="wrap center">
+        <h2 class="pain-title">O cliente não espera.<br><b>Ele compra de quem responde.</b></h2>
+        <p class="sub">Enquanto você está ocupado, dormindo ou de folga, uma mensagem sem resposta pode virar venda no concorrente.</p>
+        <div class="visual-card">
+          <img src="img/lp-teste/dor-venda-perdida.webp" width="1003" height="1568" loading="lazy" alt="Comparação entre uma mensagem ignorada de madrugada e uma venda recebida por outro negócio">
+          <div class="visual-copy">Demorou pra responder?<em>A venda muda de mão.</em></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="wrap center">
+        <span class="eyebrow">A virada</span>
+        <h2 style="margin-top:12px">Ele atende. Recomenda.<br><span style="color:var(--green-d)">E conduz até a compra.</span></h2>
+        <p class="sub">Depois de configurada, a função aprende produtos, preços, condições e respostas do seu negócio para atender com clareza dentro do WhatsApp Business que você já usa.</p>
+        <div class="visual-card">
+          <img src="img/lp-teste/beneficios-atendimento-24h.webp" width="1003" height="1568" loading="lazy" alt="Celular atendendo uma cliente enquanto a dona do negócio trabalha no balcão">
+          <div class="status"><i></i> Atendendo enquanto você trabalha</div>
+        </div>
+        <div class="turning">
+          <div><span>⚡</span><strong>Responde na hora</strong></div>
+          <div><span>🛍️</span><strong>Recomenda produtos</strong></div>
+          <div><span>🕐</span><strong>Atende 24 horas</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="early-offer" id="oferta">
+      <div class="wrap">
+        <div class="offer-card">
+          <div class="offer-tag">Acesso imediato</div>
+          <h2 class="center">Ative seu Vendedor 24h hoje</h2>
+          <p class="compare">Um atendente pode custar <s>cerca de R$2.000 por mês</s></p>
+          <div class="price"><small>Você acessa o método por apenas</small><strong>R$50<span> à vista</span></strong><br><span class="single">pagamento único • sem mensalidade</span></div>
+          <ul class="mini-list">
+            <li>Passo a passo visual para localizar e ativar a função</li>
+            <li>Configuração comercial para ensinar como seu negócio atende</li>
+            <li>Pacote de respostas e instruções por tipo de negócio</li>
+            <li>Bônus: guia prático de vendas no WhatsApp</li>
+          </ul>
+          <a class="btn" href="checkout.html">Quero meu Vendedor 24h »</a>
+          <p class="micro" style="color:#66736c">Pix ou cartão • 12x disponíveis no checkout • garantia de 7 dias</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">O que muda na prática</span><h2 style="margin-top:12px">Seu WhatsApp trabalha mesmo quando você não pode</h2></div>
+        <div class="benefits">
+          <article class="benefit"><div class="ico">⚡</div><div><h3>Cliente sem vácuo</h3><p>Respostas rápidas para dúvidas comuns, inclusive fora do horário.</p></div></article>
+          <article class="benefit"><div class="ico">🛒</div><div><h3>Atendimento que vende</h3><p>Apresenta opções, recomenda produtos e conduz o próximo passo.</p></div></article>
+          <article class="benefit"><div class="ico">😌</div><div><h3>Você cuida do negócio</h3><p>Enquanto as primeiras conversas são atendidas e organizadas.</p></div></article>
+        </div>
+
+        <div class="chat">
+          <div class="chat-head">🟢 Seu negócio • online</div>
+          <div class="chat-body">
+            <div class="msg in">Oi! Ainda dá pra fazer o pedido hoje?</div>
+            <div class="msg out">Dá sim! Posso te mostrar as opções mais pedidas e já deixar tudo encaminhado. O que você procura?</div>
+            <div class="msg in">Quero a opção mais em conta.</div>
+            <div class="msg out">Perfeito. Tenho esta opção com ótimo custo-benefício. Quer que eu te passe os detalhes?</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Sem complicação</span><h2 style="margin-top:12px">Você não precisa virar especialista em IA</h2><p class="sub">O método organiza a ativação e a configuração em etapas simples e visuais.</p></div>
+        <div class="steps">
+          <div class="step"><b>1</b><div><h3>Localize e ative</h3><p>Veja onde a função aparece na sua conta e siga o passo a passo.</p></div></div>
+          <div class="step"><b>2</b><div><h3>Ensine seu negócio</h3><p>Cadastre produtos, condições e as respostas que seus clientes precisam.</p></div></div>
+          <div class="step"><b>3</b><div><h3>Coloque para atender</h3><p>Ajuste o atendimento comercial e acompanhe as conversas.</p></div></div>
+        </div>
+        <div class="product-shot">
+          <img src="img/lp-teste/metodo-vendedor-24h.webp" width="961" height="1600" loading="lazy" alt="Método Vendedor 24h apresentado em aulas, guia e cartões de configuração">
+          <div class="caption">AULAS + GUIA VISUAL + CONFIGURAÇÃO COMERCIAL</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Faça a conta</span><h2 style="margin-top:12px">Um custo que cabe no pequeno negócio</h2></div>
+        <table class="table">
+          <tr><th></th><th>Atendente</th><th>Vendedor 24h</th></tr>
+          <tr><td>Custo</td><td>~R$2.000/mês</td><td class="win">R$50 uma vez</td></tr>
+          <tr><td>Fora do horário</td><td>Limitado</td><td class="win">Atende 24h</td></tr>
+          <tr><td>Mensalidade</td><td>Todo mês</td><td class="win">Não tem</td></tr>
+          <tr><td>Configuração</td><td>Treinamento</td><td class="win">Passo a passo</td></tr>
+        </table>
+        <a class="btn" href="checkout.html">Ativar por R$50 »</a>
+        <p class="micro" style="color:#65756d">Pagamento único • sem mensalidade</p>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="wrap">
+        <div class="guarantee"><div class="shield">🛡️</div><div><h3>Teste por 7 dias</h3><p>Se o método não fizer sentido para você, peça o reembolso dentro do prazo de garantia.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Perguntas rápidas</h2></div>
+        <details><summary>Preciso saber mexer com tecnologia?</summary><p>Não. O conteúdo é visual e guiado. Se você já usa o WhatsApp Business, consegue acompanhar as etapas.</p></details>
+        <details><summary>O que exatamente eu estou comprando?</summary><p>O Método Vendedor 24h: o passo a passo de ativação, a configuração comercial e materiais de apoio para preparar o atendimento do seu negócio.</p></details>
+        <details><summary>A função aparece em todas as contas?</summary><p>A liberação de novos recursos pode variar conforme conta, região e versão do aplicativo. O método mostra como verificar o acesso e configurar quando a função estiver disponível.</p></details>
+        <details><summary>É mensalidade?</summary><p>Não. O valor do método é pago uma única vez, sem cobrança recorrente.</p></details>
+        <details><summary>Serve para o meu negócio?</summary><p>Foi pensado para lojas, lanchonetes, salões, clínicas, prestadores de serviço, e-commerces e outros negócios que atendem clientes pelo WhatsApp.</p></details>
+        <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia para pedir o reembolso.</p></details>
+      </div>
+    </section>
+
+    <section class="final center">
+      <div class="wrap">
+        <span class="eyebrow">A decisão é simples</span>
+        <h2 style="margin-top:14px">Continuar perdendo mensagem…<br><span class="green">ou ligar seu Vendedor 24h?</span></h2>
+        <p class="lead">Coloque o atendimento para trabalhar no WhatsApp Business que você já usa.</p>
+        <a class="btn" href="checkout.html">Quero ativar agora por R$50 »</a>
+        <p class="micro">Acesso imediato • pagamento único • 7 dias de garantia</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><img src="img/v24h-logo-dark.png" alt="Vendedor 24h"><p>Atendimento e vendas no seu WhatsApp, 24 horas.<br>Pagamento único de R$50 • sem mensalidade • garantia de 7 dias.</p></footer>
+  <div class="sticky" aria-hidden="true"><div class="wrap"><a class="btn" href="#oferta">Quero meu Vendedor — R$50 »</a></div></div>
+  <script>
+    (function(){
+      var sticky=document.querySelector('.sticky'),hero=document.querySelector('.hero'),offer=document.querySelector('#oferta');
+      if(!sticky||!hero||!offer)return;
+      function update(){var o=offer.getBoundingClientRect(),inOffer=o.top<innerHeight-70&&o.bottom>0;sticky.classList.toggle('show',scrollY>hero.offsetHeight-120&&!inOffer);sticky.setAttribute('aria-hidden',sticky.classList.contains('show')?'false':'true')}
+      addEventListener('scroll',update,{passive:true});addEventListener('resize',update,{passive:true});update();
+    })();
+  </script>
+</body>
+</html>
