@@ -36,7 +36,8 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg-cream);
+    background: #F2EBE0 url('img/bg-doodle.jpg?v=2') repeat;
+    background-size: 440px auto;
     color: var(--text-dark);
     line-height: 1.5;
     overflow-x: hidden;
@@ -46,7 +47,9 @@
   .container {
     max-width: 480px;
     margin: 0 auto;
-    background: var(--bg-white);
+    background: rgba(245, 250, 247, .86) url('img/bg-doodle.jpg?v=2') repeat;
+    background-size: 440px auto;
+    background-blend-mode: soft-light;
     min-height: 100vh;
     position: relative;
     overflow: hidden;
@@ -67,7 +70,7 @@
   }
 
   /* ===== HERO compacta ===== */
-  .hero { padding: 18px 22px 8px; text-align: center; position: relative; z-index: 1; }
+  .hero { padding: 18px 22px 4px; text-align: center; position: relative; z-index: 1; }
 
   .badge-vagas {
     display: inline-flex; align-items: center; gap: 8px;
@@ -75,7 +78,7 @@
     color: white; padding: 8px 18px; border-radius: 999px;
     font-weight: 700; font-size: 12px; letter-spacing: .5px;
     box-shadow: 0 6px 20px rgba(18, 163, 86, .35);
-    margin-bottom: 14px; animation: pulse 2s ease-in-out infinite;
+    margin-bottom: 8px; animation: pulse 2s ease-in-out infinite;
   }
   @keyframes pulse {
     0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(18,163,86,.35); }
@@ -87,25 +90,18 @@
     color: var(--v24-green); font-weight: 900; font-size: 12px;
   }
 
-  .hero h1 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 32px; font-weight: 900; line-height: 1.08;
-    letter-spacing: -1.2px; margin-bottom: 8px; color: var(--text-dark);
-  }
-  .hero h1 .highlight { color: var(--v24-green); display: block; font-size: 37px; }
-
-  .subtitle-line { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 6px; }
+  .subtitle-line { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 2px 0 4px; }
   .subtitle-line::before, .subtitle-line::after {
     content: ''; width: 22px; height: 2px; background: var(--v24-green); border-radius: 2px;
   }
-  .subtitle-line span { font-weight: 600; color: var(--text-dark); font-size: 15px; }
+  .subtitle-line span { font-weight: 700; color: var(--text-dark); font-size: 14px; }
 
   .hero-description {
-    color: var(--text-medium); font-size: 13.5px; line-height: 1.45;
-    max-width: 340px; margin: 0 auto; padding: 0 4px;
+    color: var(--text-medium); font-size: 12px; line-height: 1.4;
+    max-width: 320px; margin: 0 auto; padding: 0 4px;
   }
 
-  .hero-image-wrap { position: relative; max-width: 420px; margin: 12px auto 6px; z-index: 1; }
+  .hero-image-wrap { position: relative; max-width: 420px; margin: 14px auto 6px; z-index: 1; }
   .hero-image {
     width: 100%; height: auto; display: block; border-radius: 20px;
     box-shadow: 0 12px 34px rgba(10, 45, 26, .18);
@@ -139,6 +135,7 @@
 
   /* ===== CTA ===== */
   .cta-wrap { padding: 8px 22px 0; position: relative; z-index: 2; }
+  .hero-cta { padding-top: 10px; }
   .cta-button {
     width: 100%;
     background: linear-gradient(135deg, #17b862 0%, var(--v24-green-dark) 100%);
@@ -166,6 +163,11 @@
     width: 30px; height: 30px; background: rgba(255,255,255,.2); border-radius: 50%;
     display: flex; align-items: center; justify-content: center; font-size: 16px;
   }
+  .cta-button .whatsapp-circle {
+    width: 30px; height: 30px; background: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 30px;
+  }
+  .cta-button .whatsapp-circle svg { width: 18px; height: 18px; fill: var(--whatsapp); }
   .cta-button .arrow { margin-left: auto; font-weight: 900; font-size: 22px; }
 
   .cta-micro {
@@ -241,16 +243,12 @@
   @media (max-height: 740px) {
     .hero { padding: 14px 22px 6px; }
     .badge-vagas { margin-bottom: 10px; padding: 7px 16px; font-size: 11.5px; }
-    .hero h1 { font-size: 28px; }
-    .hero h1 .highlight { font-size: 33px; }
-    .hero-description { font-size: 13px; }
+    .hero-description { font-size: 12px; }
     .hero-image-wrap { margin: 8px auto 4px; max-width: 360px; }
     .cta-button { padding: 16px 22px; font-size: 16px; }
     .cta-micro { padding: 8px 22px 4px; }
   }
   @media (max-width: 380px) {
-    .hero h1 { font-size: 26px; }
-    .hero h1 .highlight { font-size: 31px; }
     .benefits { padding: 14px 6px; }
     .benefit-item { padding: 0 3px; }
     .benefit-item h3 { font-size: 11.5px; }
@@ -622,32 +620,20 @@ fbq('init','1395668239054238');fbq('track','PageView');
       <span>FUNÇÃO DISPONÍVEL NO SEU WHATSAPP</span>
     </div>
 
-    <h1>
-      Seu WhatsApp tem um
-      <span class="highlight">funcionário 24h</span>
-      desativado
-    </h1>
-
     <div class="subtitle-line">
-      <span>Atende e vende sozinho, dia e noite</span>
+      <span>Descubra se a função está disponível</span>
     </div>
 
     <p class="hero-description">
-      Responda o teste rápido e veja se o seu negócio já pode ativar o atendimento com IA — e quanto ele pode recuperar por mês.
+      Responda em 1 minuto, sem cadastro.
     </p>
   </section>
 
-  <!-- IMAGEM -->
-  <div class="hero-image-wrap">
-    <span class="hero-image-live" id="liveCount">87 fazendo o teste agora</span>
-    <img class="hero-image" src="img/quiz-hero-beneficios-v7.webp" width="1024" height="1536" alt="Vendedora mostrando no WhatsApp um atendimento 24h que gera mais vendas e mais tempo" fetchpriority="high">
-  </div>
-
   <!-- CTA PRINCIPAL -->
-  <div class="cta-wrap">
+  <div class="cta-wrap hero-cta">
     <button class="cta-button" onclick="startQuiz()">
-      <div class="rocket-circle">🚀</div>
-      <span>Começar teste agora</span>
+      <span class="whatsapp-circle" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.8 6.5L3 29l6.7-1.8A13 13 0 1 0 16 3Zm0 23.6a10.5 10.5 0 0 1-5.4-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4A10.5 10.5 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.4.3-.4.9-1.3.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5 0-.1-.3-.2-.6-.4Z"/></svg></span>
+      <span>FAZER TESTE GRATUITO</span>
       <span class="arrow">›</span>
     </button>
   </div>
@@ -658,6 +644,12 @@ fbq('init','1395668239054238');fbq('track','PageView');
     <span>✓ Sem cadastro</span>
     <span class="dot-sep"></span>
     <span>✓ Resultado na hora</span>
+  </div>
+
+  <!-- IMAGEM -->
+  <div class="hero-image-wrap">
+    <span class="hero-image-live" id="liveCount">87 fazendo o teste agora</span>
+    <img class="hero-image" src="img/quiz-hero-beneficios-v7.webp" width="1024" height="1536" alt="Vendedora mostrando no WhatsApp um atendimento 24h que gera mais vendas e mais tempo" fetchpriority="high">
   </div>
 
   <!-- BENEFITS -->
