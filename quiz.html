@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Faça o teste rápido e descubra se a função de atendimento com IA já pode ser ativada no WhatsApp do seu negócio.">
+<meta name="theme-color" content="#FFFFFF">
+<title>Seu WhatsApp tem um funcionário 24h desativado | Faça o teste</title>
+<link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="img/quiz-hero-beneficios-v7.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --v24-green: #12A356;
+    --v24-green-dark: #0B8443;
+    --v24-green-light: #EAF9F1;
+    --v24-green-soft: #D5F3E3;
+    --bg-cream: #F5FAF7;
+    --bg-white: #FFFFFF;
+    --text-dark: #16211B;
+    --text-medium: #47554E;
+    --text-light: #8B968F;
+    --green-success: #22C55E;
+    --yellow-accent: #FFC107;
+    --whatsapp: #25D366;
+    --shadow-sm: 0 2px 8px rgba(18, 163, 86, 0.08);
+    --shadow-md: 0 4px 16px rgba(18, 163, 86, 0.12);
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 24px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--bg-white);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .container::before {
+    content: '';
+    position: absolute; top: -50px; left: -100px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, var(--v24-green-soft) 0%, transparent 70%);
+    border-radius: 50%; opacity: .6; pointer-events: none; z-index: 0;
+  }
+  .container::after {
+    content: '';
+    position: absolute; top: 220px; right: -80px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--v24-green-light) 0%, transparent 70%);
+    border-radius: 50%; opacity: .5; pointer-events: none; z-index: 0;
+  }
+
+  /* ===== HERO compacta ===== */
+  .hero { padding: 18px 22px 8px; text-align: center; position: relative; z-index: 1; }
+
+  .badge-vagas {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--v24-green) 0%, var(--v24-green-dark) 100%);
+    color: white; padding: 8px 18px; border-radius: 999px;
+    font-weight: 700; font-size: 12px; letter-spacing: .5px;
+    box-shadow: 0 6px 20px rgba(18, 163, 86, .35);
+    margin-bottom: 14px; animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(18,163,86,.35); }
+    50% { transform: scale(1.03); box-shadow: 0 8px 28px rgba(18,163,86,.5); }
+  }
+  .badge-vagas .wpp-dot {
+    width: 20px; height: 20px; background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--v24-green); font-weight: 900; font-size: 12px;
+  }
+
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 32px; font-weight: 900; line-height: 1.08;
+    letter-spacing: -1.2px; margin-bottom: 8px; color: var(--text-dark);
+  }
+  .hero h1 .highlight { color: var(--v24-green); display: block; font-size: 37px; }
+
+  .subtitle-line { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 6px; }
+  .subtitle-line::before, .subtitle-line::after {
+    content: ''; width: 22px; height: 2px; background: var(--v24-green); border-radius: 2px;
+  }
+  .subtitle-line span { font-weight: 600; color: var(--text-dark); font-size: 15px; }
+
+  .hero-description {
+    color: var(--text-medium); font-size: 13.5px; line-height: 1.45;
+    max-width: 340px; margin: 0 auto; padding: 0 4px;
+  }
+
+  .hero-image-wrap { position: relative; max-width: 420px; margin: 12px auto 6px; z-index: 1; }
+  .hero-image {
+    width: 100%; height: auto; display: block; border-radius: 20px;
+    box-shadow: 0 12px 34px rgba(10, 45, 26, .18);
+  }
+  .hero-image-live {
+    position: absolute; top: 10px; right: 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(10, 30, 20, .75); backdrop-filter: blur(6px);
+    color: #d9ffe9; font-size: 10.5px; font-weight: 700;
+    padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(37,211,102,.4);
+  }
+  .hero-image-live::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--whatsapp); animation: liveDot 1.3s infinite;
+  }
+  @keyframes liveDot { 50% { box-shadow: 0 0 0 4px rgba(37,211,102,.25); } }
+  .hero-image-caption {
+    position: absolute; left: 10px; right: 10px; bottom: 10px;
+    background: rgba(255,255,255,.94); backdrop-filter: blur(6px);
+    border-radius: 12px; padding: 9px 12px; text-align: left;
+    display: flex; align-items: center; gap: 9px;
+    box-shadow: 0 8px 22px rgba(10,45,26,.2);
+  }
+  .hero-image-caption .cap-ic {
+    flex: 0 0 32px; height: 32px; border-radius: 50%;
+    background: var(--v24-green); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
+  .hero-image-caption b { display: block; font-size: 12px; line-height: 1.25; }
+  .hero-image-caption small { display: block; font-size: 10.5px; color: var(--text-medium); margin-top: 1px; line-height: 1.3; }
+
+  /* ===== CTA ===== */
+  .cta-wrap { padding: 8px 22px 0; position: relative; z-index: 2; }
+  .cta-button {
+    width: 100%;
+    background: linear-gradient(135deg, #17b862 0%, var(--v24-green-dark) 100%);
+    color: white; border: none; padding: 18px 22px; border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 800;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;
+    box-shadow: 0 10px 28px rgba(18, 163, 86, .45);
+    transition: transform .15s ease, box-shadow .2s ease;
+    position: relative; overflow: hidden;
+    animation: ctaPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 10px 28px rgba(18,163,86,.45); }
+    50% { box-shadow: 0 14px 36px rgba(18,163,86,.65); }
+  }
+  .cta-button::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+    animation: shine 2.5s infinite;
+  }
+  @keyframes shine { to { left: 100%; } }
+  .cta-button:active { transform: scale(.98); box-shadow: 0 4px 12px rgba(18,163,86,.4); }
+  .cta-button .rocket-circle {
+    width: 30px; height: 30px; background: rgba(255,255,255,.2); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+  .cta-button .arrow { margin-left: auto; font-weight: 900; font-size: 22px; }
+
+  .cta-micro {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 10px 22px 4px; color: var(--text-medium);
+    font-size: 12px; font-weight: 600; position: relative; z-index: 1;
+  }
+  .cta-micro span { display: flex; align-items: center; gap: 5px; }
+  .cta-micro .dot-sep { width: 3px; height: 3px; background: var(--text-light); border-radius: 50%; }
+
+  /* ===== BENEFITS ===== */
+  .benefits {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    background: white; border-radius: var(--radius-lg);
+    padding: 18px 12px; margin: 18px 20px 14px;
+    box-shadow: var(--shadow-sm); border: 1px solid #E4EFE8;
+    position: relative; z-index: 1;
+  }
+  .benefit-item { text-align: center; padding: 0 6px; border-right: 1px solid #E4EFE8; }
+  .benefit-item:last-child { border-right: none; }
+  .benefit-icon-wrap {
+    width: 44px; height: 44px; margin: 0 auto 10px;
+    background: var(--v24-green-light); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 21px;
+  }
+  .benefit-item h3 { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 3px; }
+  .benefit-item p { font-size: 11px; color: var(--text-medium); line-height: 1.3; }
+
+  /* ===== TIME BADGE ===== */
+  .time-badge {
+    background: linear-gradient(135deg, #EDFBF3 0%, #D9F5E6 100%);
+    border-radius: var(--radius-md); padding: 14px 16px; margin: 0 20px 14px;
+    display: flex; align-items: center; gap: 12px;
+    position: relative; z-index: 1; border: 1px solid #BDE9D1;
+  }
+  .time-badge .timer-emoji { font-size: 32px; flex-shrink: 0; }
+  .time-badge-content { flex: 1; }
+  .time-badge h4 { font-size: 14px; font-weight: 800; color: var(--text-dark); margin-bottom: 2px; }
+  .time-badge p { font-size: 12px; color: var(--text-medium); margin-bottom: 7px; }
+  .progress-dots { display: flex; gap: 5px; }
+  .progress-dots .dot { width: 7px; height: 7px; border-radius: 50%; background: #BDE9D1; }
+  .progress-dots .dot.active { background: var(--v24-green); }
+  .sun-emoji { font-size: 30px; flex-shrink: 0; }
+
+  /* ===== DISCLAIMER + TIPS ===== */
+  .disclaimer {
+    display: flex; align-items: flex-start; justify-content: center; gap: 8px;
+    padding: 14px 24px 10px; text-align: center;
+    color: var(--text-light); font-size: 11.5px; line-height: 1.5;
+    position: relative; z-index: 1;
+  }
+  .disclaimer .sh { flex-shrink: 0; font-size: 14px; color: var(--v24-green); }
+
+  .bottom-tips {
+    background: white; border-top: 2px solid var(--v24-green);
+    padding: 18px 16px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    position: relative; z-index: 1; margin-top: 8px;
+  }
+  .bottom-tips::before {
+    content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 28px; height: 28px; background: var(--v24-green); border-radius: 50%;
+    box-shadow: 0 0 0 4px white, 0 4px 12px rgba(18,163,86,.3);
+  }
+  .bottom-tips::after {
+    content: '⭐'; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    font-size: 14px; z-index: 2;
+  }
+  .bt-item { display: flex; align-items: flex-start; gap: 10px; padding: 0 4px; }
+  .bt-icon { font-size: 26px; flex-shrink: 0; line-height: 1; }
+  .bt-content h5 { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 2px; line-height: 1.2; }
+  .bt-content p { font-size: 11px; color: var(--text-medium); line-height: 1.35; }
+
+  @media (max-height: 740px) {
+    .hero { padding: 14px 22px 6px; }
+    .badge-vagas { margin-bottom: 10px; padding: 7px 16px; font-size: 11.5px; }
+    .hero h1 { font-size: 28px; }
+    .hero h1 .highlight { font-size: 33px; }
+    .hero-description { font-size: 13px; }
+    .hero-image-wrap { margin: 8px auto 4px; max-width: 360px; }
+    .cta-button { padding: 16px 22px; font-size: 16px; }
+    .cta-micro { padding: 8px 22px 4px; }
+  }
+  @media (max-width: 380px) {
+    .hero h1 { font-size: 26px; }
+    .hero h1 .highlight { font-size: 31px; }
+    .benefits { padding: 14px 6px; }
+    .benefit-item { padding: 0 3px; }
+    .benefit-item h3 { font-size: 11.5px; }
+    .benefit-item p { font-size: 10px; }
+    .cta-button { font-size: 15px; padding: 16px 18px; }
+  }
+
+  /* ===== QUIZ MODAL (bottom sheet) ===== */
+  .quiz-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,.6); backdrop-filter: blur(6px);
+    z-index: 1000; display: none; align-items: flex-end; justify-content: center;
+  }
+  .quiz-overlay.active { display: flex; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .quiz-modal {
+    width: 100%; max-width: 480px; background: white;
+    border-radius: 28px 28px 0 0; max-height: 92vh; overflow-y: auto;
+    animation: slideUp .4s cubic-bezier(.16, 1, .3, 1); position: relative;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .quiz-header {
+    padding: 16px 20px 12px; border-bottom: 1px solid #E4EFE8;
+    position: sticky; top: 0; background: white; z-index: 10;
+    border-radius: 28px 28px 0 0;
+  }
+  .quiz-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .quiz-step-counter { font-size: 13px; color: var(--text-medium); font-weight: 600; }
+  .quiz-step-counter strong { color: var(--v24-green); font-weight: 800; }
+  .quiz-close {
+    background: #EFF5F1; border: none; width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-medium);
+  }
+
+  .quiz-xp-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .quiz-xp-label { font-size: 11px; font-weight: 800; color: var(--v24-green); white-space: nowrap; }
+  .quiz-xp-bar { flex: 1; height: 10px; background: #EFF5F1; border-radius: 5px; overflow: hidden; position: relative; }
+  .quiz-xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #34d27b 0%, var(--v24-green) 50%, #FFD700 100%);
+    border-radius: 5px; transition: width .6s cubic-bezier(.16,1,.3,1);
+    width: 0%; position: relative;
+  }
+  .quiz-xp-fill::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.4) 50%, transparent 100%);
+    animation: xpShine 1.5s ease-in-out infinite;
+  }
+  @keyframes xpShine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .quiz-xp-pts {
+    font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 900;
+    color: var(--v24-green); min-width: 50px; text-align: right;
+  }
+
+  .quiz-progress-bar { width: 100%; height: 5px; background: #EFF5F1; border-radius: 3px; overflow: hidden; }
+  .quiz-progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--v24-green) 0%, #34d27b 100%);
+    border-radius: 3px; transition: width .4s cubic-bezier(.16,1,.3,1); width: 0%;
+  }
+
+  .quiz-body { padding: 24px 22px 28px; }
+
+  .quiz-q-icon {
+    width: 56px; height: 56px; margin: 0 auto 14px;
+    background: var(--v24-green-light); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 30px;
+    animation: bounceIn .4s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .quiz-question {
+    font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 800;
+    line-height: 1.25; color: var(--text-dark); margin-bottom: 6px;
+    letter-spacing: -.5px; text-align: center; animation: fadeSlideUp .35s ease;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .quiz-subtext { color: var(--text-medium); font-size: 13.5px; margin-bottom: 20px; text-align: center; animation: fadeSlideUp .4s ease; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    background: white; border: 2px solid #E4EBE6; border-radius: var(--radius-md);
+    padding: 15px 18px; cursor: pointer; transition: all .2s ease;
+    display: flex; align-items: center; gap: 14px; text-align: left;
+    font-family: inherit; font-size: 15px; font-weight: 600;
+    color: var(--text-dark); width: 100%;
+    animation: optionSlideIn .3s ease both; position: relative; overflow: hidden;
+  }
+  .quiz-option:nth-child(1) { animation-delay: .05s; }
+  .quiz-option:nth-child(2) { animation-delay: .1s; }
+  .quiz-option:nth-child(3) { animation-delay: .15s; }
+  .quiz-option:nth-child(4) { animation-delay: .2s; }
+  .quiz-option:nth-child(5) { animation-delay: .25s; }
+  .quiz-option:nth-child(6) { animation-delay: .3s; }
+  @keyframes optionSlideIn {
+    from { opacity: 0; transform: translateX(-16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .quiz-option:active { transform: scale(.97); }
+  .quiz-option.selected {
+    border-color: var(--v24-green); background: var(--v24-green-light);
+    animation: optionPop .3s ease;
+  }
+  @keyframes optionPop { 0% { transform: scale(1); } 40% { transform: scale(1.03); } 100% { transform: scale(1); } }
+  .quiz-option.selected .option-radio {
+    border-color: var(--v24-green); background: var(--v24-green);
+    animation: radioPop .3s ease;
+  }
+  @keyframes radioPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+  .quiz-option.selected .option-radio::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+  .option-emoji { font-size: 24px; flex-shrink: 0; }
+  .option-text small { display: block; font-size: 11px; font-weight: 500; color: var(--text-light); margin-top: 1px; }
+  .option-radio {
+    width: 22px; height: 22px; border: 2px solid #CBD8D0; border-radius: 50%;
+    margin-left: auto; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; transition: all .2s ease;
+  }
+
+  /* FEEDBACK central */
+  .quiz-feedback {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: white; border: 2px solid var(--v24-green);
+    border-radius: 16px; padding: 16px 28px; text-align: center;
+    box-shadow: 0 12px 40px rgba(18,163,86,.3);
+    z-index: 1100; pointer-events: none; opacity: 0;
+    transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  .quiz-feedback.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  .quiz-feedback .fb-emoji { font-size: 36px; display: block; margin-bottom: 6px; }
+  .quiz-feedback .fb-text {
+    font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+    color: var(--text-dark); max-width: 240px;
+  }
+  .quiz-feedback.long .fb-text { max-width: 300px; font-size: 15px; line-height: 1.35; }
+  .quiz-feedback .fb-pts { font-size: 13px; font-weight: 700; color: var(--v24-green); margin-top: 2px; }
+
+  /* +PTS flutuante */
+  .floating-pts {
+    position: fixed; font-family: 'Nunito', sans-serif;
+    font-size: 22px; font-weight: 900; color: var(--v24-green);
+    pointer-events: none; z-index: 1200;
+    animation: floatUp .9s ease forwards;
+    text-shadow: 0 2px 8px rgba(18,163,86,.3);
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    70% { opacity: 1; transform: translateY(-60px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-90px) scale(.8); }
+  }
+
+  /* CONFETTI */
+  .confetti-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 1300; overflow: hidden;
+  }
+  .confetti-piece { position: absolute; top: -10px; width: 10px; height: 10px; border-radius: 2px; animation: confettiFall linear forwards; }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* LOADING */
+  .quiz-loading { text-align: center; padding: 40px 24px; }
+  .loading-spinner {
+    width: 80px; height: 80px; margin: 0 auto 24px;
+    border: 6px solid var(--v24-green-light); border-top-color: var(--v24-green);
+    border-radius: 50%; animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .quiz-loading h3 { font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
+  .quiz-loading p { color: var(--text-medium); font-size: 14px; }
+  .loading-steps { margin: 28px auto 0; text-align: left; max-width: 300px; }
+  .loading-step {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    color: var(--text-light); font-size: 14px; font-weight: 600; transition: color .3s ease;
+  }
+  .loading-step.done { color: var(--green-success); }
+  .loading-step .check {
+    width: 22px; height: 22px; border-radius: 50%; background: #E4EBE6;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 12px; font-weight: 800; flex-shrink: 0; transition: all .3s ease;
+  }
+  .loading-step.done .check { background: var(--green-success); }
+
+  /* ===== RESULT ===== */
+  .quiz-result { text-align: center; padding: 0 0 32px; animation: resultFadeIn .4s ease; }
+  @keyframes resultFadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .result-top-header {
+    background: linear-gradient(160deg, #f3fdf7 0%, #e9f9f0 100%);
+    padding: 20px 22px 16px; position: relative; text-align: center;
+  }
+  .score-reveal { text-align: center; margin-bottom: 14px; }
+  .score-circle {
+    width: 100px; height: 100px; margin: 0 auto 10px; border-radius: 50%;
+    background: conic-gradient(var(--v24-green) 0%, #FFD700 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 30px rgba(18,163,86,.3);
+    animation: scorePopIn .5s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  @keyframes scorePopIn {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .score-circle-inner {
+    width: 82px; height: 82px; background: white; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .score-circle-inner .score-num {
+    font-family: 'Nunito', sans-serif; font-size: 30px; font-weight: 900;
+    color: var(--v24-green); line-height: 1;
+  }
+  .score-circle-inner .score-label {
+    font-size: 9.5px; font-weight: 700; color: var(--text-medium);
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .score-status { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; color: var(--green-success); }
+
+  .result-badge-vagas {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--v24-green) 0%, var(--v24-green-dark) 100%);
+    color: white; padding: 8px 20px; border-radius: 999px;
+    font-weight: 800; font-size: 13px; letter-spacing: .8px;
+    box-shadow: 0 6px 20px rgba(18,163,86,.4);
+    margin-bottom: 14px; animation: pulse 2s ease-in-out infinite;
+  }
+  .result-badge-vagas .s-icon {
+    width: 22px; height: 22px; background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--v24-green); font-weight: 900; font-size: 12px; flex-shrink: 0;
+  }
+  .result-compatible-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; border: 2px solid var(--green-success); color: var(--green-success);
+    padding: 8px 20px; border-radius: 999px; font-weight: 800; font-size: 14px;
+    margin-bottom: 14px; box-shadow: 0 4px 14px rgba(34,197,94,.2);
+  }
+  .result-compatible-badge .check-circle {
+    width: 26px; height: 26px; background: var(--green-success); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+
+  .result-title {
+    font-family: 'Nunito', sans-serif; font-size: 28px; font-weight: 900;
+    color: var(--text-dark); line-height: 1.12; letter-spacing: -1px; margin-bottom: 6px;
+  }
+  .result-title .orange-word { color: var(--v24-green); display: block; font-size: 33px; }
+  .result-subtitle { color: var(--text-medium); font-size: 14px; line-height: 1.45; max-width: 300px; margin: 0 auto 4px; }
+
+  /* Caixa do potencial R$ */
+  .result-money-card {
+    margin: 14px 20px; background: #0D2318; border-radius: 18px;
+    padding: 16px 18px 18px; box-shadow: 0 10px 30px rgba(6, 35, 20, .35);
+    position: relative; overflow: hidden;
+  }
+  .result-money-card::after {
+    content: '✦'; position: absolute; right: 16px; top: 12px;
+    color: rgba(255,255,255,.18); font-size: 20px;
+  }
+  .result-money-card small {
+    display: block; color: #9fc4ae; font-weight: 700; font-size: 11px;
+    text-transform: uppercase; letter-spacing: .6px;
+  }
+  .result-money-card .money {
+    display: block; margin-top: 4px;
+    font-family: 'Nunito', sans-serif; font-size: 40px; font-weight: 900;
+    color: #6ff0a8; letter-spacing: -1.5px; line-height: 1;
+  }
+  .result-money-card .money-note { display: block; margin-top: 7px; color: #8fb49e; font-size: 11px; line-height: 1.45; }
+
+  .result-cta-wrap { padding: 0 20px 14px; }
+
+  .result-checklist-card {
+    background: white; border-radius: 18px; border: 1.5px solid #E7F0EA;
+    margin: 0 20px 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.06);
+  }
+  .checklist-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 18px; border-bottom: 1px dashed #E7F0EA;
+  }
+  .checklist-row:last-child { border-bottom: none; }
+  .checklist-left { display: flex; align-items: center; gap: 12px; }
+  .checklist-icon-wrap {
+    width: 36px; height: 36px; background: var(--v24-green-light); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+  }
+  .checklist-label { font-size: 14px; font-weight: 600; color: var(--text-dark); text-align: left; }
+  .checklist-right { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: var(--text-dark); text-align: right; }
+  .checklist-right.green { color: var(--green-success); }
+  .check-badge {
+    width: 22px; height: 22px; background: var(--green-success); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 12px; font-weight: 900; flex-shrink: 0;
+  }
+
+  .result-unlock-banner {
+    background: #111111; border-radius: 16px; margin: 0 20px 14px;
+    padding: 16px 18px; display: flex; align-items: center; gap: 14px;
+    text-align: left; position: relative; overflow: hidden;
+  }
+  .result-unlock-banner::after {
+    content: '✦'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    color: rgba(255,255,255,.2); font-size: 20px;
+  }
+  .unlock-lock-icon {
+    width: 52px; height: 52px;
+    background: radial-gradient(circle, rgba(18,163,86,.3) 0%, transparent 70%);
+    border: 2px solid rgba(18,163,86,.5); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .unlock-text { flex: 1; }
+  .unlock-text p { color: white; font-size: 14px; font-weight: 600; line-height: 1.45; margin: 0; }
+  .unlock-text p span { color: #4be48f; font-weight: 800; }
+
+  .result-what-you-get { margin: 0 20px 14px; }
+  .result-what-you-get h4 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-align: center; }
+  .what-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .what-item {
+    background: white; border: 1.5px solid #E7F0EA; border-radius: 14px;
+    padding: 12px 6px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  .what-item .wi-icon { font-size: 24px; margin-bottom: 6px; display: block; }
+  .what-item .wi-text { font-size: 10.5px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+
+  .result-disclaimer {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin: 8px 20px 14px; font-size: 11px; color: var(--text-light);
+    font-weight: 500; line-height: 1.4; text-align: center;
+  }
+  .result-disclaimer .shield { font-size: 14px; flex-shrink: 0; }
+
+  .result-tip-bar { display: flex; margin: 0 20px; gap: 10px; }
+  .rtb-item {
+    flex: 1; background: var(--v24-green-light); border-radius: 12px;
+    padding: 10px; display: flex; align-items: flex-start; gap: 8px;
+  }
+  .rtb-item .rtb-icon { font-size: 20px; flex-shrink: 0; }
+  .rtb-item .rtb-text strong { display: block; font-size: 11px; font-weight: 800; color: var(--text-dark); margin-bottom: 2px; text-align: left; }
+  .rtb-item .rtb-text span { display: block; font-size: 10px; color: var(--text-medium); font-weight: 500; line-height: 1.3; text-align: left; }
+</style>
+<!-- UTMify — persistência de UTMs/fbclid/fbp entre páginas -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1395668239054238');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1395668239054238&ev=PageView&noscript=1"></noscript>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge-vagas">
+      <div class="wpp-dot">✓</div>
+      <span>FUNÇÃO DISPONÍVEL NO SEU WHATSAPP</span>
+    </div>
+
+    <h1>
+      Seu WhatsApp tem um
+      <span class="highlight">funcionário 24h</span>
+      desativado
+    </h1>
+
+    <div class="subtitle-line">
+      <span>Atende e vende sozinho, dia e noite</span>
+    </div>
+
+    <p class="hero-description">
+      Responda o teste rápido e veja se o seu negócio já pode ativar o atendimento com IA — e quanto ele pode recuperar por mês.
+    </p>
+  </section>
+
+  <!-- IMAGEM -->
+  <div class="hero-image-wrap">
+    <span class="hero-image-live" id="liveCount">87 fazendo o teste agora</span>
+    <img class="hero-image" src="img/quiz-hero-beneficios-v7.webp" width="1024" height="1536" alt="Vendedora mostrando no WhatsApp um atendimento 24h que gera mais vendas e mais tempo" fetchpriority="high">
+  </div>
+
+  <!-- CTA PRINCIPAL -->
+  <div class="cta-wrap">
+    <button class="cta-button" onclick="startQuiz()">
+      <div class="rocket-circle">🚀</div>
+      <span>Começar teste agora</span>
+      <span class="arrow">›</span>
+    </button>
+  </div>
+
+  <div class="cta-micro">
+    <span>✓ 100% gratuito</span>
+    <span class="dot-sep"></span>
+    <span>✓ Sem cadastro</span>
+    <span class="dot-sep"></span>
+    <span>✓ Resultado na hora</span>
+  </div>
+
+  <!-- BENEFITS -->
+  <div class="benefits">
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">💬</div>
+      <h3>No seu WhatsApp</h3>
+      <p>Sem instalar nenhum outro app</p>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🧠</div>
+      <h3>Sem saber de IA</h3>
+      <p>Ativação guiada, passo a passo</p>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🌙</div>
+      <h3>Vende 24h</h3>
+      <p>Noites, almoço e fins de semana</p>
+    </div>
+  </div>
+
+  <!-- TIME BADGE -->
+  <div class="time-badge">
+    <div class="timer-emoji">⏱️</div>
+    <div class="time-badge-content">
+      <h4>Leva menos de 1 minuto</h4>
+      <p>7 perguntas rápidas</p>
+      <div class="progress-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="sun-emoji">📲</div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <span class="sh">🛡️</span>
+    <span>Diagnóstico gratuito e independente.<br>A estimativa é uma projeção, não uma garantia de resultado.</span>
+  </div>
+
+  <!-- BOTTOM TIPS -->
+  <div class="bottom-tips">
+    <div class="bt-item">
+      <div class="bt-icon">🏆</div>
+      <div class="bt-content">
+        <h5>Complete e desbloqueie</h5>
+        <p>seu diagnóstico personalizado!</p>
+      </div>
+    </div>
+    <div class="bt-item">
+      <div class="bt-icon">🎁</div>
+      <div class="bt-content">
+        <h5>Dica: seja honesto</h5>
+        <p>para receber o melhor resultado!</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- QUIZ MODAL -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <div class="quiz-header">
+      <div class="quiz-header-top">
+        <div class="quiz-step-counter">
+          Pergunta <strong id="currentStep">1</strong> de <strong id="totalSteps">7</strong>
+        </div>
+        <button class="quiz-close" onclick="closeQuiz()">✕</button>
+      </div>
+      <div class="quiz-xp-wrap">
+        <span class="quiz-xp-label">XP</span>
+        <div class="quiz-xp-bar">
+          <div class="quiz-xp-fill" id="xpFill"></div>
+        </div>
+        <span class="quiz-xp-pts" id="xpPts">0 pts</span>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="quiz-body" id="quizBody"></div>
+  </div>
+</div>
+<div class="quiz-feedback" id="quizFeedback">
+  <span class="fb-emoji" id="fbEmoji"></span>
+  <div class="fb-text" id="fbText"></div>
+  <div class="fb-pts" id="fbPts"></div>
+</div>
+
+<script>
+  function track(name, data) { try { if (window.fbq) window.fbq('trackCustom', name, data || {}); } catch (e) {} }
+
+  // Contador "fazendo o teste agora" — oscila devagar pra parecer vivo
+  (function () {
+    var live = 78 + Math.floor(Math.random() * 14);
+    var el = document.getElementById('liveCount');
+    setInterval(function () {
+      live = Math.max(64, Math.min(112, live + (Math.random() < .5 ? -1 : 1) * (1 + Math.floor(Math.random() * 2))));
+      if (el) el.textContent = live + ' fazendo o teste agora';
+    }, 3800);
+  })();
+
+  const questions = [
+    {
+      icon: "🏪",
+      key: "business",
+      question: "Qual é o seu tipo de negócio?",
+      subtext: "Escolha o mais parecido com o seu.",
+      options: [
+        { emoji: "🍔", text: "Alimentação", sub: "Lanchonete, delivery, restaurante", pts: 10, value: "alimentação" },
+        { emoji: "🛍️", text: "Loja ou e-commerce", sub: "Moda, presentes, produtos", pts: 10, value: "loja" },
+        { emoji: "✂️", text: "Beleza e estética", sub: "Salão, barbearia, procedimentos", pts: 10, value: "beleza" },
+        { emoji: "🩺", text: "Clínica ou consultório", sub: "Saúde, odontologia, terapias", pts: 10, value: "clínica" },
+        { emoji: "🔧", text: "Prestação de serviços", sub: "Orçamentos e agendamentos", pts: 10, value: "serviços" },
+        { emoji: "🏪", text: "Outro negócio", sub: "Também vendo pelo WhatsApp", pts: 10, value: "negócio" }
+      ],
+      feedbacks: [
+        { emoji: "🔥", text: "Delivery é onde a IA mais fecha pedido!" },
+        { emoji: "🛒", text: "Loja no WhatsApp vende até de madrugada!" },
+        { emoji: "💅", text: "Agendamento automático é ouro no seu ramo!" },
+        { emoji: "🩺", text: "Paciente respondido na hora não some!" },
+        { emoji: "📋", text: "Orçamento rápido fecha muito mais!" },
+        { emoji: "👍", text: "Todo negócio de WhatsApp se beneficia!" }
+      ]
+    },
+    {
+      icon: "📲",
+      key: "volume",
+      question: "Quantas pessoas chamam por dia?",
+      subtext: "Conte conversas sobre preço, horário, orçamento ou agendamento.",
+      options: [
+        { emoji: "💬", text: "Até 5 conversas", pts: 8, value: 4 },
+        { emoji: "📲", text: "De 6 a 15 conversas", pts: 10, value: 10 },
+        { emoji: "🔥", text: "De 16 a 30 conversas", pts: 13, value: 22 },
+        { emoji: "🚀", text: "Mais de 30 conversas", pts: 15, value: 40 }
+      ],
+      feedbacks: [
+        { emoji: "👍", text: "Cada conversa vale muito no seu volume!" },
+        { emoji: "📈", text: "Boa demanda — dá pra aproveitar mais!" },
+        { emoji: "💰", text: "Esse volume já pede automação!" },
+        { emoji: "🤑", text: "Volume alto = muita venda escapando!" }
+      ]
+    },
+    {
+      icon: "⏰",
+      key: "delay",
+      question: "Quanto tempo o cliente espera por resposta?",
+      subtext: "Pense nos momentos em que o movimento aperta.",
+      options: [
+        { emoji: "⚡", text: "Quase na hora", pts: 8, value: .08 },
+        { emoji: "⏱️", text: "Entre 5 e 30 minutos", pts: 10, value: .15 },
+        { emoji: "🕐", text: "Às vezes demora horas", pts: 13, value: .25 },
+        { emoji: "😓", text: "Alguns ficam sem resposta", pts: 15, value: .34 }
+      ],
+      feedbacks: [
+        { emoji: "⚡", text: "Rápido! Mas e quando você não está?" },
+        { emoji: "🤔", text: "Em 30 min o cliente já pesquisou o concorrente!" },
+        { emoji: "⚠️", text: "Horas de espera = venda esfriando!" },
+        { emoji: "🚨", text: "Sem resposta é venda indo embora!" }
+      ]
+    },
+    {
+      icon: "🌙",
+      key: "after",
+      question: "E quando você sai do celular?",
+      subtext: "Noites, almoço, fins de semana e feriados.",
+      options: [
+        { emoji: "🟢", text: "Também respondemos rápido", pts: 8, value: .04 },
+        { emoji: "🌓", text: "Respondemos quando dá", pts: 10, value: .1 },
+        { emoji: "🌙", text: "Só no próximo expediente", pts: 13, value: .17 },
+        { emoji: "📴", text: "Quase nunca respondemos", pts: 15, value: .24 }
+      ],
+      feedbacks: [
+        { emoji: "💪", text: "Forte! Mas ninguém aguenta 24h no manual!" },
+        { emoji: "⏳", text: "\"Quando dá\" é onde a venda escapa!" },
+        { emoji: "🌙", text: "A noite inteira sem atendimento!" },
+        { emoji: "🔓", text: "Um turno inteiro descoberto — dá pra ativar!" }
+      ]
+    },
+    {
+      icon: "🕳️",
+      key: "loss",
+      question: "Você já percebeu cliente desistindo?",
+      subtext: "Muita gente simplesmente para de responder.",
+      options: [
+        { emoji: "😣", text: "Sim, acontece bastante", pts: 15, value: .08 },
+        { emoji: "🤔", text: "Às vezes acontece", pts: 12, value: .04 },
+        { emoji: "👀", text: "Suspeito, mas não acompanho", pts: 10, value: .03 },
+        { emoji: "✅", text: "Raramente percebo", pts: 8, value: 0 }
+      ],
+      feedbacks: [
+        { emoji: "🚨", text: "Cada desistência era uma venda quase pronta!" },
+        { emoji: "🔍", text: "Mesmo \"às vezes\" soma muito no mês!" },
+        { emoji: "🕵️", text: "O que não é medido, escapa em silêncio!" },
+        { emoji: "🏆", text: "Ótimo sinal! Vamos cruzar com o valor médio!" }
+      ]
+    },
+    {
+      icon: "👩‍💼",
+      key: "employee",
+      question: "Hoje você paga alguém para atender o WhatsApp?",
+      subtext: "Ou alguém da equipe precisa parar outras tarefas para responder?",
+      feedbackDuration: 3400,
+      options: [
+        { emoji: "💼", text: "Sim, tenho alguém dedicado", pts: 15, value: "dedicado" },
+        { emoji: "🔄", text: "Sim, mas acumula outras tarefas", pts: 13, value: "acumula" },
+        { emoji: "📱", text: "Eu mesmo respondo tudo", pts: 12, value: "dono" },
+        { emoji: "⏳", text: "Não há responsável fixo", pts: 10, value: "sem_responsavel" }
+      ],
+      feedbacks: [
+        { emoji: "📊", text: "Um salário mensal cobre só uma jornada. O Vendedor 24h não tira férias, não folga e segue o padrão que você configurar." },
+        { emoji: "⚡", text: "Mesmo pagando salário, alguém precisa dividir a atenção. O Vendedor 24h assume o WhatsApp sem parar as outras tarefas." },
+        { emoji: "⏰", text: "Você economiza salário, mas paga com o próprio tempo. O Vendedor 24h devolve suas horas e responde como você ensinar." },
+        { emoji: "🌙", text: "Sem responsável fixo, clientes esperam. O Vendedor 24h mantém seu padrão todos os dias, sem depender de escala." }
+      ]
+    },
+    {
+      icon: "💰",
+      key: "ticket",
+      question: "Quanto vale uma venda média?",
+      subtext: "Última pergunta — quase lá!",
+      options: [
+        { emoji: "💵", text: "Até R$ 50", pts: 8, value: 35 },
+        { emoji: "💳", text: "R$ 51 a R$ 150", pts: 10, value: 100 },
+        { emoji: "💎", text: "R$ 151 a R$ 500", pts: 13, value: 300 },
+        { emoji: "🏆", text: "Acima de R$ 500", pts: 15, value: 650 }
+      ],
+      feedbacks: [
+        { emoji: "📊", text: "Volume compensa — cada venda conta!" },
+        { emoji: "💰", text: "Ticket bom pra recuperar bastante!" },
+        { emoji: "💎", text: "Cada conversa perdida custa caro!" },
+        { emoji: "🤯", text: "Uma venda recuperada já paga o mês!" }
+      ]
+    }
+  ];
+
+  let currentQuestion = 0;
+  let answers = {};
+  let totalXP = 0;
+  const maxXP = 100;
+
+  function startQuiz() {
+    document.getElementById('quizOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentQuestion = 0;
+    answers = {};
+    totalXP = 0;
+    updateXP();
+    const header = document.querySelector('.quiz-header');
+    if (header) header.style.display = '';
+    document.querySelector('.quiz-modal').style.borderRadius = '';
+    track('QuizStart');
+    try { sessionStorage.setItem('v24_quiz_started', '1'); } catch (e) {}
+    renderQuestion();
+  }
+
+  function closeQuiz() {
+    document.getElementById('quizOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    const header = document.querySelector('.quiz-header');
+    if (header) header.style.display = '';
+  }
+
+  function updateXP() {
+    const fill = document.getElementById('xpFill');
+    const label = document.getElementById('xpPts');
+    if (fill) fill.style.width = Math.min((totalXP / maxXP) * 100, 100) + '%';
+    if (label) label.textContent = totalXP + ' pts';
+  }
+
+  function showFloatingPts(pts, x, y) {
+    const el = document.createElement('div');
+    el.className = 'floating-pts';
+    el.textContent = '+' + pts;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+
+  function showFeedback(emoji, text, pts, duration) {
+    const fb = document.getElementById('quizFeedback');
+    document.getElementById('fbEmoji').textContent = emoji;
+    document.getElementById('fbText').textContent = text;
+    document.getElementById('fbPts').textContent = '+' + pts + ' XP';
+    fb.classList.toggle('long', text.length > 80);
+    fb.classList.add('show');
+    setTimeout(() => fb.classList.remove('show'), duration || 1100);
+  }
+
+  function launchConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+    const colors = ['#12A356', '#FFD700', '#22C55E', '#25D366', '#FFC107', '#4be48f', '#7C4DFF'];
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (Math.random() * 8 + 6) + 'px';
+      piece.style.height = (Math.random() * 8 + 6) + 'px';
+      piece.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+      piece.style.animationDelay = (Math.random() * .5) + 's';
+      if (Math.random() > .5) piece.style.borderRadius = '50%';
+      container.appendChild(piece);
+    }
+    setTimeout(() => container.remove(), 3500);
+  }
+
+  function renderQuestion() {
+    const q = questions[currentQuestion];
+    const progress = (currentQuestion / questions.length) * 100;
+
+    document.getElementById('currentStep').textContent = currentQuestion + 1;
+    document.getElementById('totalSteps').textContent = questions.length;
+    document.getElementById('progressFill').style.width = progress + '%';
+
+    const body = document.getElementById('quizBody');
+    body.innerHTML = `
+      <div class="quiz-q-icon">${q.icon}</div>
+      <h2 class="quiz-question">${q.question}</h2>
+      <p class="quiz-subtext">${q.subtext}</p>
+      <div class="quiz-options">
+        ${q.options.map((opt, i) => `
+          <button class="quiz-option" onclick="selectAnswer(${i})">
+            <span class="option-emoji">${opt.emoji}</span>
+            <span class="option-text">${opt.text}${opt.sub ? '<small>' + opt.sub + '</small>' : ''}</span>
+            <span class="option-radio"></span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+    document.querySelector('.quiz-modal').scrollTop = 0;
+  }
+
+  function selectAnswer(index) {
+    const buttons = document.querySelectorAll('.quiz-option');
+    buttons.forEach(b => { b.classList.remove('selected'); b.style.pointerEvents = 'none'; });
+    buttons[index].classList.add('selected');
+
+    const q = questions[currentQuestion];
+    const opt = q.options[index];
+    answers[q.key] = { index: index, value: opt.value, label: opt.text };
+
+    const pts = opt.pts;
+    totalXP += pts;
+    updateXP();
+
+    const rect = buttons[index].getBoundingClientRect();
+    showFloatingPts(pts, rect.right - 40, rect.top);
+
+    const fb = q.feedbacks[index];
+    const feedbackDuration = q.feedbackDuration || 1200;
+    showFeedback(fb.emoji, fb.text, pts, feedbackDuration);
+
+    track('QuizAnswer', { step: currentQuestion + 1, question: q.key, answer: opt.text });
+
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showLoading();
+      }
+    }, feedbackDuration);
+  }
+
+  function showLoading() {
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('currentStep').textContent = questions.length;
+
+    const body = document.getElementById('quizBody');
+    body.innerHTML = `
+      <div class="quiz-loading">
+        <div class="loading-spinner"></div>
+        <h3>Analisando seu atendimento...</h3>
+        <p>Calculando seu diagnóstico personalizado</p>
+        <div class="loading-steps">
+          <div class="loading-step" id="step1"><div class="check">⏱</div><span>Mapeando suas conversas diárias</span></div>
+          <div class="loading-step" id="step2"><div class="check">⏱</div><span>Medindo o turno sem atendimento</span></div>
+          <div class="loading-step" id="step3"><div class="check">⏱</div><span>Calculando o vazamento de vendas</span></div>
+          <div class="loading-step" id="step4"><div class="check">⏱</div><span>Gerando seu resultado personalizado</span></div>
+        </div>
+      </div>
+    `;
+
+    setTimeout(() => completeStep('step1'), 700);
+    setTimeout(() => completeStep('step2'), 1500);
+    setTimeout(() => completeStep('step3'), 2300);
+    setTimeout(() => completeStep('step4'), 3100);
+    setTimeout(showResult, 3800);
+  }
+
+  function completeStep(id) {
+    const step = document.getElementById(id);
+    if (step) {
+      step.classList.add('done');
+      step.querySelector('.check').textContent = '✓';
+    }
+  }
+
+  function computeResult() {
+    const a = answers;
+    const leads = a.volume.value * 30;
+    const leak = Math.min(.5, a.delay.value + a.after.value + a.loss.value);
+    const raw = leads * leak * a.ticket.value;
+    const estimate = Math.max(100, Math.round(raw / 50) * 50);
+    const score = Math.min(96, Math.round(48 + (leak * 95) + (a.volume.value * .55)));
+    return { estimate: estimate, score: score };
+  }
+
+  function formatBRL(v) {
+    return 'R$ ' + v.toLocaleString('pt-BR');
+  }
+
+  function showResult() {
+    const r = computeResult();
+    launchConfetti();
+
+    track('QuizComplete', { score: r.score, potential: r.estimate, business: answers.business.value });
+    try { if (window.fbq) window.fbq('track', 'Lead', { content_name: 'Quiz Vendedor 24h', value: r.estimate, currency: 'BRL' }); } catch (e) {}
+
+    const body = document.getElementById('quizBody');
+    body.innerHTML = `
+      <div class="quiz-result">
+
+        <div class="result-top-header">
+          <div class="score-reveal">
+            <div class="score-circle">
+              <div class="score-circle-inner">
+                <span class="score-num">${r.score}%</span>
+                <span class="score-label">compatível</span>
+              </div>
+            </div>
+            <div class="score-status">✅ Diagnóstico pronto!</div>
+          </div>
+
+          <div>
+            <div class="result-badge-vagas">
+              <div class="s-icon">✓</div>
+              FUNÇÃO DISPONÍVEL
+            </div>
+          </div>
+          <div>
+            <div class="result-compatible-badge">
+              <div class="check-circle">✓</div>
+              ${totalXP} XP — Perfil forte
+            </div>
+          </div>
+          <h2 class="result-title">
+            Seu funcionário 24h
+            <span class="orange-word">pode ser ativado</span>
+          </h2>
+          <p class="result-subtitle">Seu negócio de <strong>${answers.business.label.toLowerCase()}</strong> tem o perfil ideal para o atendimento com IA no WhatsApp.</p>
+        </div>
+
+        <div class="result-money-card">
+          <small>Estimativa de vendas escapando por mês</small>
+          <span class="money">até ${formatBRL(r.estimate)}</span>
+          <span class="money-note">Projeção com base na sua demanda, velocidade de resposta, horário e valor médio de venda.</span>
+        </div>
+
+        <div class="result-cta-wrap">
+          <button class="cta-button" onclick="goToOffer()" style="font-size:17px;border-radius:14px;padding:18px 20px;">
+            <div class="rocket-circle">🚀</div>
+            <span>ATIVAR MEU FUNCIONÁRIO 24H</span>
+            <span class="arrow">›</span>
+          </button>
+        </div>
+
+        <div class="result-checklist-card">
+          <div class="checklist-row">
+            <div class="checklist-left">
+              <div class="checklist-icon-wrap">🏆</div>
+              <span class="checklist-label">Pontuação</span>
+            </div>
+            <div class="checklist-right green">
+              ${totalXP} XP
+              <div class="check-badge">✓</div>
+            </div>
+          </div>
+          <div class="checklist-row">
+            <div class="checklist-left">
+              <div class="checklist-icon-wrap">👤</div>
+              <span class="checklist-label">Perfil do negócio</span>
+            </div>
+            <div class="checklist-right green">
+              Compatível
+              <div class="check-badge">✓</div>
+            </div>
+          </div>
+          <div class="checklist-row">
+            <div class="checklist-left">
+              <div class="checklist-icon-wrap">🧠</div>
+              <span class="checklist-label">Precisa saber de IA</span>
+            </div>
+            <div class="checklist-right">
+              Não
+              <div class="check-badge">✓</div>
+            </div>
+          </div>
+          <div class="checklist-row">
+            <div class="checklist-left">
+              <div class="checklist-icon-wrap">🚩</div>
+              <span class="checklist-label">Próximo passo</span>
+            </div>
+            <div class="checklist-right">
+              Ativar agora
+              <div class="check-badge">✓</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-unlock-banner">
+          <div class="unlock-lock-icon">🔓</div>
+          <div class="unlock-text">
+            <p>Seu resultado de <span>${r.score}%</span> libera a ativação guiada do seu atendente de IA.</p>
+          </div>
+        </div>
+
+        <div class="result-what-you-get">
+          <h4>O que você recebe</h4>
+          <div class="what-grid">
+            <div class="what-item">
+              <span class="wi-icon">🤖</span>
+              <span class="wi-text">IA que atende e vende sozinha</span>
+            </div>
+            <div class="what-item">
+              <span class="wi-icon">📖</span>
+              <span class="wi-text">Ativação guiada passo a passo</span>
+            </div>
+            <div class="what-item">
+              <span class="wi-icon">🌙</span>
+              <span class="wi-text">Atendimento 24h por dia</span>
+            </div>
+            <div class="what-item">
+              <span class="wi-icon">💬</span>
+              <span class="wi-text">Tudo no seu WhatsApp</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-disclaimer">
+          <span class="shield">🛡️</span>
+          <span>Estimativa baseada nas suas respostas.<br>Projeção, não garantia de resultado.</span>
+        </div>
+
+        <div class="result-tip-bar">
+          <div class="rtb-item">
+            <span class="rtb-icon">⚡</span>
+            <div class="rtb-text">
+              <strong>Ativação imediata</strong>
+              <span>Seu atendente começa a trabalhar hoje</span>
+            </div>
+          </div>
+          <div class="rtb-item">
+            <span class="rtb-icon">🔒</span>
+            <div class="rtb-text">
+              <strong>100% seguro</strong>
+              <span>Pagamento protegido com garantia</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `;
+
+    document.querySelector('.quiz-header').style.display = 'none';
+    document.querySelector('.quiz-modal').style.borderRadius = '24px';
+    document.querySelector('.quiz-modal').scrollTop = 0;
+  }
+
+  function goToOffer() {
+    const r = computeResult();
+    const params = new URLSearchParams(location.search);
+    params.set('quiz', 'concluido');
+    params.set('score', r.score);
+    params.set('potencial', r.estimate);
+    params.set('segmento', answers.business.value);
+    track('QuizToSalesPage', { score: r.score, potential: r.estimate, business: answers.business.value });
+    setTimeout(function () { location.href = 'index.html?' + params.toString() + '#comprar'; }, 150);
+  }
+
+  document.getElementById('quizOverlay').addEventListener('click', function (e) {
+    if (e.target === this) closeQuiz();
+  });
+  document.addEventListener('dblclick', function (e) { e.preventDefault(); });
+</script>
+</body>
+</html>
