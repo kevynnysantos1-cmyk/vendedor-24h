@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('motion-ready');</script>
 <title>Ative o funcionário que já pode estar no seu WhatsApp — Vendedor 24h</title>
 <meta name="description" content="Método guiado para ativar e configurar a nova função de IA do WhatsApp Business para atender e ajudar a vender 24 horas.">
 <meta name="robots" content="noindex,nofollow">
@@ -32,6 +33,26 @@ h2{font-size:25px;font-weight:800;line-height:1.15;margin-bottom:8px}
 .hero-stack{width:100%;max-width:420px;margin:20px auto 0}
 .hero-stack .shot{max-width:100%;margin:0;border-radius:var(--radius) var(--radius) 0 0;box-shadow:none}
 .hero-proof{width:100%;height:auto;display:block;border-radius:0 0 var(--radius) var(--radius);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.motion-panel{position:relative;width:100%;max-width:420px;margin-left:auto;margin-right:auto;border-radius:var(--radius);isolation:isolate}
+.motion-panel:not(.hero-stack){overflow:hidden;border:1px solid rgba(15,31,23,.08);box-shadow:0 14px 34px rgba(15,31,23,.14)}
+.motion-panel:not(.hero-stack) .shot{max-width:none;margin:0;box-shadow:none}
+.hero-stack.motion-panel{margin:20px auto 0;overflow:hidden;box-shadow:0 14px 34px rgba(15,31,23,.14)}
+.hero-stack.motion-panel .hero-proof{box-shadow:none}
+.motion-panel--flush{margin-top:0;margin-bottom:0}
+.motion-panel--tight{margin-top:0;margin-bottom:4px}
+.motion-panel--spaced{margin-top:18px;margin-bottom:22px}
+.motion-panel--offer{margin-top:0;margin-bottom:22px}
+.motion-panel::after{content:'';position:absolute;z-index:2;inset:0;width:34%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.34),transparent);border-radius:inherit;opacity:0;transform:translate3d(-210%,0,0) skewX(-14deg);pointer-events:none}
+html.motion-ready .motion-panel{opacity:0;transform:translate3d(0,24px,0) scale(.985);transition:opacity .38s ease-out,transform .38s cubic-bezier(.2,.75,.25,1);will-change:opacity,transform}
+html.motion-ready .motion-panel[data-motion="left"]{transform:translate3d(-16px,12px,0) scale(.985)}
+html.motion-ready .motion-panel[data-motion="right"]{transform:translate3d(16px,12px,0) scale(.985)}
+html.motion-ready .motion-panel.is-visible{opacity:1;transform:translate3d(0,0,0) scale(1)}
+html.motion-ready .motion-panel.is-visible::after{animation:panel-sheen .48s .16s ease-out both}
+@keyframes panel-sheen{0%{opacity:0;transform:translate3d(-210%,0,0) skewX(-14deg)}18%{opacity:1}100%{opacity:0;transform:translate3d(390%,0,0) skewX(-14deg)}}
+@media(prefers-reduced-motion:reduce){
+  html.motion-ready .motion-panel{opacity:1;transform:none;transition:none;will-change:auto}
+  html.motion-ready .motion-panel::after{display:none;animation:none}
+}
 .bullets{list-style:none;display:grid;gap:12px;margin-top:18px}
 .bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e3efe8;border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
 .bullets .ic{font-size:24px;line-height:1.1}
@@ -164,8 +185,8 @@ fbq('track','PageView');
 <header class="sec center" style="padding-top:8px">
   <div class="wrap">
     <span class="eyebrow">⚡ A nova função do WhatsApp Business</span>
-    <div class="hero-stack">
-      <img class="shot" src="img/lp-teste-v2/01-hero-funcionario-24h.webp" width="1024" height="1536" fetchpriority="high" alt="Painel mostrando uma comerciante com seu funcionário 24 horas no WhatsApp">
+    <div class="hero-stack motion-panel" data-motion="up">
+      <img class="shot" src="img/lp-teste-v2/01-hero-funcionario-24h-whatsapp.webp" width="1024" height="1536" fetchpriority="high" alt="Painel mostrando uma comerciante com seu funcionário 24 horas no WhatsApp">
       <img class="hero-proof" src="img/comprovante.jpg" width="760" height="943" loading="lazy" alt="Comprovante de transferência recebida após atendimento no WhatsApp">
     </div>
     <div style="margin-top:18px"><a class="btn" href="#comprar">QUERO ATIVAR MEU FUNCIONÁRIO 24H!</a></div>
@@ -176,7 +197,9 @@ fbq('track','PageView');
 <!-- DOR -->
 <section class="sec bg2 image-first">
   <div class="wrap center">
-    <img class="shot" src="img/lp-teste-v2/02-venda-perdida.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando uma venda perdida porque a resposta ao cliente demorou" style="max-width:420px;margin:0 auto">
+    <div class="motion-panel motion-panel--flush" data-motion="left">
+      <img class="shot" src="img/lp-teste-v2/02-venda-perdida.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando uma venda perdida porque a resposta ao cliente demorou">
+    </div>
     <p class="lead" style="margin-top:18px">O cliente manda mensagem… você tá ocupado, dormindo ou de folga… ele cansa de esperar e compra no concorrente. Todo. Santo. Dia.</p>
   </div>
 </section>
@@ -184,7 +207,9 @@ fbq('track','PageView');
 <!-- SOLUÇÃO + CARROSSEL -->
 <section class="sec center image-first">
   <div class="wrap">
-    <img class="shot" src="img/lp-teste-v2/03-como-funciona.webp" width="1024" height="1536" loading="lazy" alt="Painel explicando em três passos como ativar e ensinar o Vendedor 24h" style="max-width:420px;margin:0 auto 4px">
+    <div class="motion-panel motion-panel--tight" data-motion="right">
+      <img class="shot" src="img/lp-teste-v2/03-como-funciona.webp" width="1024" height="1536" loading="lazy" alt="Painel explicando em três passos como ativar e ensinar o Vendedor 24h">
+    </div>
     <p class="lead" style="margin-top:18px">Depois de configurada, ela responde na hora, recomenda produtos e conduz o cliente até a compra — dentro do WhatsApp Business que você já usa.</p>
 
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -276,7 +301,9 @@ fbq('track','PageView');
 <section class="sec bg2">
   <div class="wrap">
     <h2 class="center">O que ele faz por você</h2>
-    <img class="shot" src="img/lp-teste-v2/04-beneficios.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando o Vendedor 24h respondendo, recomendando e ajudando a vender" style="max-width:420px;margin:18px auto 22px">
+    <div class="motion-panel motion-panel--spaced" data-motion="left">
+      <img class="shot" src="img/lp-teste-v2/04-beneficios.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando o Vendedor 24h respondendo, recomendando e ajudando a vender">
+    </div>
     <ul class="bullets">
       <li><span class="ic">🚀</span><div><b>Ativação rápida e guiada</b><span>Siga o passo a passo e configure sem código, técnico ou aplicativo novo.</span></div></li>
       <li><span class="ic">⚡</span><div><b>Responde na hora, 24h</b><span>Nenhum cliente fica no vácuo — nem de madrugada.</span></div></li>
@@ -334,7 +361,9 @@ fbq('track','PageView');
 <!-- OFERTA -->
 <section class="sec" id="comprar">
   <div class="wrap">
-    <img class="shot" src="img/lp-teste-v2/05-oferta.webp" width="1024" height="1536" loading="lazy" alt="Painel da oferta Método Vendedor 24h por cinquenta reais, pagamento único" style="max-width:420px;margin:0 auto 22px">
+    <div class="motion-panel motion-panel--offer" data-motion="up">
+      <img class="shot" src="img/lp-teste-v2/05-oferta.webp" width="1024" height="1536" loading="lazy" alt="Painel da oferta Método Vendedor 24h por cinquenta reais, pagamento único">
+    </div>
     <div class="offer">
       <div class="wabrand"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#25D366" d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.6 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3z"/><path fill="#fff" d="M22.6 18.4c-.3-.2-2-1-2.3-1.1-.3-.1-.6-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6 0-.2-.8-1.9-1.1-2.6-.3-.6-.5-.5-.8-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.4 3.7 5.8 5.2.8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>Funciona direto no seu WhatsApp</div>
       <h2 class="center">Destrave a função e coloque seu Vendedor 24h para trabalhar</h2>
@@ -411,6 +440,32 @@ fbq('track','PageView');
 
 <!-- STICKY CTA (mobile) -->
 <div class="sticky"><div class="wrap"><a class="btn" href="#comprar"><svg class="btn-wpp" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.8 6.5L3 29l6.7-1.8A13 13 0 1 0 16 3Zm0 23.6a10.5 10.5 0 0 1-5.4-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4A10.5 10.5 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.4.3-.4.9-1.3.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5 0-.1-.3-.2-.6-.4Z"/></svg><span>DESTRAVAR VENDEDOR AUTOMÁTICO</span></a></div></div>
+
+<script>
+(function(){
+  var panels=[].slice.call(document.querySelectorAll('.motion-panel'));
+  if(!panels.length)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var saveData=navigator.connection&&navigator.connection.saveData;
+  function show(panel){panel.classList.add('is-visible');}
+  if(reduce||saveData||!('IntersectionObserver' in window)){
+    panels.forEach(show);
+    return;
+  }
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      show(entry.target);
+      observer.unobserve(entry.target);
+    });
+  },{threshold:.14,rootMargin:'0px 0px -6% 0px'});
+  panels.forEach(function(panel){
+    var rect=panel.getBoundingClientRect();
+    if(rect.top<(window.innerHeight||document.documentElement.clientHeight)*.94)show(panel);
+    else observer.observe(panel);
+  });
+})();
+</script>
 
 <script>
 (function(){
