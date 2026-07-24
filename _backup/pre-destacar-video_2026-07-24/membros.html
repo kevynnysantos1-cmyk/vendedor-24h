@@ -81,15 +81,6 @@
     .stat span{display:block;margin-top:6px;color:var(--muted);font-size:12px;font-weight:750}
 
     .section{scroll-margin-top:88px;margin-top:22px;padding:25px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 35px rgba(5,70,63,.055)}
-    .video-feature{position:relative;margin-top:0;border:3px solid var(--yellow);background:linear-gradient(180deg,#fffdf2 0,#fff 32%);box-shadow:0 22px 60px rgba(115,86,8,.18)}
-    .video-kicker{display:inline-flex;align-items:center;min-height:34px;margin-bottom:11px;padding:6px 11px;border-radius:9px;background:var(--yellow);color:#4f3b00;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
-    .video-feature .section-head{margin-bottom:15px}
-    .video-feature .section-head h1{max-width:720px;margin:0;font-size:clamp(27px,4.6vw,40px);line-height:1.06;letter-spacing:-.035em}
-    .video-feature .section-head p{font-size:16px}
-    .video-focus{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;padding:11px 14px;border-radius:12px;background:var(--green-deep);color:#fff}
-    .video-focus strong{font-size:14px}
-    .video-focus span{color:#c7e8dc;font-size:12px;font-weight:750}
-    .video-feature .video-wrap{border:4px solid var(--green-deep);box-shadow:0 16px 38px rgba(5,70,63,.23)}
     .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
     .section-head h2{margin:0;font-size:25px;line-height:1.15;letter-spacing:-.025em}
     .section-head p{max-width:720px;margin:7px 0 0;color:var(--muted)}
@@ -166,7 +157,13 @@
 
     @media(max-width:900px){
       .shell{display:block;padding:18px 14px 60px}
-      .side{display:none}
+      .side{position:static;margin-bottom:16px}
+      .side-card{display:grid;grid-template-columns:1fr auto;align-items:center}
+      .player{padding:16px}
+      .nav{display:flex;overflow-x:auto;grid-column:1/-1;padding:10px;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.08)}
+      .nav::-webkit-scrollbar{display:none}
+      .nav a{flex:none;background:rgba(255,255,255,.06)}
+      .side-foot{display:none}
       .stats{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:680px){
@@ -175,10 +172,6 @@
       .top-chip:first-child{display:none}
       .hero,.section{padding:20px}
       .hero h1{font-size:31px}
-      .video-feature{padding:16px}
-      .video-feature .section-head{display:block}
-      .video-feature .pill{display:inline-flex;margin-top:10px}
-      .video-focus{align-items:flex-start;flex-direction:column;gap:3px}
       .next{grid-template-columns:auto 1fr}
       .next button{grid-column:1/-1;width:100%}
       .goal-box,.templates,.achievements{grid-template-columns:1fr}
@@ -220,7 +213,7 @@
   <div id="members" hidden>
     <header class="top">
       <div class="top-inner">
-        <a class="brand" href="#aula" aria-label="Ir para a aula principal">
+        <a class="brand" href="#inicio" aria-label="Início da área de membros">
           <img src="img/v24h-logo-dark.png" alt="Vendedor 24h">
         </a>
         <div class="top-stats">
@@ -250,18 +243,40 @@
       </aside>
 
       <main id="conteudo">
-        <section class="section video-feature" id="aula">
-          <span class="video-kicker">Passo 1 · Comece por este vídeo</span>
+        <section class="hero" id="inicio">
+          <div class="eyebrow">Sua jornada prática</div>
+          <h1>Assista, faça no WhatsApp e veja seu progresso crescer.</h1>
+          <p>Você não precisa decorar tudo. Complete as missões na ordem, marque o que fez e volte sempre do ponto em que parou.</p>
+          <div class="hero-progress">
+            <strong id="progress-label">0 de 29 ações concluídas</strong>
+            <b id="progress-percent">0%</b>
+            <div class="bar" aria-hidden="true"><span id="hero-progress"></span></div>
+          </div>
+        </section>
+
+        <section class="next" aria-live="polite">
+          <div class="next-num" id="next-num">1</div>
+          <div>
+            <small>Faça agora</small>
+            <strong id="next-title">Assista à aula principal</strong>
+          </div>
+          <button id="next-action" type="button">Ir para a próxima ação</button>
+        </section>
+
+        <div class="stats" aria-label="Resumo do progresso">
+          <div class="stat"><b id="stat-actions">0</b><span>Ações feitas</span></div>
+          <div class="stat"><b id="stat-missions">0/7</b><span>Missões completas</span></div>
+          <div class="stat"><b id="stat-streak">0</b><span>Dias de evolução</span></div>
+          <div class="stat"><b id="stat-badges">0/6</b><span>Conquistas</span></div>
+        </div>
+
+        <section class="section" id="aula">
           <div class="section-head">
             <div>
-              <h1>Antes das missões, assista à aula principal.</h1>
-              <p>Em pouco mais de 6 minutos você entende o que vai configurar e por que cada ação da trilha importa.</p>
+              <h2>Primeiro: entenda o que você vai configurar</h2>
+              <p>Assista à aula e depois escolha o principal objetivo do seu atendimento. Isso deixa as próximas missões mais fáceis.</p>
             </div>
             <span class="pill">6min09s</span>
-          </div>
-          <div class="video-focus">
-            <strong>Dê o play agora</strong>
-            <span>Depois, defina seu objetivo e ganhe os primeiros 10 XP.</span>
           </div>
           <div class="video-wrap">
             <video id="main-video" controls playsinline preload="metadata" controlslist="nodownload">
@@ -298,33 +313,6 @@
             <span class="xp">+10 XP</span>
           </label>
         </section>
-
-        <section class="hero" id="inicio">
-          <div class="eyebrow">Sua jornada prática</div>
-          <h1>Assista, faça no WhatsApp e veja seu progresso crescer.</h1>
-          <p>Você não precisa decorar tudo. Complete as missões na ordem, marque o que fez e volte sempre do ponto em que parou.</p>
-          <div class="hero-progress">
-            <strong id="progress-label">0 de 29 ações concluídas</strong>
-            <b id="progress-percent">0%</b>
-            <div class="bar" aria-hidden="true"><span id="hero-progress"></span></div>
-          </div>
-        </section>
-
-        <section class="next" aria-live="polite">
-          <div class="next-num" id="next-num">1</div>
-          <div>
-            <small>Faça agora</small>
-            <strong id="next-title">Assista à aula principal</strong>
-          </div>
-          <button id="next-action" type="button">Ir para a próxima ação</button>
-        </section>
-
-        <div class="stats" aria-label="Resumo do progresso">
-          <div class="stat"><b id="stat-actions">0</b><span>Ações feitas</span></div>
-          <div class="stat"><b id="stat-missions">0/7</b><span>Missões completas</span></div>
-          <div class="stat"><b id="stat-streak">0</b><span>Dias de evolução</span></div>
-          <div class="stat"><b id="stat-badges">0/6</b><span>Conquistas</span></div>
-        </div>
 
         <section class="section" id="trilha">
           <div class="journey-intro">
