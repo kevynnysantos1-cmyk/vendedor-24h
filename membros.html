@@ -8,113 +8,201 @@
   <title>Área de membros | Vendedor 24h</title>
   <style>
     :root{
-      --green:#25d366;--green-dark:#075e54;--green-deep:#05463f;--ink:#10231f;
-      --muted:#5d6d68;--line:#dce8e3;--soft:#eef8f3;--white:#fff;--yellow:#ffd54a;
-      --shadow:0 18px 50px rgba(5,70,63,.12);--radius:22px
+      color-scheme:light;
+      --green:#25d366;--green-dark:#075e54;--green-deep:#05463f;--green-soft:#eaf9f1;
+      --yellow:#ffd65c;--yellow-soft:#fff7d8;--ink:#10231f;--muted:#5c6d68;--line:#dce9e3;
+      --surface:#fff;--background:#f3f8f5;--danger:#a83a36;--shadow:0 18px 50px rgba(5,70,63,.11);
+      --radius:22px;--focus:#146cdb
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:#f4f8f6;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
-    button,a{font:inherit}
+    body{margin:0;background:var(--background);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+    button,input,select,textarea{font:inherit}
+    button,a,label,select{touch-action:manipulation}
+    button{cursor:pointer}
     a{color:inherit}
+    :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
     [hidden]{display:none!important}
-    .gate{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#d8f8e7 0,transparent 44%),#f4f8f6}
+    .skip{position:fixed;left:12px;top:-80px;z-index:1000;padding:12px 16px;border-radius:10px;background:#fff;color:var(--ink);font-weight:800}
+    .skip:focus{top:12px}
+
+    .gate{min-height:100dvh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#d8f8e7 0,transparent 44%),var(--background)}
     .gate-card{width:min(100%,470px);padding:34px 26px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}
-    .gate-icon{width:66px;height:66px;margin:0 auto 18px;display:grid;place-items:center;border-radius:20px;background:var(--soft);font-size:30px}
+    .gate-symbol{width:66px;height:66px;margin:0 auto 18px;display:grid;place-items:center;border-radius:20px;background:var(--green-soft);color:var(--green-dark);font-size:26px;font-weight:900}
     .gate h1{font-size:25px;line-height:1.15;margin:0 0 10px}
     .gate p{color:var(--muted);margin:0}
     .spinner{width:34px;height:34px;margin:24px auto 0;border:4px solid #d8ebe3;border-top-color:var(--green-dark);border-radius:50%;animation:spin .8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .gate-action{display:inline-flex;justify-content:center;margin-top:22px;padding:13px 20px;border-radius:14px;background:var(--green-dark);color:#fff;text-decoration:none;font-weight:800}
-    .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-    .top-inner{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:900}
-    .brand img{width:130px;height:auto;display:block}
-    .access{display:flex;align-items:center;gap:7px;color:var(--green-dark);font-size:13px;font-weight:800}
-    .access-dot{width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px rgba(37,211,102,.14)}
-    .shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:28px;padding:30px 20px 70px}
-    .side{position:sticky;top:84px;align-self:start}
-    .side-card{background:var(--green-deep);color:#fff;border-radius:var(--radius);padding:22px 16px;box-shadow:var(--shadow)}
-    .side-eyebrow{margin:0 7px 7px;color:#a8d9c9;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-    .side h2{margin:0 7px 18px;font-size:20px;line-height:1.15}
-    .nav{display:grid;gap:7px}
-    .nav a{display:flex;align-items:center;gap:10px;padding:11px;border-radius:12px;color:#d9eee7;text-decoration:none;font-size:14px;font-weight:700}
-    .nav a:hover,.nav a:focus-visible{background:rgba(255,255,255,.1);color:#fff;outline:none}
-    .nav-num{display:grid;place-items:center;min-width:27px;height:27px;border-radius:9px;background:rgba(255,255,255,.11);font-size:12px}
-    .progress-box{margin-top:16px;padding:14px;background:rgba(255,255,255,.08);border-radius:14px}
-    .progress-line{height:7px;overflow:hidden;background:rgba(255,255,255,.14);border-radius:99px}
-    .progress-line span{display:block;width:0;height:100%;background:var(--green);border-radius:inherit;transition:width .25s ease}
-    .progress-copy{display:flex;justify-content:space-between;margin-top:8px;color:#cbe5dc;font-size:12px;font-weight:700}
+
+    .top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .top-inner{max-width:1200px;margin:auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;text-decoration:none}
+    .brand img{width:128px;height:auto;display:block}
+    .top-stats{display:flex;align-items:center;gap:10px}
+    .top-chip{display:flex;align-items:center;gap:7px;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--green-dark);font-size:13px;font-weight:900}
+    .status-dot{width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px rgba(37,211,102,.14)}
+
+    .shell{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:255px minmax(0,1fr);gap:28px;padding:28px 20px 80px}
+    .side{position:sticky;top:82px;align-self:start}
+    .side-card{overflow:hidden;background:var(--green-deep);color:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .player{padding:22px 18px;background:linear-gradient(145deg,#075e54,#064c45)}
+    .player-label{margin:0 0 5px;color:#bce7d8;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .player-level{margin:0;font-size:22px;line-height:1.15}
+    .player-xp{margin:7px 0 0;color:#d8f2e8;font-size:13px;font-weight:700}
+    .side-progress{height:8px;margin-top:15px;overflow:hidden;background:rgba(255,255,255,.15);border-radius:99px}
+    .side-progress span,.bar span,.mission-bar span{display:block;width:100%;height:100%;background:var(--green);border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+    .nav{display:grid;gap:4px;padding:12px}
+    .nav a{display:flex;align-items:center;gap:10px;min-height:46px;padding:10px 11px;border-radius:12px;color:#d8eee6;text-decoration:none;font-size:14px;font-weight:750}
+    .nav a:hover,.nav a:focus-visible{background:rgba(255,255,255,.1);color:#fff}
+    .nav-num{display:grid;place-items:center;min-width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.1);font-size:12px}
+    .side-foot{padding:14px 18px 18px;color:#bfe1d5;font-size:12px;border-top:1px solid rgba(255,255,255,.08)}
+
     main{min-width:0}
-    .welcome{position:relative;overflow:hidden;padding:30px;border-radius:var(--radius);background:linear-gradient(135deg,var(--green-dark),#087f6f);color:#fff;box-shadow:var(--shadow)}
-    .welcome:after{content:"";position:absolute;width:180px;height:180px;right:-65px;top:-70px;border-radius:50%;background:rgba(37,211,102,.28)}
-    .eyebrow{display:inline-flex;align-items:center;gap:7px;margin-bottom:10px;color:#c8f4df;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-    .welcome h1{max-width:680px;margin:0 0 10px;font-size:clamp(28px,5vw,44px);line-height:1.05;letter-spacing:-.035em}
-    .welcome p{max-width:690px;margin:0;color:#d8f3ea;font-size:16px}
-    .notice{display:flex;gap:12px;margin:16px 0 0;padding:13px 15px;border:1px solid #eed47a;background:#fff7d8;border-radius:14px;color:#5b4710;font-size:13px}
-    .section{scroll-margin-top:88px;margin-top:24px;padding:26px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 35px rgba(5,70,63,.06)}
+    .hero{position:relative;overflow:hidden;padding:30px;border-radius:var(--radius);background:linear-gradient(135deg,var(--green-dark),#078474);color:#fff;box-shadow:var(--shadow)}
+    .hero:after{content:"";position:absolute;width:220px;height:220px;right:-80px;top:-100px;border:35px solid rgba(37,211,102,.16);border-radius:50%}
+    .eyebrow{position:relative;z-index:1;display:inline-flex;margin-bottom:10px;color:#c8f4df;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+    .hero h1{position:relative;z-index:1;max-width:700px;margin:0 0 10px;font-size:clamp(29px,5vw,46px);line-height:1.04;letter-spacing:-.04em}
+    .hero p{position:relative;z-index:1;max-width:720px;margin:0;color:#daf5ec;font-size:16px}
+    .hero-progress{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-top:22px}
+    .hero-progress strong{font-size:14px}
+    .hero-progress b{font-size:22px}
+    .bar{grid-column:1/-1;height:10px;overflow:hidden;background:rgba(255,255,255,.18);border-radius:99px}
+
+    .next{display:grid;grid-template-columns:auto 1fr auto;gap:15px;align-items:center;margin-top:16px;padding:18px;border:1px solid #efd77b;border-radius:18px;background:var(--yellow-soft);box-shadow:0 10px 30px rgba(98,74,10,.08)}
+    .next-num{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--yellow);color:#4f3b00;font-weight:950}
+    .next small{display:block;color:#745b12;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .next strong{display:block;margin-top:3px;font-size:16px;line-height:1.25}
+    .next button{min-height:46px;padding:11px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:900}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+    .stat{padding:16px;background:#fff;border:1px solid var(--line);border-radius:16px}
+    .stat b{display:block;color:var(--green-dark);font-size:24px;line-height:1}
+    .stat span{display:block;margin-top:6px;color:var(--muted);font-size:12px;font-weight:750}
+
+    .section{scroll-margin-top:88px;margin-top:22px;padding:25px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 35px rgba(5,70,63,.055)}
     .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
-    .section-head h2{margin:0;font-size:24px;line-height:1.15;letter-spacing:-.02em}
-    .section-head p{margin:7px 0 0;color:var(--muted)}
-    .pill{flex:none;padding:7px 10px;border-radius:99px;background:var(--soft);color:var(--green-dark);font-size:11px;font-weight:900;text-transform:uppercase}
-    .video-wrap{overflow:hidden;border-radius:17px;background:#061713;box-shadow:0 12px 34px rgba(0,0,0,.2)}
+    .section-head h2{margin:0;font-size:25px;line-height:1.15;letter-spacing:-.025em}
+    .section-head p{max-width:720px;margin:7px 0 0;color:var(--muted)}
+    .pill{flex:none;padding:7px 10px;border-radius:99px;background:var(--green-soft);color:var(--green-dark);font-size:11px;font-weight:900;text-transform:uppercase}
+    .video-wrap{overflow:hidden;border-radius:17px;background:#061713;box-shadow:0 12px 34px rgba(0,0,0,.18)}
     video{display:block;width:100%;aspect-ratio:16/9;background:#061713}
     .video-meta{display:flex;justify-content:space-between;gap:14px;padding:13px 15px;background:#0b2822;color:#d9eee7;font-size:12px}
-    .video-meta a{color:#7ceeb2;font-weight:800}
-    .complete{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:16px;padding:13px 16px;border:1px solid #aadfc4;border-radius:13px;background:#ecfbf3;color:var(--green-dark);cursor:pointer;font-weight:900}
-    .complete.done{background:var(--green-dark);border-color:var(--green-dark);color:#fff}
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .step{padding:18px;border:1px solid var(--line);border-radius:16px;background:#fbfdfc}
-    .step-num{display:grid;place-items:center;width:34px;height:34px;margin-bottom:13px;border-radius:11px;background:var(--green-dark);color:#fff;font-size:13px;font-weight:900}
-    .step h3{margin:0 0 7px;font-size:17px;line-height:1.2}
-    .step p{margin:0;color:var(--muted);font-size:14px}
-    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .card{padding:18px;border:1px solid var(--line);border-radius:16px}
-    .card-icon{font-size:24px}
-    .card h3{margin:8px 0 6px;font-size:17px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
-    .checklist{display:grid;gap:10px}
-    .check{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1px solid var(--line);border-radius:14px;cursor:pointer}
-    .check input{position:absolute;opacity:0;pointer-events:none}
-    .box{flex:none;display:grid;place-items:center;width:24px;height:24px;margin-top:1px;border:2px solid #a8c8bb;border-radius:7px;color:transparent;font-size:14px;font-weight:900}
-    .check input:checked+.box{border-color:var(--green-dark);background:var(--green-dark);color:#fff}
-    .check strong{display:block;font-size:15px}
-    .check small{display:block;margin-top:2px;color:var(--muted);font-size:13px}
-    .official{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(135deg,#fff9de,#fff);border-color:#f0d97b}
-    .official h2{margin:0 0 6px;font-size:22px}
-    .official p{margin:0;color:var(--muted)}
-    .official-link{flex:none;display:inline-flex;align-items:center;justify-content:center;padding:13px 17px;border-radius:13px;background:var(--ink);color:#fff;text-decoration:none;font-size:14px;font-weight:900}
+    .video-meta a{color:#79ebb0;font-weight:800}
+
+    .goal-box{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#f8fbf9}
+    .field label{display:block;margin-bottom:7px;font-size:13px;font-weight:850}
+    .field select,.field input,.field textarea{width:100%;min-height:48px;padding:12px;border:1.5px solid #b9cec5;border-radius:12px;background:#fff;color:var(--ink)}
+    .field textarea{min-height:92px;resize:vertical}
+    .field small{display:block;margin-top:6px;color:var(--muted);font-size:12px}
+
+    .journey-intro{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .journey-intro h2{margin:0;font-size:28px}
+    .journey-intro p{margin:5px 0 0;color:var(--muted)}
+    .journey-badge{padding:10px 14px;border-radius:13px;background:var(--green-dark);color:#fff;font-size:13px;font-weight:900}
+    .missions{display:grid;gap:13px;margin-top:17px}
+    .mission{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease}
+    .mission.is-complete{border-color:#80d9aa;box-shadow:0 8px 24px rgba(37,211,102,.1)}
+    .mission-toggle{width:100%;min-height:76px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:15px 17px;border:0;background:#fff;text-align:left;color:var(--ink)}
+    .mission-toggle:hover{background:#fbfdfc}
+    .mission-index{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:var(--green-soft);color:var(--green-dark);font-weight:950}
+    .mission.is-complete .mission-index{background:var(--green-dark);color:#fff}
+    .mission-title strong{display:block;font-size:17px}
+    .mission-title small{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+    .mission-status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:850}
+    .chevron{display:inline-block;width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .2s ease}
+    .mission-toggle[aria-expanded="true"] .chevron{transform:rotate(225deg)}
+    .mission-bar{height:5px;overflow:hidden;background:#edf3f0}
+    .mission-body{padding:4px 17px 18px;background:#fbfdfc;border-top:1px solid #eef4f1}
+    .mission-copy{margin:13px 0;color:var(--muted);font-size:14px}
+    .task-list{display:grid;gap:9px}
+    .task{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;min-height:56px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff;cursor:pointer}
+    .task:hover{border-color:#9fcdb9}
+    .task input{position:absolute;opacity:0;pointer-events:none}
+    .task-box{display:grid;place-items:center;width:26px;height:26px;margin-top:1px;border:2px solid #a7c1b6;border-radius:8px;color:transparent;font-size:15px;font-weight:950}
+    .task input:checked+.task-box{border-color:var(--green-dark);background:var(--green-dark);color:#fff}
+    .task strong{display:block;font-size:14px}
+    .task small{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+    .xp{padding:4px 7px;border-radius:8px;background:var(--yellow-soft);color:#715607;font-size:11px;font-weight:900;white-space:nowrap}
+    .mission-tip{margin-top:12px;padding:12px 13px;border-left:4px solid var(--yellow);border-radius:0 10px 10px 0;background:var(--yellow-soft);color:#594510;font-size:12px}
+
+    .templates{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+    .template{display:flex;flex-direction:column;padding:17px;border:1px solid var(--line);border-radius:16px;background:#fbfdfc}
+    .template-tag{align-self:flex-start;padding:4px 8px;border-radius:7px;background:var(--green-soft);color:var(--green-dark);font-size:10px;font-weight:900;text-transform:uppercase}
+    .template h3{margin:10px 0 6px;font-size:17px}
+    .template p{flex:1;margin:0;color:var(--muted);font-size:13px}
+    .template button{min-height:46px;margin-top:14px;border:1.5px solid var(--green-dark);border-radius:12px;background:#fff;color:var(--green-dark);font-weight:900}
+    .template button:hover{background:var(--green-soft)}
+
+    .achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .achievement{min-height:128px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#f7faf8;color:#87948f}
+    .achievement.is-earned{border-color:#eed169;background:linear-gradient(145deg,#fff9dc,#fff);color:var(--ink)}
+    .medal{display:grid;place-items:center;width:37px;height:37px;border-radius:50%;background:#e4ebe8;color:#718079;font-size:12px;font-weight:950}
+    .achievement.is-earned .medal{background:var(--yellow);color:#5d4600;box-shadow:0 0 0 5px rgba(255,214,92,.22)}
+    .achievement strong{display:block;margin-top:11px;font-size:14px}
+    .achievement small{display:block;margin-top:3px;font-size:11px}
+
+    .weekly{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:23px;background:linear-gradient(135deg,#10231f,#153d34);color:#fff;border-radius:18px}
+    .weekly h2{margin:0 0 5px;font-size:23px}
+    .weekly p{margin:0;color:#c8ded6}
+    .weekly button{min-height:48px;padding:12px 17px;border:0;border-radius:12px;background:var(--green);color:#083c31;font-weight:950}
+
+    .source{margin-top:18px;text-align:center;color:#72817c;font-size:12px}
+    .source a{color:var(--green-dark);font-weight:800}
     .footer{padding:0 20px 34px;text-align:center;color:#7b8985;font-size:12px}
-    @media(max-width:820px){
-      .shell{display:block;padding:18px 14px 55px}
+    .toast{position:fixed;z-index:100;left:50%;bottom:22px;width:min(calc(100% - 28px),460px);padding:14px 17px;border-radius:14px;background:#10231f;color:#fff;text-align:center;font-weight:800;box-shadow:0 16px 45px rgba(0,0,0,.25);transform:translate(-50%,120px);opacity:0;transition:transform .25s ease,opacity .25s ease;pointer-events:none}
+    .toast.show{transform:translate(-50%,0);opacity:1}
+    .confetti{position:fixed;z-index:99;width:8px;height:14px;border-radius:2px;top:-20px;animation:fall 1.6s ease-in forwards;pointer-events:none}
+    @keyframes fall{to{transform:translate(var(--drift),105vh) rotate(720deg);opacity:.2}}
+
+    @media(max-width:900px){
+      .shell{display:block;padding:18px 14px 60px}
       .side{position:static;margin-bottom:16px}
-      .side-card{padding:16px}
-      .side h2,.side-eyebrow{display:none}
-      .nav{display:flex;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+      .side-card{display:grid;grid-template-columns:1fr auto;align-items:center}
+      .player{padding:16px}
+      .nav{display:flex;overflow-x:auto;grid-column:1/-1;padding:10px;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.08)}
       .nav::-webkit-scrollbar{display:none}
-      .nav a{flex:none;background:rgba(255,255,255,.07)}
-      .progress-box{margin-top:12px}
-      .welcome,.section{padding:20px}
-      .steps,.cards{grid-template-columns:1fr}
-      .official{align-items:stretch;flex-direction:column}
-      .official-link{width:100%}
+      .nav a{flex:none;background:rgba(255,255,255,.06)}
+      .side-foot{display:none}
+      .stats{grid-template-columns:repeat(2,1fr)}
     }
-    @media(max-width:480px){
+    @media(max-width:680px){
       .top-inner{padding:10px 14px}
-      .brand img{width:112px}
-      .access{font-size:11px}
-      .welcome h1{font-size:30px}
-      .section-head{display:block}
-      .pill{display:inline-block;margin-top:10px}
+      .brand img{width:110px}
+      .top-chip:first-child{display:none}
+      .hero,.section{padding:20px}
+      .hero h1{font-size:31px}
+      .next{grid-template-columns:auto 1fr}
+      .next button{grid-column:1/-1;width:100%}
+      .goal-box,.templates,.achievements{grid-template-columns:1fr}
+      .journey-intro{align-items:flex-start;flex-direction:column}
+      .mission-toggle{grid-template-columns:auto 1fr;padding:14px}
+      .mission-status{grid-column:2}
+      .mission-body{padding:4px 14px 15px}
+      .weekly{grid-template-columns:1fr}
+      .weekly button{width:100%}
       .video-meta{display:block}
-      .video-meta span{display:block;margin-bottom:4px}
+      .video-meta span{display:block;margin-bottom:5px}
+    }
+    @media(max-width:380px){
+      .top-chip{padding:7px 9px}
+      .stats{grid-template-columns:1fr 1fr}
+      .stat{padding:13px}
+      .task{grid-template-columns:auto 1fr}
+      .xp{grid-column:2;justify-self:start}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
   <section class="gate" id="gate">
     <div class="gate-card">
-      <div class="gate-icon" id="gate-icon">🔐</div>
+      <div class="gate-symbol" id="gate-symbol">24h</div>
       <h1 id="gate-title">Confirmando seu acesso…</h1>
       <p id="gate-copy">Estamos verificando a aprovação do pagamento com segurança.</p>
       <div class="spinner" id="spinner" aria-label="Carregando"></div>
@@ -128,46 +216,65 @@
         <a class="brand" href="#inicio" aria-label="Início da área de membros">
           <img src="img/v24h-logo-dark.png" alt="Vendedor 24h">
         </a>
-        <div class="access"><span class="access-dot"></span> Acesso liberado</div>
+        <div class="top-stats">
+          <div class="top-chip"><span class="status-dot"></span> Acesso liberado</div>
+          <div class="top-chip"><span id="top-xp">0 XP</span></div>
+        </div>
       </div>
     </header>
 
     <div class="shell">
       <aside class="side">
         <div class="side-card">
-          <p class="side-eyebrow">Seu treinamento</p>
-          <h2>Método Vendedor 24h</h2>
-          <nav class="nav" aria-label="Conteúdo do treinamento">
-            <a href="#aula"><span class="nav-num">1</span> Aula principal</a>
-            <a href="#ativacao"><span class="nav-num">2</span> Ativação</a>
-            <a href="#treinamento"><span class="nav-num">3</span> Treinamento da IA</a>
-            <a href="#controle"><span class="nav-num">4</span> Controles</a>
-            <a href="#checklist"><span class="nav-num">5</span> Checklist</a>
-          </nav>
-          <div class="progress-box">
-            <div class="progress-line"><span id="progress-bar"></span></div>
-            <div class="progress-copy"><span>Seu progresso</span><strong id="progress-text">0%</strong></div>
+          <div class="player">
+            <p class="player-label">Seu nível atual</p>
+            <h2 class="player-level" id="side-level">Aprendiz</h2>
+            <p class="player-xp"><span id="side-xp">0</span> XP conquistados</p>
+            <div class="side-progress" aria-hidden="true"><span id="side-progress"></span></div>
           </div>
+          <nav class="nav" aria-label="Conteúdo do treinamento">
+            <a href="#aula"><span class="nav-num">1</span> Comece aqui</a>
+            <a href="#trilha"><span class="nav-num">2</span> Missões</a>
+            <a href="#modelos"><span class="nav-num">3</span> Modelos prontos</a>
+            <a href="#conquistas"><span class="nav-num">4</span> Conquistas</a>
+          </nav>
+          <div class="side-foot">Faça uma tarefa por vez. Cada ação concluída deixa seu atendimento mais preparado.</div>
         </div>
       </aside>
 
-      <main>
-        <section class="welcome" id="inicio">
-          <div class="eyebrow">✓ Compra confirmada</div>
-          <h1>Seu Vendedor 24h começa aqui.</h1>
-          <p>Assista à aula e siga a ordem abaixo para configurar, ensinar e testar o Meta Business Agent no WhatsApp Business.</p>
+      <main id="conteudo">
+        <section class="hero" id="inicio">
+          <div class="eyebrow">Sua jornada prática</div>
+          <h1>Assista, faça no WhatsApp e veja seu progresso crescer.</h1>
+          <p>Você não precisa decorar tudo. Complete as missões na ordem, marque o que fez e volte sempre do ponto em que parou.</p>
+          <div class="hero-progress">
+            <strong id="progress-label">0 de 29 ações concluídas</strong>
+            <b id="progress-percent">0%</b>
+            <div class="bar" aria-hidden="true"><span id="hero-progress"></span></div>
+          </div>
         </section>
 
-        <div class="notice">
-          <span>ℹ️</span>
-          <span>A disponibilidade do Meta Business Agent pode variar conforme a conta, a região e a versão do aplicativo.</span>
+        <section class="next" aria-live="polite">
+          <div class="next-num" id="next-num">1</div>
+          <div>
+            <small>Faça agora</small>
+            <strong id="next-title">Assista à aula principal</strong>
+          </div>
+          <button id="next-action" type="button">Ir para a próxima ação</button>
+        </section>
+
+        <div class="stats" aria-label="Resumo do progresso">
+          <div class="stat"><b id="stat-actions">0</b><span>Ações feitas</span></div>
+          <div class="stat"><b id="stat-missions">0/7</b><span>Missões completas</span></div>
+          <div class="stat"><b id="stat-streak">0</b><span>Dias de evolução</span></div>
+          <div class="stat"><b id="stat-badges">0/6</b><span>Conquistas</span></div>
         </div>
 
         <section class="section" id="aula">
           <div class="section-head">
             <div>
-              <h2>Aula principal: conheça o Business Agent</h2>
-              <p>Veja como funciona a IA nativa para atendimento e vendas no WhatsApp Business.</p>
+              <h2>Primeiro: entenda o que você vai configurar</h2>
+              <p>Assista à aula e depois escolha o principal objetivo do seu atendimento. Isso deixa as próximas missões mais fáceis.</p>
             </div>
             <span class="pill">6min09s</span>
           </div>
@@ -178,177 +285,275 @@
             </video>
             <div class="video-meta">
               <span>Conteúdo de apoio: Poli Digital</span>
-              <a href="https://www.youtube.com/watch?v=WrJ9HobZk8w" target="_blank" rel="noopener">Ver fonte no YouTube ↗</a>
+              <a href="https://www.youtube.com/watch?v=WrJ9HobZk8w" target="_blank" rel="noopener">Ver fonte no YouTube</a>
             </div>
           </div>
-          <button class="complete" type="button" data-complete="aula">✓ Marcar aula como concluída</button>
+          <div class="goal-box">
+            <div class="field">
+              <label for="goal">Qual é sua prioridade no WhatsApp?</label>
+              <select id="goal">
+                <option value="">Selecione uma opção</option>
+                <option value="vender">Vender mais produtos ou serviços</option>
+                <option value="agendar">Gerar agendamentos</option>
+                <option value="qualificar">Qualificar novos interessados</option>
+                <option value="suporte">Responder dúvidas e dar suporte</option>
+              </select>
+              <small>Essa resposta fica salva somente neste aparelho.</small>
+            </div>
+            <div class="field">
+              <label for="result">O que precisa melhorar primeiro?</label>
+              <textarea id="result" maxlength="240" placeholder="Ex.: parar de perder clientes que perguntam preço à noite."></textarea>
+              <small>Escreva em uma frase. Isso será seu objetivo durante a trilha.</small>
+            </div>
+          </div>
+          <label class="task" style="margin-top:12px">
+            <input type="checkbox" data-task="watch-video">
+            <span class="task-box">✓</span>
+            <span><strong>Assisti à aula e defini meu objetivo</strong><small>Marque somente depois de escolher a prioridade acima.</small></span>
+            <span class="xp">+10 XP</span>
+          </label>
         </section>
 
-        <section class="section" id="ativacao">
+        <section class="section" id="trilha">
+          <div class="journey-intro">
+            <div>
+              <h2>Trilha prática: WhatsApp mais preparado em 7 missões</h2>
+              <p>Abra uma missão, faça as ações no aplicativo e marque cada item concluído.</p>
+            </div>
+            <div class="journey-badge">28 ações práticas</div>
+          </div>
+
+          <div class="missions">
+            <article class="mission" data-mission="perfil">
+              <button class="mission-toggle" type="button" aria-expanded="true" aria-controls="mission-perfil">
+                <span class="mission-index">01</span>
+                <span class="mission-title"><strong>Arrume sua vitrine profissional</strong><small>Perfil completo gera mais confiança antes da primeira resposta.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-perfil">
+                <p class="mission-copy">Entre no perfil comercial e confira tudo como se você fosse um cliente que acabou de encontrar a empresa.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="perfil-categoria"><span class="task-box">✓</span><span><strong>Revise nome, categoria e descrição</strong><small>Diga o que vende, para quem e qual região atende.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="perfil-horario"><span class="task-box">✓</span><span><strong>Atualize horário, endereço e contatos</strong><small>Evite que o cliente precise perguntar informações básicas.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="perfil-foto"><span class="task-box">✓</span><span><strong>Coloque uma foto ou logo fácil de reconhecer</strong><small>Use uma imagem nítida, centralizada e sem letras pequenas.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="perfil-teste"><span class="task-box">✓</span><span><strong>Veja o perfil usando outro número</strong><small>Confira como um cliente enxerga sua empresa.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Por que fazer:</strong> informações completas diminuem perguntas repetidas e dão mais segurança para continuar a conversa.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="catalogo">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-catalogo">
+                <span class="mission-index">02</span>
+                <span class="mission-title"><strong>Monte um catálogo que ajuda a vender</strong><small>Transforme seus principais produtos em uma vitrine fácil de consultar.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-catalogo" hidden>
+                <p class="mission-copy">Comece pelos itens mais procurados. Um catálogo curto e completo é melhor que uma lista enorme e desatualizada.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="catalogo-top3"><span class="task-box">✓</span><span><strong>Escolha seus 3 produtos ou serviços principais</strong><small>Priorize o que mais vende ou o que você mais quer oferecer.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="catalogo-dados"><span class="task-box">✓</span><span><strong>Adicione preço e descrição completa</strong><small>Inclua tamanho, prazo, forma de entrega ou o que costuma gerar dúvida.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="catalogo-fotos"><span class="task-box">✓</span><span><strong>Use fotos reais e nítidas</strong><small>Mostre ângulos ou detalhes que ajudam o cliente a decidir.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="catalogo-colecao"><span class="task-box">✓</span><span><strong>Crie uma coleção e compartilhe em uma conversa</strong><small>Teste se o cliente consegue abrir e entender tudo.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Meta da missão:</strong> o cliente deve conseguir entender produto, preço e próxima ação sem pedir cada informação separadamente.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="conhecimento">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-conhecimento">
+                <span class="mission-index">03</span>
+                <span class="mission-title"><strong>Ensine sua IA sobre o negócio</strong><small>Dê informações claras para receber respostas mais úteis.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-conhecimento" hidden>
+                <p class="mission-copy">Abra as configurações do Meta Business Agent e alimente a base de conhecimento com informações que já estão corretas.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="conhecimento-faq"><span class="task-box">✓</span><span><strong>Liste as 10 perguntas mais repetidas</strong><small>Preço, prazo, pagamento, entrega, endereço e disponibilidade são um bom começo.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="conhecimento-fontes"><span class="task-box">✓</span><span><strong>Adicione site, catálogo ou documentos</strong><small>Use somente fontes atualizadas e que representam sua oferta atual.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="conhecimento-regras"><span class="task-box">✓</span><span><strong>Confira preços, pagamentos e frete</strong><small>Corrija qualquer informação antiga antes de ativar.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="conhecimento-prioridade"><span class="task-box">✓</span><span><strong>Defina o que a IA deve recomendar primeiro</strong><small>Escolha os produtos ou serviços prioritários para o negócio.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Regra de ouro:</strong> a IA responde com base no que você fornece. Informação incompleta tende a gerar resposta incompleta.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="personalidade">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-personalidade">
+                <span class="mission-index">04</span>
+                <span class="mission-title"><strong>Ensine a IA a falar como sua empresa</strong><small>Ajuste tom, perguntas e momento de chamar uma pessoa.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-personalidade" hidden>
+                <p class="mission-copy">Use os modelos prontos mais abaixo como ponto de partida e adapte as palavras ao jeito real da sua empresa.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="personalidade-tom"><span class="task-box">✓</span><span><strong>Defina um tom de voz</strong><small>Ex.: simples, prestativo, direto e sem parecer robótico.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="personalidade-dados"><span class="task-box">✓</span><span><strong>Defina quais dados perguntar</strong><small>Nome, necessidade, bairro, tamanho ou data desejada, conforme o negócio.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="personalidade-limites"><span class="task-box">✓</span><span><strong>Marque assuntos que a IA não deve responder</strong><small>Inclua informações sensíveis, exceções e situações que precisam de conferência.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="personalidade-humano"><span class="task-box">✓</span><span><strong>Configure a transferência para humano</strong><small>Defina quando você deve entrar na conversa.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Boa prática:</strong> deixe a IA cuidar das perguntas repetidas e entre pessoalmente em conversas de maior valor ou mais complexas.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="teste">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-teste">
+                <span class="mission-index">05</span>
+                <span class="mission-title"><strong>Faça o teste do cliente secreto</strong><small>Descubra respostas fracas antes que um cliente descubra.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-teste" hidden>
+                <p class="mission-copy">Use o modo de teste e converse como pessoas diferentes. Não ajude a IA: escreva como um cliente de verdade escreveria.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="teste-basico"><span class="task-box">✓</span><span><strong>Teste horário, endereço, preço e pagamento</strong><small>Confira se as respostas estão corretas e fáceis de entender.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="teste-recomendacao"><span class="task-box">✓</span><span><strong>Peça uma recomendação sem dizer o produto</strong><small>Veja se a IA faz perguntas antes de sugerir algo.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="teste-confuso"><span class="task-box">✓</span><span><strong>Faça uma pergunta confusa ou fora do catálogo</strong><small>A IA deve admitir limites, não inventar uma resposta.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="teste-transferencia"><span class="task-box">✓</span><span><strong>Peça para falar com uma pessoa</strong><small>Confirme se a transferência acontece do jeito configurado.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Não gostou de uma resposta?</strong> Reescreva na hora e teste novamente. Esse ciclo faz parte do treinamento.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="organizacao">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-organizacao">
+                <span class="mission-index">06</span>
+                <span class="mission-title"><strong>Organize o atendimento que continua humano</strong><small>Use as ferramentas do WhatsApp Business para não perder o próximo passo.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-organizacao" hidden>
+                <p class="mission-copy">Automação ajuda, mas organização fecha o ciclo. Prepare o aplicativo para acompanhar clientes que precisam da sua atenção.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="organizacao-rapidas"><span class="task-box">✓</span><span><strong>Crie respostas rápidas para mensagens recorrentes</strong><small>Prepare atalhos para pagamento, localização, prazo e acompanhamento.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="organizacao-etiquetas"><span class="task-box">✓</span><span><strong>Crie etiquetas para cada etapa do cliente</strong><small>Ex.: novo contato, aguardando resposta, aguardando pagamento e cliente.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="organizacao-mensagens"><span class="task-box">✓</span><span><strong>Revise saudação e mensagem de ausência</strong><small>Avise o que acontece agora e quando uma pessoa poderá responder.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="organizacao-notas"><span class="task-box">✓</span><span><strong>Registre uma nota em uma conversa importante</strong><small>Salve contexto útil para o próximo atendimento, sem dados sensíveis.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Resultado esperado:</strong> você bate o olho e sabe quem acabou de chegar, quem precisa de retorno e quem está pronto para avançar.</div>
+              </div>
+            </article>
+
+            <article class="mission" data-mission="otimizacao">
+              <button class="mission-toggle" type="button" aria-expanded="false" aria-controls="mission-otimizacao">
+                <span class="mission-index">07</span>
+                <span class="mission-title"><strong>Crie sua rotina de melhoria semanal</strong><small>O atendimento melhora quando você revisa conversas reais.</small></span>
+                <span class="mission-status"><span data-mission-count>0/4</span><i class="chevron" aria-hidden="true"></i></span>
+              </button>
+              <div class="mission-bar" aria-hidden="true"><span></span></div>
+              <div class="mission-body" id="mission-otimizacao" hidden>
+                <p class="mission-copy">Separe 15 minutos por semana. Não tente refazer tudo: encontre o erro que mais se repete e corrija primeiro.</p>
+                <div class="task-list">
+                  <label class="task"><input type="checkbox" data-task="otimizacao-conversas"><span class="task-box">✓</span><span><strong>Revise 5 conversas recentes</strong><small>Procure perguntas sem resposta, confusão ou demora para avançar.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="otimizacao-respostas"><span class="task-box">✓</span><span><strong>Melhore 3 respostas fracas</strong><small>Deixe cada uma mais clara, curta e orientada ao próximo passo.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="otimizacao-atualizar"><span class="task-box">✓</span><span><strong>Atualize uma informação que mudou</strong><small>Preço, prazo, estoque, horário ou política de atendimento.</small></span><span class="xp">+10 XP</span></label>
+                  <label class="task"><input type="checkbox" data-task="otimizacao-agenda"><span class="task-box">✓</span><span><strong>Escolha o dia da revisão semanal</strong><small>Coloque um lembrete de 15 minutos na sua agenda.</small></span><span class="xp">+10 XP</span></label>
+                </div>
+                <div class="mission-tip"><strong>Você não terminou para sempre:</strong> concluiu a instalação de um processo que fica melhor com as conversas reais da sua empresa.</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="modelos">
           <div class="section-head">
             <div>
-              <h2>Ative em 3 etapas</h2>
-              <p>A sequência oficial para sair da configuração até o agente funcionando.</p>
+              <h2>Modelos prontos para copiar e adaptar</h2>
+              <p>Use como ponto de partida. Troque os trechos entre colchetes pelas informações reais da sua empresa.</p>
             </div>
-            <span class="pill">Passo a passo</span>
+            <span class="pill">Copiar e usar</span>
           </div>
-          <div class="steps">
-            <article class="step">
-              <div class="step-num">01</div>
-              <h3>Configure no aplicativo</h3>
-              <p>No WhatsApp Business, acesse Ferramentas, selecione Meta Business Agent, faça a autenticação e confirme a conexão solicitada.</p>
+          <div class="templates">
+            <article class="template">
+              <span class="template-tag">Tom de voz</span>
+              <h3>Instrução para falar como sua empresa</h3>
+              <p>Define uma resposta simples, prestativa e sem aparência de robô.</p>
+              <button type="button" data-copy="tone">Copiar modelo de tom</button>
             </article>
-            <article class="step">
-              <div class="step-num">02</div>
-              <h3>Ensine sobre a empresa</h3>
-              <p>Permita o aprendizado com conversas anteriores e adicione seu site, catálogo, documentos, fotos ou lista de preços.</p>
+            <article class="template">
+              <span class="template-tag">Qualificação</span>
+              <h3>Perguntas antes de recomendar</h3>
+              <p>Ajuda a IA a entender a necessidade antes de indicar um produto.</p>
+              <button type="button" data-copy="qualify">Copiar perguntas</button>
             </article>
-            <article class="step">
-              <div class="step-num">03</div>
-              <h3>Teste e ative</h3>
-              <p>Converse com a IA como se fosse um cliente, ajuste as respostas e só então conclua a ativação.</p>
+            <article class="template">
+              <span class="template-tag">Transferência</span>
+              <h3>Regra para chamar uma pessoa</h3>
+              <p>Evita que a IA insista em assuntos complexos ou sensíveis.</p>
+              <button type="button" data-copy="handoff">Copiar regra de transferência</button>
+            </article>
+            <article class="template">
+              <span class="template-tag">Teste</span>
+              <h3>Roteiro do cliente secreto</h3>
+              <p>Oito mensagens para testar conhecimento, recomendação e limites.</p>
+              <button type="button" data-copy="test">Copiar roteiro de teste</button>
             </article>
           </div>
-          <button class="complete" type="button" data-complete="ativacao">✓ Concluí a configuração inicial</button>
         </section>
 
-        <section class="section" id="treinamento">
+        <section class="section" id="conquistas">
           <div class="section-head">
             <div>
-              <h2>O que ensinar ao seu agente</h2>
-              <p>Quanto mais clara for a base de conhecimento, mais úteis serão as respostas.</p>
+              <h2>Suas conquistas</h2>
+              <p>Elas são liberadas automaticamente conforme você faz as ações da trilha.</p>
             </div>
-            <span class="pill">Base de conhecimento</span>
+            <span class="pill">Progresso real</span>
           </div>
-          <div class="cards">
-            <article class="card">
-              <div class="card-icon">🏪</div>
-              <h3>Informações da empresa</h3>
-              <p>Endereço, horários, formas de contato, regiões atendidas e regras importantes do negócio.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">🛍️</div>
-              <h3>Produtos e serviços</h3>
-              <p>Catálogo, preços, variações, disponibilidade, pagamentos, descontos, entrega e frete.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">💬</div>
-              <h3>Perguntas frequentes</h3>
-              <p>Use as dúvidas que seus clientes já fazem para preparar respostas rápidas e completas.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">🎯</div>
-              <h3>Recomendação e qualificação</h3>
-              <p>Ensine quais perguntas fazer, quais dados coletar e quando recomendar cada solução.</p>
-            </article>
-          </div>
-          <button class="complete" type="button" data-complete="treinamento">✓ Preparei as informações da empresa</button>
-        </section>
-
-        <section class="section" id="controle">
-          <div class="section-head">
-            <div>
-              <h2>Você continua no controle</h2>
-              <p>Defina como a IA representa seu negócio e quando uma pessoa deve assumir.</p>
-            </div>
-            <span class="pill">Ajustes essenciais</span>
-          </div>
-          <div class="cards">
-            <article class="card">
-              <div class="card-icon">🧠</div>
-              <h3>Conhecimento</h3>
-              <p>Revise e atualize as fontes usadas pela IA sempre que preços, produtos ou regras mudarem.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">🗣️</div>
-              <h3>Personalidade</h3>
-              <p>Defina o tom de voz e reescreva respostas que não estejam do jeito que sua empresa fala.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">👥</div>
-              <h3>Público</h3>
-              <p>Escolha se a IA responde a todos, somente novos clientes ou apenas contatos vindos de anúncios.</p>
-            </article>
-            <article class="card">
-              <div class="card-icon">🤝</div>
-              <h3>Transferência humana</h3>
-              <p>Determine assuntos sensíveis ou complexos que devem ser encaminhados para você.</p>
-            </article>
-          </div>
-          <button class="complete" type="button" data-complete="controle">✓ Revisei os controles da IA</button>
-        </section>
-
-        <section class="section" id="checklist">
-          <div class="section-head">
-            <div>
-              <h2>Checklist antes de ligar</h2>
-              <p>Faça uma última conferência para evitar respostas erradas aos clientes.</p>
-            </div>
-            <span class="pill">Revisão final</span>
-          </div>
-          <div class="checklist">
-            <label class="check">
-              <input type="checkbox" data-check="dados">
-              <span class="box">✓</span>
-              <span><strong>Dados básicos conferidos</strong><small>Horário, endereço, preços e contatos estão corretos.</small></span>
-            </label>
-            <label class="check">
-              <input type="checkbox" data-check="teste">
-              <span class="box">✓</span>
-              <span><strong>Conversa de teste realizada</strong><small>Você perguntou como um cliente e conferiu as respostas.</small></span>
-            </label>
-            <label class="check">
-              <input type="checkbox" data-check="tom">
-              <span class="box">✓</span>
-              <span><strong>Tom de voz ajustado</strong><small>A IA responde de forma compatível com sua empresa.</small></span>
-            </label>
-            <label class="check">
-              <input type="checkbox" data-check="transferencia">
-              <span class="box">✓</span>
-              <span><strong>Transferência para humano definida</strong><small>Casos complexos ou sensíveis chegam até você.</small></span>
-            </label>
+          <div class="achievements">
+            <article class="achievement" data-badge="start"><span class="medal">01</span><strong>Primeiro movimento</strong><small>Conclua sua primeira ação.</small></article>
+            <article class="achievement" data-badge="profile"><span class="medal">02</span><strong>Vitrine profissional</strong><small>Complete a missão do perfil.</small></article>
+            <article class="achievement" data-badge="knowledge"><span class="medal">03</span><strong>IA bem informada</strong><small>Complete catálogo e conhecimento.</small></article>
+            <article class="achievement" data-badge="tester"><span class="medal">04</span><strong>Cliente secreto</strong><small>Complete todos os testes.</small></article>
+            <article class="achievement" data-badge="optimizer"><span class="medal">05</span><strong>Otimizador</strong><small>Complete a rotina semanal.</small></article>
+            <article class="achievement" data-badge="master"><span class="medal">24h</span><strong>Vendedor 24h ativado</strong><small>Conclua toda a jornada.</small></article>
           </div>
         </section>
 
-        <section class="section official">
+        <section class="weekly">
           <div>
-            <h2>Consulte também o material oficial</h2>
-            <p>Veja novidades, limitações e instruções atualizadas diretamente no WhatsApp Business.</p>
+            <h2>Seu próximo resultado vem da próxima ação.</h2>
+            <p id="weekly-copy">Volte para a trilha e conclua uma tarefa de cada vez.</p>
           </div>
-          <a class="official-link" href="https://whatsappbusiness.com/pt-br/products/business-app-ai-agent/" target="_blank" rel="noopener">Abrir página oficial ↗</a>
+          <button id="weekly-action" type="button">Continuar minha jornada</button>
         </section>
+
+        <p class="source">Conteúdo baseado nos materiais oficiais do <a href="https://whatsappbusiness.com/pt-br/products/business-app-ai-agent/" target="_blank" rel="noopener">Meta Business Agent</a> e do <a href="https://whatsappbusiness.com/pt-br/resources/resource-library/whatsapp-business-app-resources-whatsapp-business-catalog/" target="_blank" rel="noopener">catálogo do WhatsApp Business</a>. A disponibilidade de recursos pode variar conforme conta, região e versão do aplicativo.</p>
       </main>
     </div>
 
     <footer class="footer">Vendedor 24h • Área exclusiva para compradores</footer>
   </div>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
   (function(){
     var gate=document.getElementById('gate');
     var members=document.getElementById('members');
-    var title=document.getElementById('gate-title');
-    var copy=document.getElementById('gate-copy');
-    var icon=document.getElementById('gate-icon');
+    var gateTitle=document.getElementById('gate-title');
+    var gateCopy=document.getElementById('gate-copy');
     var spinner=document.getElementById('spinner');
-    var action=document.getElementById('gate-action');
+    var gateAction=document.getElementById('gate-action');
     var params=new URLSearchParams(location.search);
     var paymentId=params.get('payment_id')||params.get('collection_id')||params.get('id')||'';
     try{if(!paymentId)paymentId=localStorage.getItem('v24_acesso_payment_id')||'';}catch(e){}
 
     function deny(message){
-      icon.textContent='🔒';
-      title.textContent='Acesso ainda não liberado';
-      copy.textContent=message||'Esta área é liberada somente após a confirmação do pagamento.';
+      gateTitle.textContent='Acesso ainda não liberado';
+      gateCopy.textContent=message||'Esta área é liberada somente após a confirmação do pagamento.';
       spinner.hidden=true;
-      action.hidden=false;
+      gateAction.hidden=false;
     }
     function release(){
       try{localStorage.setItem('v24_acesso_payment_id',paymentId);}catch(e){}
       gate.hidden=true;
       members.hidden=false;
       if(location.search)history.replaceState({},'',location.pathname);
-      initProgress();
+      initGame();
     }
     if(!paymentId){
       deny('Não encontramos uma compra aprovada neste aparelho. Volte ao pagamento para concluir ou confirmar seu Pix.');
@@ -363,32 +568,212 @@
         .catch(function(){deny('Não conseguimos consultar o pagamento agora. Aguarde alguns instantes e atualize esta página.');});
     }
 
-    function initProgress(){
-      var done={};
-      try{done=JSON.parse(localStorage.getItem('v24_membros_progress')||'{}')||{};}catch(e){}
-      var buttons=[].slice.call(document.querySelectorAll('[data-complete]'));
-      var checks=[].slice.call(document.querySelectorAll('[data-check]'));
+    function initGame(){
+      var storageKey='v24_member_game_v2';
+      var state={tasks:{},dates:{},goal:'',result:'',celebrated:{}};
+      try{state=Object.assign(state,JSON.parse(localStorage.getItem(storageKey)||'{}')||{});}catch(e){}
+      state.tasks=state.tasks||{};state.dates=state.dates||{};state.celebrated=state.celebrated||{};
+
+      var taskInputs=[].slice.call(document.querySelectorAll('[data-task]'));
+      var missions=[].slice.call(document.querySelectorAll('[data-mission]'));
+      var toast=document.getElementById('toast');
+      var toastTimer;
+      var goal=document.getElementById('goal');
+      var result=document.getElementById('result');
+      var copyTexts={
+        tone:'Responda de forma simples, prestativa e direta. Use frases curtas, chame o cliente pelo nome quando souber e faça uma pergunta por vez. Fale como uma pessoa da equipe da [NOME DA EMPRESA]. Não use palavras difíceis, não invente informações e não pressione o cliente.',
+        qualify:'Antes de recomendar, descubra: 1) O que o cliente procura? 2) Para quem ou para qual situação? 3) Qual tamanho, quantidade, data ou região é necessária? 4) Existe alguma preferência importante? Depois, recomende até 3 opções do catálogo e explique em uma frase por que cada uma combina com a necessidade.',
+        handoff:'Transfira a conversa para uma pessoa quando o cliente pedir atendimento humano, demonstrar insatisfação, solicitar exceção de preço, tratar de cancelamento, reembolso, problema com pedido, informação sensível ou quando a resposta não estiver confirmada na base de conhecimento. Avise com clareza que uma pessoa continuará o atendimento.',
+        test:'1. Vocês abrem hoje?\\n2. Quanto custa e como posso pagar?\\n3. Não sei qual escolher, pode me ajudar?\\n4. Entrega no meu bairro?\\n5. Tem desconto para duas unidades?\\n6. Preciso disso para amanhã, dá tempo?\\n7. Quero um produto que não aparece no catálogo.\\n8. Quero falar com uma pessoa.'
+      };
+
+      goal.value=state.goal||'';
+      result.value=state.result||'';
+      taskInputs.forEach(function(input){input.checked=!!state.tasks[input.dataset.task];});
+
       function save(){
-        try{localStorage.setItem('v24_membros_progress',JSON.stringify(done));}catch(e){}
-        var total=buttons.length+checks.length;
-        var count=buttons.filter(function(b){return !!done['section_'+b.dataset.complete];}).length+
-          checks.filter(function(c){return !!done['check_'+c.dataset.check];}).length;
-        var percent=Math.round((count/total)*100);
-        document.getElementById('progress-bar').style.width=percent+'%';
-        document.getElementById('progress-text').textContent=percent+'%';
+        try{localStorage.setItem(storageKey,JSON.stringify(state));}catch(e){}
       }
-      buttons.forEach(function(btn){
-        var key='section_'+btn.dataset.complete;
-        function paint(){btn.classList.toggle('done',!!done[key]);btn.textContent=done[key]?'✓ Etapa concluída':'✓ Marcar como concluída';}
-        paint();
-        btn.addEventListener('click',function(){done[key]=!done[key];paint();save();});
+      function today(){
+        var d=new Date();
+        return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      }
+      function showToast(message){
+        toast.textContent=message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer=setTimeout(function(){toast.classList.remove('show');},2600);
+      }
+      function confetti(){
+        if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+        var colors=['#25d366','#ffd65c','#075e54','#ffffff'];
+        for(var i=0;i<24;i++){
+          var piece=document.createElement('i');
+          piece.className='confetti';
+          piece.style.left=(5+Math.random()*90)+'vw';
+          piece.style.background=colors[i%colors.length];
+          piece.style.setProperty('--drift',(-80+Math.random()*160)+'px');
+          piece.style.animationDelay=(Math.random()*.35)+'s';
+          document.body.appendChild(piece);
+          setTimeout(function(el){el.remove();},2100,piece);
+        }
+      }
+      function missionData(mission){
+        var inputs=[].slice.call(mission.querySelectorAll('[data-task]'));
+        var done=inputs.filter(function(input){return input.checked;}).length;
+        return{inputs:inputs,done:done,total:inputs.length,complete:done===inputs.length};
+      }
+      function earnedBadges(completed,total,completeMissions){
+        var map={
+          start:completed>=1,
+          profile:completeMissions.indexOf('perfil')!==-1,
+          knowledge:completeMissions.indexOf('catalogo')!==-1&&completeMissions.indexOf('conhecimento')!==-1,
+          tester:completeMissions.indexOf('teste')!==-1,
+          optimizer:completeMissions.indexOf('otimizacao')!==-1,
+          master:completed===total
+        };
+        var count=0;
+        Object.keys(map).forEach(function(key){
+          var card=document.querySelector('[data-badge="'+key+'"]');
+          card.classList.toggle('is-earned',map[key]);
+          if(map[key])count++;
+        });
+        return count;
+      }
+      function levelFor(percent){
+        if(percent>=100)return'Vendedor 24h';
+        if(percent>=75)return'Otimizador';
+        if(percent>=50)return'Treinador';
+        if(percent>=25)return'Configurador';
+        return'Aprendiz';
+      }
+      function nextIncomplete(){
+        return taskInputs.find(function(input){return !input.checked;})||null;
+      }
+      function openMissionFor(input){
+        var mission=input&&input.closest('[data-mission]');
+        if(!mission)return;
+        var toggle=mission.querySelector('.mission-toggle');
+        var body=mission.querySelector('.mission-body');
+        toggle.setAttribute('aria-expanded','true');
+        body.hidden=false;
+      }
+      function goNext(){
+        var input=nextIncomplete();
+        if(!input){
+          document.getElementById('conquistas').scrollIntoView({behavior:'smooth',block:'start'});
+          return;
+        }
+        openMissionFor(input);
+        input.closest('.task').scrollIntoView({behavior:'smooth',block:'center'});
+      }
+      function render(){
+        var completed=taskInputs.filter(function(input){return input.checked;}).length;
+        var total=taskInputs.length;
+        var percent=Math.round(completed/total*100);
+        var xp=completed*10;
+        var completeMissions=[];
+
+        missions.forEach(function(mission){
+          var data=missionData(mission);
+          mission.classList.toggle('is-complete',data.complete);
+          mission.querySelector('[data-mission-count]').textContent=data.done+'/'+data.total;
+          mission.querySelector('.mission-bar span').style.transform='scaleX('+(data.done/data.total)+')';
+          if(data.complete)completeMissions.push(mission.dataset.mission);
+          if(data.complete&&!state.celebrated[mission.dataset.mission]){
+            state.celebrated[mission.dataset.mission]=true;
+            showToast('Missão concluída. Você ganhou '+(data.total*10)+' XP.');
+            confetti();
+            save();
+          }
+        });
+
+        var badgeCount=earnedBadges(completed,total,completeMissions);
+        var uniqueDays=Array.from(new Set(Object.keys(state.dates).filter(function(key){return state.tasks[key];}).map(function(key){return state.dates[key];}))).length;
+        var level=levelFor(percent);
+        var scale=completed/total;
+        document.getElementById('hero-progress').style.transform='scaleX('+scale+')';
+        document.getElementById('side-progress').style.transform='scaleX('+scale+')';
+        document.getElementById('progress-label').textContent=completed+' de '+total+' ações concluídas';
+        document.getElementById('progress-percent').textContent=percent+'%';
+        document.getElementById('top-xp').textContent=xp+' XP';
+        document.getElementById('side-xp').textContent=xp;
+        document.getElementById('side-level').textContent=level;
+        document.getElementById('stat-actions').textContent=completed;
+        document.getElementById('stat-missions').textContent=completeMissions.length+'/7';
+        document.getElementById('stat-streak').textContent=uniqueDays;
+        document.getElementById('stat-badges').textContent=badgeCount+'/6';
+
+        var next=nextIncomplete();
+        if(next){
+          var nextTask=next.closest('.task');
+          var nextStrong=nextTask.querySelector('strong');
+          document.getElementById('next-num').textContent=completed+1;
+          document.getElementById('next-title').textContent=nextStrong?nextStrong.textContent:'Continuar a jornada';
+          document.getElementById('next-action').textContent='Ir para a próxima ação';
+          document.getElementById('weekly-copy').textContent='Falta pouco para a próxima conquista. Faça agora: '+(nextStrong?nextStrong.textContent.toLowerCase():'continue a trilha')+'.';
+        }else{
+          document.getElementById('next-num').textContent='✓';
+          document.getElementById('next-title').textContent='Jornada completa. Mantenha a revisão semanal.';
+          document.getElementById('next-action').textContent='Ver minhas conquistas';
+          document.getElementById('weekly-copy').textContent='Sua configuração está completa. Agora reserve 15 minutos por semana para revisar conversas e atualizar informações.';
+          if(!state.celebrated.master){
+            state.celebrated.master=true;
+            showToast('Jornada completa. Seu nível agora é Vendedor 24h.');
+            confetti();save();
+          }
+        }
+      }
+
+      taskInputs.forEach(function(input){
+        input.addEventListener('change',function(){
+          var id=input.dataset.task;
+          state.tasks[id]=input.checked;
+          if(input.checked){
+            state.dates[id]=today();
+            showToast('Ação concluída. +10 XP no seu progresso.');
+          }else{
+            delete state.dates[id];
+          }
+          save();render();
+        });
       });
-      checks.forEach(function(input){
-        var key='check_'+input.dataset.check;
-        input.checked=!!done[key];
-        input.addEventListener('change',function(){done[key]=input.checked;save();});
+      missions.forEach(function(mission){
+        var toggle=mission.querySelector('.mission-toggle');
+        var body=mission.querySelector('.mission-body');
+        toggle.addEventListener('click',function(){
+          var expanded=toggle.getAttribute('aria-expanded')==='true';
+          toggle.setAttribute('aria-expanded',expanded?'false':'true');
+          body.hidden=expanded;
+        });
       });
-      save();
+      goal.addEventListener('change',function(){state.goal=goal.value;save();});
+      result.addEventListener('input',function(){state.result=result.value;save();});
+      document.querySelectorAll('[data-copy]').forEach(function(button){
+        button.addEventListener('click',function(){
+          var text=copyTexts[button.dataset.copy]||'';
+          function done(){button.textContent='Modelo copiado';showToast('Copiado. Agora adapte e use no WhatsApp.');setTimeout(function(){button.textContent=button.dataset.original;},1800);}
+          if(!button.dataset.original)button.dataset.original=button.textContent;
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(done,function(){fallback();});
+          }else fallback();
+          function fallback(){
+            var area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();
+            try{document.execCommand('copy');done();}catch(e){showToast('Selecione e copie o modelo manualmente.');}
+            area.remove();
+          }
+        });
+      });
+      document.getElementById('next-action').addEventListener('click',goNext);
+      document.getElementById('weekly-action').addEventListener('click',goNext);
+
+      try{
+        var old=JSON.parse(localStorage.getItem('v24_membros_progress')||'{}');
+        if(old&&old.section_aula&&!state.tasks['watch-video']){
+          state.tasks['watch-video']=true;state.dates['watch-video']=today();save();
+        }
+      }catch(e){}
+      render();
     }
   })();
   </script>
