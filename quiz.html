@@ -1169,7 +1169,7 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
     params.set('potencial', r.estimate);
     params.set('segmento', answers.business.value);
     track('QuizToSalesPage', { score: r.score, potential: r.estimate, business: answers.business.value });
-    setTimeout(function () { location.href = 'index.html?' + params.toString() + '#comprar'; }, 150);
+    setTimeout(function () { location.href = 'index.html?' + params.toString(); }, 150);
   }
 
   document.getElementById('quizOverlay').addEventListener('click', function (e) {
