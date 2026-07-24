@@ -790,7 +790,7 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
       key: "employee",
       question: "Hoje você paga alguém para atender o WhatsApp?",
       subtext: "Ou alguém da equipe precisa parar outras tarefas para responder?",
-      feedbackDuration: 3400,
+      feedbackDuration: 3900,
       options: [
         { emoji: "💼", text: "Sim, tenho alguém dedicado", pts: 15, value: "dedicado" },
         { emoji: "🔄", text: "Sim, mas acumula outras tarefas", pts: 13, value: "acumula" },
@@ -941,7 +941,7 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
     showFloatingPts(pts, rect.right - 40, rect.top);
 
     const fb = q.feedbacks[index];
-    const feedbackDuration = q.feedbackDuration || 1200;
+    const feedbackDuration = q.feedbackDuration || 1700;
     showFeedback(fb.emoji, fb.text, pts, feedbackDuration);
 
     track('QuizAnswer', { step: currentQuestion + 1, question: q.key, answer: opt.text });
