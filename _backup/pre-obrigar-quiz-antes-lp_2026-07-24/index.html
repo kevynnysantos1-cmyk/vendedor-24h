@@ -3,18 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-  (function () {
-    var params = new URLSearchParams(window.location.search);
-    var quizConcluido = params.get('quiz') === 'concluido';
-    try {
-      quizConcluido = quizConcluido || sessionStorage.getItem('v24_quiz_completed') === '1';
-    } catch (e) {}
-    if (!quizConcluido) {
-      window.location.replace('quiz.html' + window.location.search + window.location.hash);
-    }
-  })();
-</script>
 <script>document.documentElement.classList.add('motion-ready');</script>
 <title>Ative o funcionário que já pode estar no seu WhatsApp — Vendedor 24h</title>
 <meta name="description" content="Método guiado para ativar e configurar a nova função de IA do WhatsApp Business para atender e ajudar a vender 24 horas.">

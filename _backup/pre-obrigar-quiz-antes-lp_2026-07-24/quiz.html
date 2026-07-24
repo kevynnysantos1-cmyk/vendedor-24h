@@ -1168,7 +1168,6 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
     params.set('score', r.score);
     params.set('potencial', r.estimate);
     params.set('segmento', answers.business.value);
-    try { sessionStorage.setItem('v24_quiz_completed', '1'); } catch (e) {}
     track('QuizToSalesPage', { score: r.score, potential: r.estimate, business: answers.business.value });
     setTimeout(function () { location.href = 'index.html?' + params.toString(); }, 150);
   }
