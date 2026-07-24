@@ -70,26 +70,11 @@
   }
 
   /* ===== Imagem de abertura ===== */
-  .hero-image-wrap {
-    position: relative; display: flex; flex-direction: column; align-items: flex-end;
-    gap: 8px; max-width: 420px; margin: 14px auto 6px; z-index: 1;
-  }
+  .hero-image-wrap { position: relative; max-width: 420px; margin: 14px auto 6px; z-index: 1; }
   .hero-image {
     width: 100%; height: auto; display: block; border-radius: 20px;
     box-shadow: 0 12px 34px rgba(10, 45, 26, .18);
   }
-  .hero-image-live {
-    position: relative;
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(10, 30, 20, .75); backdrop-filter: blur(6px);
-    color: #d9ffe9; font-size: 10.5px; font-weight: 700;
-    padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(37,211,102,.4);
-  }
-  .hero-image-live::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--whatsapp); animation: liveDot 1.3s infinite;
-  }
-  @keyframes liveDot { 50% { box-shadow: 0 0 0 4px rgba(37,211,102,.25); } }
   .hero-image-caption {
     position: absolute; left: 10px; right: 10px; bottom: 10px;
     background: rgba(255,255,255,.94); backdrop-filter: blur(6px);
@@ -136,10 +121,15 @@
     display: flex; align-items: center; justify-content: center; font-size: 16px;
   }
   .cta-button .whatsapp-circle {
-    width: 30px; height: 30px; background: #fff; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; flex: 0 0 30px;
+    width: 42px; height: 42px; background: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 42px;
   }
-  .cta-button .whatsapp-circle svg { width: 18px; height: 18px; fill: var(--whatsapp); }
+  .cta-button .whatsapp-circle svg { width: 25px; height: 25px; fill: var(--whatsapp); }
+  .cta-button .advance-circle {
+    width: 42px; height: 42px; background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 42px;
+  }
+  .cta-button .advance-circle svg { width: 25px; height: 25px; fill: var(--v24-green); transform: translateX(2px); }
   .cta-button .arrow { margin-left: auto; font-weight: 900; font-size: 22px; }
 
   .cta-micro {
@@ -584,7 +574,6 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
 
   <!-- IMAGEM DE ABERTURA -->
   <div class="hero-image-wrap">
-    <span class="hero-image-live" id="liveCount">87 fazendo o teste agora</span>
     <img class="hero-image" src="img/quiz-hero-beneficios-v7.webp" width="1024" height="1536" alt="Vendedora mostrando no WhatsApp um atendimento 24h que gera mais vendas e mais tempo" fetchpriority="high">
   </div>
 
@@ -592,7 +581,7 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
   <div class="cta-wrap hero-cta">
     <button class="cta-button" onclick="startQuiz()">
       <span class="whatsapp-circle" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.8 6.5L3 29l6.7-1.8A13 13 0 1 0 16 3Zm0 23.6a10.5 10.5 0 0 1-5.4-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4A10.5 10.5 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.4.3-.4.9-1.3.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5 0-.1-.3-.2-.6-.4Z"/></svg></span>
-      <span>COMEÇAR MEU DIAGNÓSTICO GRÁTIS</span>
+      <span>DESTRAVAR AGORA!</span>
       <span class="arrow">›</span>
     </button>
   </div>
@@ -700,16 +689,6 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
 
 <script>
   function track(name, data) { try { if (window.fbq) window.fbq('trackCustom', name, data || {}); } catch (e) {} }
-
-  // Contador "fazendo o teste agora" — oscila devagar pra parecer vivo
-  (function () {
-    var live = 78 + Math.floor(Math.random() * 14);
-    var el = document.getElementById('liveCount');
-    setInterval(function () {
-      live = Math.max(64, Math.min(112, live + (Math.random() < .5 ? -1 : 1) * (1 + Math.floor(Math.random() * 2))));
-      if (el) el.textContent = live + ' fazendo o teste agora';
-    }, 3800);
-  })();
 
   const questions = [
     {
@@ -1074,8 +1053,8 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
 
         <div class="result-cta-wrap">
           <button class="cta-button" onclick="goToOffer()" style="font-size:17px;border-radius:14px;padding:18px 20px;">
-            <div class="rocket-circle">🚀</div>
-            <span>ATIVAR MEU FUNCIONÁRIO 24H</span>
+            <span class="advance-circle" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 4.8 28.5 16 4 27.2l5.8-9.5z"/></svg></span>
+            <span>DESTRAVAR AGORA!</span>
             <span class="arrow">›</span>
           </button>
         </div>
