@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vendedor 24h — seu WhatsApp vendendo sozinho</title>
+<title>Ative o funcionário que já pode estar no seu WhatsApp — Vendedor 24h</title>
+<meta name="description" content="Método guiado para ativar e configurar a nova função de IA do WhatsApp Business para atender e ajudar a vender 24 horas.">
+<meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +26,11 @@ h2{font-size:25px;font-weight:800;line-height:1.15;margin-bottom:8px}
 .btn{display:block;width:100%;background:linear-gradient(180deg,#2bdc6e,#10a058);color:#fff;font-weight:800;font-size:19px;text-align:center;text-decoration:none;padding:18px 20px;border-radius:14px;box-shadow:0 8px 22px rgba(16,160,88,.35);border:none;cursor:pointer}
 .btn:active{transform:translateY(1px)}
 .micro{font-size:13px;color:var(--gray);text-align:center;margin-top:10px}
-.shot{border-radius:var(--radius);margin-top:22px;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.shot{width:100%;height:auto;object-fit:contain;border-radius:var(--radius);margin-top:22px;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.image-first{padding-top:0}
+.hero-stack{width:100%;max-width:420px;margin:20px auto 0}
+.hero-stack .shot{max-width:100%;margin:0;border-radius:var(--radius) var(--radius) 0 0;box-shadow:none}
+.hero-proof{width:100%;height:auto;display:block;border-radius:0 0 var(--radius) var(--radius);box-shadow:0 12px 30px rgba(0,0,0,.12)}
 .bullets{list-style:none;display:grid;gap:12px;margin-top:18px}
 .bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e3efe8;border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
 .bullets .ic{font-size:24px;line-height:1.1}
@@ -134,16 +140,17 @@ details p{padding-bottom:14px;color:var(--gray);font-size:14px}
 .v24foot img{height:50px;width:auto;max-width:82%;margin:0 auto 12px;display:block}
 .v24foot p{font-size:12.5px;line-height:1.7;color:#9fb0a6}
 .v24foot a{color:#dfe9e3;font-weight:700;text-decoration:underline}
+
 </style>
 <!-- Utmify — captura e persiste os UTMs (atribuição) e propaga pro checkout -->
 <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
 <!-- Meta Pixel - Infoproduto -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1395668239054238');
+fbq('init','2017200229157886',{country:'br'});
 fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1395668239054238&ev=PageView&noscript=1"/></noscript>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2017200229157886&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
 </head>
 <body>
@@ -154,29 +161,29 @@ fbq('track','PageView');
 <!-- HERO -->
 <header class="sec center" style="padding-top:8px">
   <div class="wrap">
-    <span class="eyebrow">⚡ Ativa em 5 min e já vende</span>
-    <h1 style="margin-top:10px">Não contrate um funcionário.<br><span style="color:var(--green-d)">Compre um por R$50.</span></h1>
-    <p class="lead">Ele atende e fecha venda no seu WhatsApp <b>24h</b> — sem salário, sem férias, sem mensalidade.</p>
-    <img class="shot" src="img/comprovante.jpg" alt="Lojista surpresa com comprovante de pagamento recebido pelo WhatsApp no automático" style="max-width:360px;margin:20px auto 0">
-    <div style="margin-top:18px"><a class="btn" href="#comprar">QUERO VENDER 24H TODOS OS DIAS!</a></div>
-    <p class="micro">⚡ Pronto em 5 min • pagamento único de R$50 • 7 dias de garantia</p>
+    <span class="eyebrow">⚡ A nova função do WhatsApp Business</span>
+    <div class="hero-stack">
+      <img class="shot" src="img/lp-teste-v2/01-hero-funcionario-24h.webp" width="1024" height="1536" fetchpriority="high" alt="Painel mostrando uma comerciante com seu funcionário 24 horas no WhatsApp">
+      <img class="hero-proof" src="img/comprovante.jpg" width="760" height="943" loading="lazy" alt="Comprovante de transferência recebida após atendimento no WhatsApp">
+    </div>
+    <div style="margin-top:18px"><a class="btn" href="#comprar">QUERO ATIVAR MEU FUNCIONÁRIO 24H!</a></div>
+    <p class="micro">⚡ Ativação guiada • pagamento único de R$50 • 7 dias de garantia</p>
   </div>
 </header>
 
 <!-- DOR -->
-<section class="sec bg2">
+<section class="sec bg2 image-first">
   <div class="wrap center">
-    <p class="dor">Quantas vendas você já perdeu <span>só porque demorou pra responder?</span></p>
-    <p class="lead">O cliente manda mensagem… você tá ocupado, dormindo ou de folga… ele cansa de esperar e compra no concorrente. Todo. Santo. Dia.</p>
-    <img class="shot" src="img/hero-ugc.jpg" alt="WhatsApp fechando venda sozinho às 2h da manhã" style="max-width:360px;margin:22px auto 0">
+    <img class="shot" src="img/lp-teste-v2/02-venda-perdida.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando uma venda perdida porque a resposta ao cliente demorou" style="max-width:420px;margin:0 auto">
+    <p class="lead" style="margin-top:18px">O cliente manda mensagem… você tá ocupado, dormindo ou de folga… ele cansa de esperar e compra no concorrente. Todo. Santo. Dia.</p>
   </div>
 </section>
 
 <!-- SOLUÇÃO + CARROSSEL -->
-<section class="sec center">
+<section class="sec center image-first">
   <div class="wrap">
-    <h2>Imagina um vendedor que <span style="color:var(--green-d)">nunca</span> deixa o cliente no vácuo.</h2>
-    <p class="lead" style="margin-bottom:2px">Responde na hora, recomenda e fecha a venda sozinho — seja qual for o seu negócio.</p>
+    <img class="shot" src="img/lp-teste-v2/03-como-funciona.webp" width="1024" height="1536" loading="lazy" alt="Painel explicando em três passos como ativar e ensinar o Vendedor 24h" style="max-width:420px;margin:0 auto 4px">
+    <p class="lead" style="margin-top:18px">Depois de configurada, ela responde na hora, recomenda produtos e conduz o cliente até a compra — dentro do WhatsApp Business que você já usa.</p>
 
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
       <symbol id="ic-bk" viewBox="0 0 10 16"><polyline points="8.5,1.5 2,8 8.5,14.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -267,8 +274,9 @@ fbq('track','PageView');
 <section class="sec bg2">
   <div class="wrap">
     <h2 class="center">O que ele faz por você</h2>
+    <img class="shot" src="img/lp-teste-v2/04-beneficios.webp" width="1024" height="1536" loading="lazy" alt="Painel mostrando o Vendedor 24h respondendo, recomendando e ajudando a vender" style="max-width:420px;margin:18px auto 22px">
     <ul class="bullets">
-      <li><span class="ic">🚀</span><div><b>Pronto em 5 minutos</b><span>Paga, ativa em minutos e seu WhatsApp já vende sozinho hoje.</span></div></li>
+      <li><span class="ic">🚀</span><div><b>Ativação rápida e guiada</b><span>Siga o passo a passo e configure sem código, técnico ou aplicativo novo.</span></div></li>
       <li><span class="ic">⚡</span><div><b>Responde na hora, 24h</b><span>Nenhum cliente fica no vácuo — nem de madrugada.</span></div></li>
       <li><span class="ic">🛒</span><div><b>Recomenda e vende</b><span>Mostra seus produtos e conduz o cliente até fechar.</span></div></li>
       <li><span class="ic">🌙</span><div><b>Nunca dorme, nunca falta</b><span>Sem folga, sem férias, sem pedir aumento.</span></div></li>
@@ -309,9 +317,9 @@ fbq('track','PageView');
   <div class="wrap">
     <div class="serve">
       <p class="serve-q">“Mas será que ele vai <u>responder certo</u>?”</p>
-      <p class="serve-a">Vai. Ele aprende o jeito do <b>seu</b> negócio — seus produtos, seus preços e suas respostas — e conversa como gente: educado, rápido e vendedor, sem aquela cara de robô.</p>
+      <p class="serve-a">Vai. A função aprende as informações do <b>seu</b> negócio — produtos, preços, condições e respostas — e recebe uma configuração comercial feita para atender com clareza e conduzir a conversa para a venda.</p>
       <ul class="check">
-        <li>Treinado com as respostas prontas do seu tipo de negócio</li>
+        <li>Configuração baseada em práticas usadas por bons vendedores e atendentes</li>
         <li>Fala natural, não trava nem responde igual robô</li>
         <li>Tira dúvida, recomenda e conduz o cliente até fechar</li>
         <li>Nunca cansa, nunca falta, nunca responde de mau humor</li>
@@ -324,14 +332,15 @@ fbq('track','PageView');
 <!-- OFERTA -->
 <section class="sec" id="comprar">
   <div class="wrap">
+    <img class="shot" src="img/lp-teste-v2/05-oferta.webp" width="1024" height="1536" loading="lazy" alt="Painel da oferta Método Vendedor 24h por cinquenta reais, pagamento único" style="max-width:420px;margin:0 auto 22px">
     <div class="offer">
       <div class="wabrand"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#25D366" d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.6 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3z"/><path fill="#fff" d="M22.6 18.4c-.3-.2-2-1-2.3-1.1-.3-.1-.6-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6 0-.2-.8-1.9-1.1-2.6-.3-.6-.5-.5-.8-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.4 3.7 5.8 5.2.8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>Funciona direto no seu WhatsApp</div>
-      <h2 class="center">Ative seu Vendedor 24h hoje</h2>
-      <p class="center" style="color:var(--green-d);font-size:14px;margin:-2px 0 2px;font-weight:700">⚡ Ativação guiada: copia, cola e pronto — sem técnico</p>
+      <h2 class="center">Destrave a função e coloque seu Vendedor 24h para trabalhar</h2>
+      <p class="center" style="color:var(--green-d);font-size:14px;margin:-2px 0 2px;font-weight:700">⚡ Você recebe o método de ativação + a configuração comercial pronta</p>
       <ul class="inc">
-        <li>Fica pronto em ~5 minutos — sem instalar nada, sem técnico</li>
-        <li>Passo a passo simples pra ativar — sem saber nada de tecnologia</li>
-        <li>Pacote de respostas prontas pro seu tipo de negócio</li>
+        <li>Passo a passo visual para localizar e ativar a função disponível na sua conta</li>
+        <li>Configuração simples — sem saber nada de tecnologia ou inteligência artificial</li>
+        <li>Pacote de respostas e instruções comerciais pro seu tipo de negócio</li>
         <li>Bônus: guia de vendas no WhatsApp que converte</li>
       </ul>
       <div class="sp">
@@ -374,6 +383,8 @@ fbq('track','PageView');
   <div class="wrap">
     <h2 class="center">Perguntas rápidas</h2>
     <details><summary>Preciso saber mexer com tecnologia?</summary><p>Não. São 3 passos simples e ele já fica no ar. Se você sabe usar o WhatsApp, já sabe ativar — qualquer pessoa consegue em poucos minutos.</p></details>
+    <details><summary>O que exatamente eu estou comprando?</summary><p>Você recebe o Método Vendedor 24h: o passo a passo para ativar a função de IA disponível no WhatsApp Business e a configuração comercial para ensinar como ela deve atender, recomendar e vender no seu negócio.</p></details>
+    <details><summary>A função aparece em todas as contas?</summary><p>A liberação de novos recursos do WhatsApp Business pode variar conforme conta, região e versão do aplicativo. O método mostra como verificar o acesso e configurar a função quando ela estiver disponível.</p></details>
     <details><summary>É mensalidade?</summary><p>Não. Você paga R$50 uma vez e pronto. Sem cobrança recorrente.</p></details>
     <details><summary>Funciona pro meu negócio?</summary><p>Sim. Loja, lanchonete, salão, clínica, e-commerce — qualquer negócio que atende ou vende pelo WhatsApp.</p></details>
     <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Não gostou, devolvemos seu dinheiro.</p></details>

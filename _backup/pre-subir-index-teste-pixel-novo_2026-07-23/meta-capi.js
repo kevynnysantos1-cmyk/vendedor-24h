@@ -5,7 +5,7 @@
 const crypto = require('crypto');
 
 const API_VERSION = 'v21.0';
-const DEFAULT_PIXEL_ID = '2017200229157886'; // dataset "Vendedor24h"
+const DEFAULT_PIXEL_ID = '1395668239054238'; // dataset "Vendedor24h"
 
 function hash(v) {
   if (v === undefined || v === null || v === '') return undefined;
