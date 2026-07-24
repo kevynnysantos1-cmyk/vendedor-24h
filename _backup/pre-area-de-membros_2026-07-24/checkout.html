@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout seguro — Vendedor 24h</title>
+<link rel="icon" type="image/svg+xml" href="img/icon-vendedor.svg?v=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#00a884;--green-d:#008069;--green-dd:#046c54;--ink:#111b21;--ink2:#3b4a54;--mut:#667781;--soft:#f7f9fa;--line:#e9edef;--line2:#dfe5e7;--bg:#f0f2f5;--blue:#1d7efd;--tintp:#e9f8f3;--cream:#f2ebe0;--wabeige:#efe7de;--wahead:#008069}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream) url('img/bg-doodle.jpg?v=2') repeat;background-size:440px auto;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:92px}
+.wrap{max-width:460px;margin:0 auto;padding:0 14px 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+.secure-bar{background:#fff;color:var(--mut);text-align:center;font-size:12px;font-weight:600;padding:10px;border-bottom:1px solid var(--line);letter-spacing:.1px}
+.secure-bar b{color:var(--ink)}
+.brand{display:flex;align-items:center;justify-content:center;gap:9px;padding:20px 0 4px;font-size:16px;font-weight:700;color:var(--ink2)}
+.brand .logo{width:30px;height:30px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.brand b{font-family:'Poppins';font-weight:800;color:var(--ink)}
+.brand img.v24{height:42px;width:auto;display:block}
+/* Cabeçalho estilo conversa do WhatsApp */
+.wa-topbar{display:flex;align-items:center;gap:10px;background:var(--wahead);color:#fff;margin:0 -14px;padding:9px 13px calc(9px + env(safe-area-inset-top))}
+.wa-back{background:none;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:2px;flex:none;margin-right:-2px}
+.wa-ava{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.wa-ava img{width:26px;height:26px;display:block}
+.wa-meta{min-width:0;flex:1;line-height:1.2}
+.wa-name{font-weight:700;font-size:16px;letter-spacing:-.2px;display:flex;align-items:center;gap:4px;min-width:0}
+.wa-name>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-verified{flex:none;display:block}
+.wa-pres{font-size:12px;opacity:.92;display:flex;align-items:center;gap:5px;margin-top:1px}
+.wa-pres .dot{width:7px;height:7px;border-radius:50%;background:#8fe7b6;display:inline-block;flex:none}
+.wa-acts{display:flex;align-items:center;gap:19px;opacity:.96;flex:none}
+.wa-acts svg{display:block}
+.timer{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--mut);font-size:13px;font-weight:500;margin:16px 0 18px}
+.timer b{font-variant-numeric:tabular-nums;color:var(--green-d);font-weight:700}
+/* Seletor de pagamento — 2 cards lado a lado (Pix | Cartão) */
+.pm-tabs{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:4px 0 14px}
+.pm{position:relative;border:1.8px solid var(--line2);border-radius:14px;padding:15px 10px 12px;background:#fff;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color .15s,background .15s,box-shadow .15s}
+.pm:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+.pm-pix[aria-checked=true]{border-color:var(--green);background:#eefaf5;box-shadow:0 0 0 1px var(--green) inset}
+.pm-card[aria-checked=true]{border-color:#1d7efd;background:#eef4ff;box-shadow:0 0 0 1px #1d7efd inset}
+.pm-ic{height:30px;display:flex;align-items:center;justify-content:center}
+.pm-ic svg{height:27px;width:auto;display:block}
+.pm-name{font-weight:700;font-size:14.5px;color:var(--ink2)}
+.pm-price{font-weight:800;font-size:18px;letter-spacing:-.4px;line-height:1}
+.pm-pix .pm-price{color:var(--green-d)}
+.pm-card .pm-price{color:#1d7efd}
+.pm-sub{font-size:10.5px;font-weight:800;letter-spacing:.3px}
+.pm-pix .pm-sub{color:var(--green-d)}
+.pm-card .pm-sub{color:#1d7efd}
+.pm-check{position:absolute;top:7px;right:7px;width:19px;height:19px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.pm-pix .pm-check{background:var(--green)}
+.pm-card .pm-check{background:#1d7efd}
+.pm[aria-checked=true] .pm-check{display:flex}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 1px 2px rgba(11,20,26,.04)}
+.prod-card{background:var(--wabeige);border:1px solid #ddd1c0;box-shadow:0 4px 14px rgba(11,20,26,.13),inset 0 1px 0 rgba(255,255,255,.55);padding:13px}
+.prod-bubble{background:#fff;border-radius:13px;padding:15px 16px;box-shadow:0 1px 1.5px rgba(11,20,26,.14)}
+.prod-card .pn{font-size:15px;color:var(--ink)}
+.prod-card .pp{color:var(--ink2)}
+.prod-card .inc li{color:var(--ink2);font-size:13.5px}
+.step{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-bottom:14px;letter-spacing:-.2px}
+.step .n{width:24px;height:24px;border-radius:50%;background:var(--tintp);color:var(--green-d);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex:none}
+.muted{font-size:13px;color:var(--mut);margin:-6px 0 14px;line-height:1.45}
+.prod{display:flex;gap:13px;align-items:center}
+.prod img{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none}
+.prod .pn{font-weight:600;font-size:14px;line-height:1.3}
+.prod .pp{margin-top:4px;font-size:13px;color:var(--mut)}
+.prod .pp s{color:#9fadb3}
+.prod .pp b{color:var(--green-d);font-weight:700;font-size:15px}
+.inc{list-style:none;margin-top:16px;display:grid;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+.inc li{display:flex;gap:8px;font-size:13px;color:var(--mut);align-items:center}
+.inc li .c{color:var(--green-d);font-weight:600;font-size:11px;flex:none}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin:12px 0 6px}
+.fld{width:100%;font-family:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line2);border-radius:12px;padding:13px 14px;transition:border-color .15s,box-shadow .15s}
+.fld::placeholder{color:#aab4b9}
+.fld:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,168,132,.14)}
+.fld.err{border-color:#e3342f;box-shadow:0 0 0 3px rgba(227,52,47,.12)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+select.fld{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23667781' d='M1 1l5 5 5-5'/></svg>");background-repeat:no-repeat;background-position:right 14px center}
+.bump{display:flex;gap:12px;align-items:center;border:1px solid var(--line2);background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
+.bump.on{border-color:var(--green);background:var(--soft);box-shadow:0 0 0 1px var(--green) inset}
+.bump:focus-within{outline:2.5px solid var(--blue);outline-offset:2px}
+.bump input{appearance:none;-webkit-appearance:none;width:24px;height:24px;border:2px solid #cdd6da;border-radius:7px;flex:none;cursor:pointer;position:relative;background:#fff;transition:background .15s,border-color .15s}
+.bump.on input{background:var(--green);border-color:var(--green)}
+.bump input::after{content:'';position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);transition:transform .15s}
+.bump.on input::after{transform:rotate(45deg) scale(1)}
+.bump .bimg{width:52px;height:52px;border-radius:11px;object-fit:cover;flex:none;border:1px solid var(--line2);background:#fff}
+.bump .bc{flex:1;min-width:0}
+.bump .bt{font-weight:700;font-size:14px;line-height:1.25;letter-spacing:-.1px;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0}
+.bump .bd{font-size:12px;color:var(--mut);margin-top:2px;line-height:1.35}
+.bump .bp{flex:none;text-align:right;line-height:1.15}
+.bump .bp b{display:block;font-size:15px;font-weight:800;color:var(--green-d);letter-spacing:-.3px}
+.bump .bp s{display:block;margin-top:2px;font-size:10px;font-weight:700;color:var(--green-d);text-decoration:none;opacity:.8;letter-spacing:.1px}
+.bump .tag{background:#eef1f3;color:var(--mut);font-size:9px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase;flex:none}
+.pm-tabs{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:15px}
+.pm{border:1.5px solid var(--line2);border-radius:13px;padding:14px 10px;text-align:center;cursor:pointer;font-weight:600;font-size:14.5px;background:#fff;transition:border-color .15s,background .15s;position:relative;font-family:inherit;color:var(--ink)}
+.pm .ic{font-size:19px;display:block;margin-bottom:4px}
+.pm small{display:block;font-size:11px;font-weight:500;color:var(--mut);margin-top:3px}
+.pm[aria-checked=true]{border-color:var(--green);background:var(--soft);box-shadow:0 0 0 1px var(--green) inset}
+.pm[aria-checked=true] small{color:var(--green-d)}
+.pm .badge{position:absolute;top:-9px;right:9px;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.2px}
+.pix-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:13px;font-size:13px;color:var(--ink2);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.pix-box .pi{font-size:17px}
+.pix-box b{color:var(--green-dd);font-weight:700}
+.card-note{font-size:12.5px;color:var(--green-dd);background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;font-weight:500}
+.anchor{font-size:12.5px;color:var(--mut);text-align:center;padding:2px 0 14px;line-height:1.5}
+.anchor b{color:var(--ink);font-weight:700}
+.totals{font-size:14px}
+.totals .tr{display:flex;justify-content:space-between;gap:12px;padding:6px 0;color:var(--mut)}
+.totals .tr b{color:var(--ink2);font-weight:600}
+.totals .disc b{color:var(--green-d)}
+.totals .grand{border-top:1px solid var(--line);margin-top:8px;padding-top:13px;font-size:16px;color:var(--ink);font-weight:700;align-items:baseline}
+.totals .grand b{font-size:24px;color:var(--ink);font-weight:800;letter-spacing:-.5px}
+.parc{text-align:right;font-size:12px;color:var(--mut);margin-top:3px}
+.cta{display:block;width:100%;background:var(--green);color:#fff;font-weight:700;font-size:16.5px;text-align:center;border:none;border-radius:13px;padding:17px;margin-top:14px;cursor:pointer;box-shadow:0 6px 16px rgba(0,168,132,.28);letter-spacing:.1px;line-height:1.25;font-family:inherit;transition:background .15s,transform .05s}
+.cta:hover{background:#019e7d}
+.cta:active{transform:translateY(1px)}
+.cta .s{display:block;font-size:11.5px;font-weight:500;opacity:.92;margin-top:3px}
+.under{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;color:var(--mut);margin-top:13px;text-align:center;flex-wrap:wrap}
+.logos{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:9px 0 0}
+.logos span{font-size:10.5px;font-weight:600;color:var(--mut);background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+.guar{display:flex;gap:13px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 1px 2px rgba(11,20,26,.04)}
+.guar .seal{font-size:30px;flex:none}
+.guar b{font-size:14px;font-weight:700}
+.guar p{font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.45}
+.mini{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink2);padding:11px 0;border-bottom:1px solid var(--line);line-height:1.45}
+.mini:last-child{border-bottom:none;padding-bottom:0}
+.mini .av{width:38px;height:38px;border-radius:50%;background:var(--tintp);color:var(--green-d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none;overflow:hidden}
+.mini .av img{width:100%;height:100%;object-fit:cover;display:block}
+.mini .star{color:#f5b400;font-size:10.5px;letter-spacing:1px}
+.mini b{font-weight:700}
+.foot{text-align:center;font-size:11.5px;color:var(--mut);line-height:1.8;margin-top:14px}
+.foot a{color:var(--mut)}
+.pop{position:fixed;left:14px;bottom:104px;max-width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(11,20,26,.15);padding:12px 13px;display:flex;gap:11px;align-items:center;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s;z-index:40}
+.pop.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.pop .pic{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.pop .pt{font-size:12.5px;line-height:1.35}
+.pop .pt b{font-weight:700}
+.pop .pt small{color:#9fadb3;font-size:11px}
+.pop .x{position:absolute;top:5px;right:7px;width:26px;height:26px;border:none;background:none;color:#c2cacd;font-size:17px;cursor:pointer;line-height:1}
+.ov{position:fixed;inset:0;background:rgba(11,20,26,.55);display:none;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(2px)}
+.ov.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:460px;border-radius:20px 20px 0 0;padding:24px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet h3{font-size:19px;text-align:center;letter-spacing:-.3px}
+.sheet .ok{text-align:center;font-size:40px;margin-bottom:6px}
+.sheet .sub{text-align:center;color:var(--mut);font-size:13px;margin-top:7px;line-height:1.5}
+.qr{display:block;width:184px;height:184px;margin:16px auto;border-radius:14px;border:1px solid var(--line);padding:8px;background:#fff}
+.bignum{text-align:center;font-weight:800;font-size:20px;color:var(--ink);letter-spacing:-.4px}
+.copy{display:flex;gap:8px;margin-top:12px}
+.copy input{flex:1;font-size:13px;border:1.5px solid var(--line2);border-radius:11px;padding:12px;color:var(--mut);background:var(--soft);min-width:0}
+.copy button{background:var(--green);color:#fff;border:none;border-radius:11px;font-weight:600;font-size:13px;padding:0 16px;min-height:44px;cursor:pointer;font-family:inherit;flex:none}
+.ups{margin-top:18px;border:1px solid var(--green);background:var(--soft);border-radius:14px;padding:15px}
+.ups .ut{font-weight:700;font-size:14px}
+.ups .ud{font-size:12.5px;color:var(--ink2);margin:5px 0 11px;line-height:1.5}
+.ups button{width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:14px;padding:13px;cursor:pointer;font-family:inherit}
+.sheet .close{display:block;width:100%;text-align:center;margin-top:15px;color:var(--mut);font-size:13px;background:none;border:none;cursor:pointer;min-height:44px}
+.devnote{font-size:11px;color:var(--mut);text-align:center;margin-top:13px;line-height:1.5;background:var(--soft);border-radius:9px;padding:9px}
+</style>
+<!-- Utmify — captura e persiste os UTMs (atribuição) -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+<!-- Meta Pixel - Infoproduto -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2017200229157886',{country:'br'});
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2017200229157886&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+<!-- SDK Mercado Pago (Checkout Transparente) -->
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="wa-topbar">
+    <button class="wa-back" type="button" aria-label="Voltar" onclick="if(history.length>1){history.back()}else{location.href='index.html'}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="wa-ava"><img src="img/icon-vendedor.svg" alt=""></span>
+    <div class="wa-meta">
+      <div class="wa-name"><span>Vendedor 24h</span><svg class="wa-verified" width="15" height="15" viewBox="0 0 24 24" role="img" aria-label="Empresa verificada"><path fill="#1d9bf0" d="M12 1.6l2.55 1.86 3.15-.18.9 3.02 2.64 1.74-1 2.96 1 2.96-2.64 1.74-.9 3.02-3.15-.18L12 22.4l-2.55-1.86-3.15.18-.9-3.02L2.76 16l1-2.96-1-2.96 2.64-1.74.9-3.02 3.15.18z"/><path fill="#fff" d="M10.55 14.7l-2.3-2.3 1.1-1.12 1.2 1.2 3.55-3.55 1.12 1.12z"/></svg></div>
+      <div class="wa-pres"><span class="dot"></span> online</div>
+    </div>
+    <div class="wa-acts" aria-hidden="true">
+      <svg width="6" height="22" viewBox="0 0 6 24" fill="currentColor"><circle cx="3" cy="4" r="2.1"/><circle cx="3" cy="12" r="2.1"/><circle cx="3" cy="20" r="2.1"/></svg>
+    </div>
+  </header>
+
+  <h1 class="sr">Vendedor 24h — finalizar compra</h1>
+
+  <!-- RESUMO -->
+  <div class="card prod-card">
+    <div class="prod-bubble">
+      <div class="prod">
+        <img src="img/mascote-vendedor.jpg" alt="Vendedor 24h — o braço direito do empresário">
+        <div>
+          <div class="pn">Vendedor 24h — seu WhatsApp vendendo sozinho</div>
+          <div class="pp"><s>de R$197</s> &nbsp;por&nbsp; <b>R$50</b> · pagamento único</div>
+        </div>
+      </div>
+      <ul class="inc">
+        <li><span class="c">✓</span> Acesso imediato · você ativa em poucos minutos</li>
+        <li><span class="c">✓</span> Respostas prontas pro seu negócio + bônus de vendas</li>
+        <li><span class="c">✓</span> 7 dias de garantia · risco zero</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DADOS -->
+  <div class="card">
+    <h2 class="step"><span class="n" aria-hidden="true">1</span> Seus dados</h2>
+    <form id="form" novalidate>
+      <label for="nome">Nome completo</label>
+      <input class="fld" id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome">
+      <label for="email">E-mail (onde você recebe o acesso)</label>
+      <input class="fld" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="voce@email.com">
+      <div class="row2">
+        <div>
+          <label for="tel">WhatsApp</label>
+          <input class="fld" id="tel" name="tel" type="tel" autocomplete="tel" inputmode="numeric" placeholder="(11) 99999-9999">
+        </div>
+        <div>
+          <label for="cpf">CPF</label>
+          <input class="fld" id="cpf" name="cpf" type="text" inputmode="numeric" placeholder="000.000.000-00">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ORDER BUMPS -->
+  <div class="card">
+    <h2 class="step"><span class="n" aria-hidden="true">2</span> Monte seu time 24h</h2>
+    <p class="muted">Adicione ao seu pedido (opcional):</p>
+
+    <label class="bump" data-price="37" data-label="Designer 24h (IA)">
+      <input type="checkbox" id="b1">
+      <img class="bimg" src="img/bump-designer.webp?v=1" alt="Designer 24h" loading="lazy" width="52" height="52">
+      <span class="bc">
+        <span class="bt">Designer 24h <span class="tag">Mais pedido</span></span>
+        <span class="bd">Cria artes, posts e logo em segundos.</span>
+      </span>
+      <span class="bp"><b>+R$37</b><s>economize R$60</s></span>
+    </label>
+
+    <label class="bump" data-price="27" data-label="Recuperador de Vendas 24h">
+      <input type="checkbox" id="b2">
+      <img class="bimg" src="img/bump-recuperador.webp?v=1" alt="Recuperador de Vendas 24h" loading="lazy" width="52" height="52">
+      <span class="bc">
+        <span class="bt">Recuperador de Vendas 24h</span>
+        <span class="bd">Recupera o cliente que sumiu e fecha a venda.</span>
+      </span>
+      <span class="bp"><b>+R$27</b><s>economize R$40</s></span>
+    </label>
+
+    <label class="bump" data-price="19" data-label="Máquina de Conteúdo 24h">
+      <input type="checkbox" id="b3">
+      <img class="bimg" src="img/bump-conteudo.webp?v=1" alt="Máquina de Conteúdo 24h" loading="lazy" width="52" height="52">
+      <span class="bc">
+        <span class="bt">Máquina de Conteúdo 24h</span>
+        <span class="bd">Gera 30 dias de posts que vendem.</span>
+      </span>
+      <span class="bp"><b>+R$19</b><s>economize R$28</s></span>
+    </label>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="card">
+    <div class="anchor">Um atendente custaria <b>~R$2.000/mês</b>. Aqui é <b>R$50</b>, uma vez só.</div>
+    <div class="totals" aria-live="polite">
+      <div class="tr">Vendedor 24h <b>R$50,00</b></div>
+      <div id="bump-lines"></div>
+      <div class="tr grand">Total <b id="total">R$50,00</b></div>
+    </div>
+  </div>
+
+  <!-- PAGAMENTO (Checkout Transparente Mercado Pago) -->
+  <div class="card">
+    <h2 class="step"><span class="n" aria-hidden="true">3</span> Pagamento</h2>
+    <p class="muted">Pague com <b>Pix</b> ou <b>cartão</b> sem sair desta página.</p>
+    <div class="pm-tabs" role="radiogroup" aria-label="Forma de pagamento" id="pm-group">
+      <button type="button" class="pm pm-pix" id="pm-pix" role="radio" aria-checked="true">
+        <span class="pm-check" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M1 6.5l3 3 7-7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pm-ic"><svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#32BCAD" d="M112.57 391.19c20.06 0 38.93-7.81 53.12-22l76.69-76.69c5.39-5.4 14.77-5.38 20.15 0l76.99 76.99c14.19 14.17 33.04 21.98 53.12 21.98h15.1l-97.14 97.14c-30.33 30.34-79.5 30.34-109.85 0l-97.42-97.42h9.23z"/><path fill="#32BCAD" d="M400.74 120.3c-20.06 0-38.93 7.81-53.12 22l-76.97 76.99c-5.55 5.53-14.6 5.57-20.15-.02l-76.71-76.69c-14.19-14.19-33.05-22-53.12-22h-9.23l97.42-97.42c30.33-30.34 79.5-30.34 109.85 0l97.14 97.14h-15.1z"/><path fill="#32BCAD" d="M22.22 200.67l58.76-58.76h31.58c13.85 0 27.41 5.6 37.18 15.37l76.71 76.69c7.18 7.16 16.61 10.76 26.04 10.76 9.43 0 18.85-3.59 26.03-10.76l76.99-76.99c9.77-9.77 23.34-15.37 37.18-15.37h31.58l58.77 58.76c30.34 30.33 30.34 79.51 0 109.85l-58.77 58.77h-31.58c-13.84 0-27.41-5.61-37.18-15.37l-76.99-76.99c-13.94-13.94-38.13-13.94-52.07 0l-76.71 76.69c-9.77 9.77-23.33 15.37-37.18 15.37h-31.58l-58.76-58.76c-30.34-30.33-30.34-79.51 0-109.85z"/></svg></span>
+        <span class="pm-name">Pix</span>
+        <span class="pm-price" id="pm-pix-price">R$47,50</span>
+        <span class="pm-sub">5% OFF</span>
+      </button>
+      <button type="button" class="pm pm-card" id="pm-card" role="radio" aria-checked="false" tabindex="-1">
+        <span class="pm-check" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M1 6.5l3 3 7-7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pm-ic"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.6" stroke="#1d7efd" stroke-width="1.8"/><path d="M2 9.5h20" stroke="#1d7efd" stroke-width="1.8"/><rect x="5" y="14" width="6" height="2" rx="1" fill="#1d7efd"/></svg></span>
+        <span class="pm-name">Cartão</span>
+        <span class="pm-price" id="pm-card-price">R$50,00</span>
+        <span class="pm-sub">em até 12×</span>
+      </button>
+    </div>
+    <div id="pane-pix">
+      <button type="button" id="pixbtn" class="cta" style="margin-top:2px">Pagar com Pix ⚡<span class="s">QR na hora · 5% de desconto · liberação automática</span></button>
+    </div>
+    <div id="pane-card" style="display:none">
+      <div id="brick"></div>
+      <div id="brick-load" class="muted" style="text-align:center;margin:10px 0 0">Carregando o cartão…</div>
+    </div>
+    <div class="under">🔒 Pagamento seguro · 🛡️ dados protegidos · 7 dias de garantia</div>
+    <div class="logos">
+      <span>⚡ Pix</span><span>VISA</span><span>MASTERCARD</span><span>ELO</span><span>HIPERCARD</span><span>AMEX</span>
+    </div>
+  </div>
+
+  <!-- GARANTIA -->
+  <div class="guar">
+    <div class="seal" aria-hidden="true">🛡️</div>
+    <div><b>Garantia de 7 dias.</b><p>Não gostou? Devolvemos 100% do valor, sem burocracia — é só enviar um e-mail. O risco é todo nosso.</p></div>
+  </div>
+
+  <!-- PROVA SOCIAL -->
+  <div class="card">
+    <h2 class="step" style="margin-bottom:8px"><span class="n" aria-hidden="true">★</span> Quem ativou, aprova</h2>
+    <div class="mini"><span class="av"><img src="img/ugc-carlos.jpg" alt="Carlos" loading="lazy"></span><div><b>Carlos</b> · lanchonete <span class="star" aria-label="5 de 5 estrelas">★★★★★</span><br>"Meu WhatsApp vende sozinho 24h agora. Melhor R$50 que gastei."</div></div>
+    <div class="mini"><span class="av"><img src="img/ugc-ana.jpg" alt="Ana" loading="lazy"></span><div><b>Ana</b> · loja de roupa <span class="star" aria-label="5 de 5 estrelas">★★★★★</span><br>"Botei pra atender e foi outra vida. Não respondo mais no vácuo."</div></div>
+    <div class="mini"><span class="av"><img src="img/ugc-marcos.jpg" alt="Marcos" loading="lazy"></span><div><b>Marcos</b> · materiais <span class="star" aria-label="5 de 5 estrelas">★★★★★</span><br>"2h da manhã fechando venda sozinho. Surreal."</div></div>
+  </div>
+
+  <div class="foot">
+    Vendedor 24h · CNPJ 00.000.000/0001-00 · <a href="#">Política de Privacidade</a> · <a href="#">Termos de Uso</a><br>
+    <a href="index.html">‹ voltar para a oferta</a>
+  </div>
+
+</div>
+
+<!-- POPUP PROVA SOCIAL -->
+<div class="pop" id="pop" role="status" aria-live="off">
+  <button class="x" id="pop-x" aria-label="Fechar aviso">×</button>
+  <span class="pic" aria-hidden="true">🟢</span><div class="pt" id="pop-txt"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
+  <div class="sheet" id="sheet" tabindex="-1"></div>
+</div>
+
+<script>
+(function(){
+  var BASE=50;
+  var bumps=[].slice.call(document.querySelectorAll('.bump'));
+  var BRL=function(v){return 'R$'+v.toFixed(2).replace('.',',');};
+  var $=function(id){return document.getElementById(id);};
+
+  // ---------- preços ----------
+  function bumpsTotal(){return bumps.reduce(function(a,b){return a+(b.querySelector('input').checked?parseFloat(b.dataset.price):0);},0);}
+  function total(){return BASE+bumpsTotal();}
+  function pixPrice(){return Math.round(total()*95)/100;} // 5% OFF no Pix
+  var method='pix';
+  function selecionados(){var sel=[];bumps.forEach(function(b){var i=b.querySelector('input');if(i&&i.checked)sel.push(i.id);});return sel;}
+  function recompute(){
+    var bl=$('bump-lines'); bl.innerHTML='';
+    bumps.forEach(function(b){
+      if(b.querySelector('input').checked){
+        var div=document.createElement('div'); div.className='tr';
+        var nm=document.createElement('span'); nm.textContent=b.dataset.label;
+        var pr=document.createElement('b'); pr.textContent='+ '+BRL(parseFloat(b.dataset.price));
+        div.appendChild(nm); div.appendChild(pr); bl.appendChild(div);
+      }
+    });
+    var t=total();
+    $('total').textContent=BRL(t);
+    var pp=$('pm-pix-price'); if(pp)pp.textContent=BRL(pixPrice());
+    var cp=$('pm-card-price'); if(cp)cp.textContent=BRL(t);
+    return t;
+  }
+  var brickTimer=null;
+  function agendarBrick(){if(brickTimer)clearTimeout(brickTimer);brickTimer=setTimeout(renderBrick,400);}
+  bumps.forEach(function(b){
+    var inp=b.querySelector('input');
+    inp.addEventListener('change',function(){b.classList.toggle('on',inp.checked);recompute();agendarBrick();});
+  });
+
+  // ---------- máscaras (cursor preservado) ----------
+  function mask(id,fn){
+    var e=$(id); if(!e)return;
+    e.addEventListener('input',function(){
+      var p=e.selectionStart;
+      var before=e.value.slice(0,p).replace(/\D/g,'').length;
+      e.value=fn(e.value);
+      var c=0,i=0; for(;i<e.value.length&&c<before;i++){if(/\d/.test(e.value.charAt(i)))c++;}
+      try{e.setSelectionRange(i,i);}catch(_){}
+    });
+  }
+  mask('cpf',function(v){v=v.replace(/\D/g,'').slice(0,11);return v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/,'$1.$2.$3-$4');});
+  mask('tel',function(v){v=v.replace(/\D/g,'').slice(0,11);
+    if(v.length<=2)return v.length?'('+v:'';
+    if(v.length<=6)return '('+v.slice(0,2)+') '+v.slice(2);
+    if(v.length<=10)return '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
+    return '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);});
+
+  // ---------- validação leve ----------
+  function need(id){var e=$(id);var ok=e.value.trim().length>0;e.classList.toggle('err',!ok);return ok;}
+  function validEmail(){var e=$('email');var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e.value.trim());e.classList.toggle('err',!ok);return ok;}
+  ['nome','tel','cpf'].forEach(function(id){var el=$(id);if(el)el.addEventListener('blur',function(){if(el.value)need(id);});});
+  var emailEl=$('email');
+  if(emailEl)emailEl.addEventListener('blur',function(){if(emailEl.value){validEmail();renderBrick();}});
+
+  // ---------- overlay acessível ----------
+  var ov=$('ov'), sheet=$('sheet'), lastFocus=null;
+  function openSheet(html){
+    sheet.innerHTML=html; lastFocus=document.activeElement;
+    ov.classList.add('show'); document.body.style.overflow='hidden'; sheet.focus();
+    var cl=$('cl'); if(cl)cl.onclick=closeSheet;
+    var cp=$('cp'); if(cp)cp.onclick=copyPix;
+    var ub=$('ups-btn'); if(ub)ub.onclick=function(){ub.textContent='Adicionado! ✓';ub.disabled=true;ub.style.opacity=.7;};
+  }
+  function closeSheet(){ov.classList.remove('show');document.body.style.overflow='';if(lastFocus)try{lastFocus.focus();}catch(e){}}
+  ov.addEventListener('click',function(e){if(e.target===ov)closeSheet();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('show'))closeSheet();});
+  function copyPix(){
+    var i=$('pixcode'), cp=$('cp'); if(!i||!cp)return;
+    function ok(){cp.textContent='Copiado ✓';}
+    function fail(){cp.textContent='Selecione e copie';}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(i.value).then(ok,function(){tryExec();});}
+    else tryExec();
+    function tryExec(){i.focus();i.select();try{i.setSelectionRange(0,99999);}catch(e){}var d=false;try{d=document.execCommand('copy');}catch(e){}d?ok():fail();}
+  }
+
+  var UPSELL='<div class="ups"><div class="ut">🚀 Última chance (oferta única)</div><div class="ud">Quer que a gente <b>configure tudo pra você</b>? Nossa equipe deixa seu Vendedor 24h pronto no seu WhatsApp — você só liga e vende. <b>+R$47</b>, com 1 clique.</div><button id="ups-btn" type="button">Sim, configurar pra mim (+R$47)</button></div>';
+
+  // ---------- Meta Pixel — Advanced Matching + Purchase robusto (sem CAPI) ----------
+  var PIXEL_ID='2017200229157886';
+  // Advanced Matching: o Pixel hasheia (SHA-256) no navegador os dados passados ao init.
+  function amData(){
+    var d={country:'br'};
+    var em=(($('email')&&$('email').value)||'').trim().toLowerCase(); if(em)d.em=em;
+    var ph=(($('tel')&&$('tel').value)||'').replace(/\D/g,''); if(ph&&(ph.length===10||ph.length===11))ph='55'+ph; if(ph)d.ph=ph;
+    var nm=(($('nome')&&$('nome').value)||'').trim(); var pp=nm.split(/\s+/);
+    if(pp[0])d.fn=pp[0].toLowerCase(); if(pp.length>1)d.ln=pp.slice(1).join(' ').toLowerCase();
+    var cpf=(($('cpf')&&$('cpf').value)||'').replace(/\D/g,''); if(cpf)d.external_id=cpf;
+    return d;
+  }
+  function enrichPixel(){ if(window.fbq){ try{ fbq('init',PIXEL_ID,amData()); }catch(e){} } }
+  function selBumpIds(){ try{ return ['base'].concat(selecionados()); }catch(e){ return ['base']; } }
+  function purchaseParams(){ var ids=selBumpIds(); return {value:(method==='card'?total():pixPrice()),currency:'BRL',content_type:'product',content_ids:ids,num_items:ids.length}; }
+  // Dispara Purchase no máximo 1x por pedido (trava local) + eventID pra dedup no Meta.
+  function firePurchaseOnce(id,params){
+    if(!window.fbq)return;
+    var key='v24_pur_'+(id||'');
+    try{ if(id&&localStorage.getItem(key))return; }catch(e){}
+    enrichPixel();
+    fbq('track','Purchase',params,id?{eventID:'purchase_'+id}:undefined);
+    try{ if(id)localStorage.setItem(key,'1'); }catch(e){}
+  }
+  // PIX com aba fechada: guarda o pendente e reconfere quando o cliente reabre o checkout.
+  function savePendingPix(id){ try{ localStorage.setItem('v24_pix_pend',JSON.stringify({id:id,value:total(),ids:selBumpIds(),ts:Date.now()})); }catch(e){} }
+  function clearPendingPix(){ try{ localStorage.removeItem('v24_pix_pend'); }catch(e){} }
+  function checkPendingPixOnLoad(){
+    var raw; try{ raw=localStorage.getItem('v24_pix_pend'); }catch(e){ return; }
+    if(!raw)return; var p; try{ p=JSON.parse(raw); }catch(e){ clearPendingPix(); return; }
+    if(!p||!p.id||(Date.now()-(p.ts||0)>86400000)){ clearPendingPix(); return; }
+    fetch('/api/status-pagamento?id='+encodeURIComponent(p.id)).then(function(r){return r.json();}).then(function(s){
+      if(s&&s.status==='approved'){ firePurchaseOnce(p.id,{value:p.value,currency:'BRL',content_type:'product',content_ids:p.ids||['base'],num_items:(p.ids||['base']).length}); clearPendingPix(); }
+      else if(s&&(s.status==='cancelled'||s.status==='expired'||s.status==='rejected')){ clearPendingPix(); }
+    }).catch(function(){});
+  }
+
+  // tracking p/ o servidor (fbc/fbp + UTMs) — gravado no metadata do pagamento e lido pelo webhook
+  function getCookie(n){var m=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)');return m?m.pop():null;}
+  function trkUtms(){var u={};try{var qs=new URLSearchParams(location.search);['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid','src','sck'].forEach(function(k){var v=qs.get(k);if(v)u[k]=v;});}catch(e){}return u;}
+  function trkMeta(){return {fbc:getCookie('_fbc'),fbp:getCookie('_fbp'),user_agent:navigator.userAgent,event_source_url:location.href};}
+  // eventID compartilhado Pixel<->CAPI pro AddPaymentInfo (o Meta deduplica navegador vs servidor)
+  function genId(){ return 'api_'+Date.now()+'_'+Math.random().toString(36).slice(2,10); }
+
+  // ---------- Mercado Pago — Checkout Transparente (Payment Brick) ----------
+  var mp=null, builder=null, brickCtrl=null, pollIv=null;
+  function showApproved(id){
+    clearInterval(pollIv);
+    clearPendingPix();
+    firePurchaseOnce(id,purchaseParams());
+    openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
+  }
+  function showPendente(){
+    openSheet('<div class="ok" aria-hidden="true">⏳</div><h3 id="sheet-h">Pagamento em análise</h3><p class="sub">Assim que for aprovado, liberamos seu acesso por e-mail.</p><button class="close" id="cl" type="button">fechar</button>');
+  }
+  function showRejeitado(msg){
+    openSheet('<div class="ok" aria-hidden="true">⚠️</div><h3 id="sheet-h">Pagamento não aprovado</h3><p class="sub">'+(msg||'Não foi dessa vez. Confira os dados ou tente outro método.')+'</p><button class="close" id="cl" type="button">tentar de novo</button>');
+  }
+  function showPix(res){
+    var img=res.pix&&res.pix.qr_code_base64?'<img class="qr" alt="QR Code Pix" src="data:image/png;base64,'+res.pix.qr_code_base64+'">':'';
+    var code=(res.pix&&res.pix.qr_code)||'';
+    openSheet('<div class="ok" aria-hidden="true">⚡</div><h3 id="sheet-h">Quase lá! Pague o Pix 🔓</h3><p class="sub">Escaneie o QR no app do seu banco ou use o Pix copia e cola. A confirmação é automática.</p>'+img+'<div class="bignum">'+BRL(res.amount||total())+'</div><div class="copy"><input id="pixcode" readonly aria-label="Pix copia e cola" value="'+code+'"><button id="cp" type="button">Copiar</button></div><button class="close" id="cl" type="button">fechar</button>');
+    if(res.id){savePendingPix(res.id);clearInterval(pollIv);pollIv=setInterval(function(){checarStatus(res.id);},5000);}
+  }
+  function checarStatus(id){
+    fetch('/api/status-pagamento?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(s){if(s&&s.status==='approved')showApproved(id);}).catch(function(){});
+  }
+  function onSubmit(arg){
+    var formData=arg&&arg.formData;
+    var apiId=genId();
+    enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams(),{eventID:apiId});
+    return fetch('/api/processar-pagamento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formData:formData,bumps:selecionados(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,email:$('email').value.trim(),meta:trkMeta(),utms:trkUtms(),apiEventId:apiId})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(res.error){showRejeitado(res.error);return;}
+        if(res.pix){showPix(res);return;}
+        if(res.status==='approved'){showApproved(res.id);return;}
+        if(res.status==='in_process'||res.status==='pending'){showPendente();return;}
+        showRejeitado();
+      })
+      .catch(function(e){console.error('pagamento',e);showRejeitado('Falha de conexão. Tente de novo.');});
+  }
+  function renderBrick(){
+    if(!builder)return;
+    var email=(emailEl&&emailEl.value.trim())||'';
+    try{if(brickCtrl&&brickCtrl.unmount)brickCtrl.unmount();}catch(e){}
+    builder.create('payment','brick',{
+      initialization:{amount:total(),payer:{email:email}},
+      customization:{paymentMethods:{creditCard:'all',maxInstallments:12}},
+      callbacks:{
+        onReady:function(){var l=$('brick-load');if(l)l.style.display='none';},
+        onError:function(err){console.error('brick',err);},
+        onSubmit:function(a){return onSubmit(a);}
+      }
+    }).then(function(c){brickCtrl=c;}).catch(function(e){console.error('brick create',e);});
+  }
+  function validarDados(){
+    var ok=true;
+    ['nome','tel','cpf'].forEach(function(id){if(!need(id))ok=false;});
+    if(!validEmail())ok=false;
+    if(!ok){var f=document.querySelector('.fld.err');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});f.focus();}}
+    return ok;
+  }
+  // Botão do Pix (painel Pix) — usa só o MP_ACCESS_TOKEN. O cartão fica no Payment Brick (painel Cartão).
+  function wirePixButton(){
+    var btn=$('pixbtn'); if(!btn||btn._wired)return; btn._wired=true;
+    btn.addEventListener('click',function(){
+      if(!validarDados())return;
+      btn.disabled=true; btn.style.opacity=.7; btn.firstChild.textContent='Gerando Pix…';
+      var apiId=genId();
+      enrichPixel();if(window.fbq)fbq('track','AddPaymentInfo',purchaseParams(),{eventID:apiId});
+      fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),nome:$('nome').value.trim(),cpf:$('cpf').value,phone:$('tel').value,bumps:selecionados(),meta:trkMeta(),utms:trkUtms(),apiEventId:apiId})})
+        .then(function(r){return r.json();})
+        .then(function(res){
+          btn.disabled=false; btn.style.opacity=1; btn.firstChild.textContent='Pagar com Pix ⚡';
+          if(res.error){showRejeitado(res.error);return;}
+          if(res.pix){showPix(res);return;}
+          if(res.status==='approved'){showApproved(res.id);return;}
+          showPendente();
+        })
+        .catch(function(e){btn.disabled=false;btn.style.opacity=1;btn.firstChild.textContent='Pagar com Pix ⚡';console.error('pix',e);showRejeitado('Falha de conexão. Tente de novo.');});
+    });
+  }
+  function ensureBrick(){ if(builder && !brickCtrl) renderBrick(); }
+  // Alterna entre os 2 cards (Pix | Cartão)
+  function setMethod(m){
+    method=m; var isPix=(m==='pix');
+    var pPix=$('pm-pix'), pCard=$('pm-card');
+    pPix.setAttribute('aria-checked',isPix?'true':'false'); pPix.tabIndex=isPix?0:-1;
+    pCard.setAttribute('aria-checked',isPix?'false':'true'); pCard.tabIndex=isPix?-1:0;
+    $('pane-pix').style.display=isPix?'block':'none';
+    $('pane-card').style.display=isPix?'none':'block';
+    if(!isPix) ensureBrick();
+  }
+  $('pm-pix').addEventListener('click',function(){setMethod('pix');});
+  $('pm-card').addEventListener('click',function(){setMethod('card');});
+  $('pm-group').addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setMethod(method==='pix'?'card':'pix');(method==='pix'?$('pm-pix'):$('pm-card')).focus();}});
+  function loadBrick(){
+    wirePixButton();
+    fetch('/api/config').then(function(r){return r.json();}).then(function(cfg){
+      if(cfg&&cfg.publicKey&&typeof MercadoPago!=='undefined'){
+        mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});
+        builder=mp.bricks();
+        renderBrick();                 // cartão de crédito (Payment Brick, sem débito CAIXA)
+      } else {
+        var l=$('brick-load'); if(l)l.textContent='Cartão indisponível no momento — use o Pix acima ⚡';
+      }
+    }).catch(function(e){console.error('config',e);var l=$('brick-load');if(l)l.textContent='Cartão indisponível — use o Pix ⚡';});
+  }
+
+  // ---------- prova social ----------
+  var people=[['Joana','Recife'],['Rafael','Curitiba'],['Patrícia','Salvador'],['Diego','Belo Horizonte'],['Camila','Fortaleza'],['Bruno','Porto Alegre'],['Larissa','Goiânia']];
+  var pop=$('pop'), pi=0, hideT, popOff=false;
+  $('pop-x').addEventListener('click',function(){popOff=true;pop.classList.remove('show');});
+  function showPop(){
+    if(popOff)return;
+    var p=people[pi%people.length]; pi++;
+    $('pop-txt').innerHTML='<b>'+p[0]+' de '+p[1]+'</b> ativou o Vendedor 24h.<br><small>há poucos minutos</small>';
+    pop.classList.add('show'); clearTimeout(hideT); hideT=setTimeout(function(){pop.classList.remove('show');},4500);
+  }
+  setTimeout(showPop,4000); setInterval(showPop,13000);
+
+  recompute();
+  if(window.fbq)fbq('track','InitiateCheckout',purchaseParams());
+  checkPendingPixOnLoad();
+  loadBrick();
+})();
+</script>
+</body>
+</html>

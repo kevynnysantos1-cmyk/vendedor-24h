@@ -459,7 +459,11 @@ fbq('track','PageView');
     if(!raw)return; var p; try{ p=JSON.parse(raw); }catch(e){ clearPendingPix(); return; }
     if(!p||!p.id||(Date.now()-(p.ts||0)>86400000)){ clearPendingPix(); return; }
     fetch('/api/status-pagamento?id='+encodeURIComponent(p.id)).then(function(r){return r.json();}).then(function(s){
-      if(s&&s.status==='approved'){ firePurchaseOnce(p.id,{value:p.value,currency:'BRL',content_type:'product',content_ids:p.ids||['base'],num_items:(p.ids||['base']).length}); clearPendingPix(); }
+      if(s&&s.status==='approved'){
+        firePurchaseOnce(p.id,{value:p.value,currency:'BRL',content_type:'product',content_ids:p.ids||['base'],num_items:(p.ids||['base']).length});
+        clearPendingPix();
+        window.location.replace('/membros.html?payment_id='+encodeURIComponent(p.id));
+      }
       else if(s&&(s.status==='cancelled'||s.status==='expired'||s.status==='rejected')){ clearPendingPix(); }
     }).catch(function(){});
   }
@@ -477,7 +481,8 @@ fbq('track','PageView');
     clearInterval(pollIv);
     clearPendingPix();
     firePurchaseOnce(id,purchaseParams());
-    openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Recebemos seu pagamento. Em instantes enviamos o acesso do seu Vendedor 24h pro seu e-mail.</p>'+UPSELL+'<button class="close" id="cl" type="button">fechar</button>');
+    openSheet('<div class="ok" aria-hidden="true">✅</div><h3 id="sheet-h">Pagamento aprovado! 🎉</h3><p class="sub">Seu acesso ao Vendedor 24h foi liberado.</p><a class="cta" href="/membros.html?payment_id='+encodeURIComponent(id)+'">ACESSAR O CONTEÚDO AGORA →</a><p class="sub" style="font-size:12px">Você será direcionado automaticamente.</p>');
+    setTimeout(function(){window.location.replace('/membros.html?payment_id='+encodeURIComponent(id));},2200);
   }
   function showPendente(){
     openSheet('<div class="ok" aria-hidden="true">⏳</div><h3 id="sheet-h">Pagamento em análise</h3><p class="sub">Assim que for aprovado, liberamos seu acesso por e-mail.</p><button class="close" id="cl" type="button">fechar</button>');

@@ -9,7 +9,17 @@ module.exports = async (req, res) => {
       headers: { 'Authorization': 'Bearer ' + token },
     });
     const d = await mp.json();
-    res.status(mp.ok ? 200 : mp.status).json({ status: d.status, status_detail: d.status_detail });
+    const description = String(d.description || '').toLowerCase();
+    let products = [];
+    try { products = JSON.parse((d.metadata && d.metadata.products_json) || '[]'); } catch (e) {}
+    const belongsToVendedor24h = description.indexOf('vendedor 24h') !== -1 ||
+      products.some(function (item) { return item && item.id === 'base'; });
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(mp.ok ? 200 : mp.status).json({
+      status: d.status,
+      status_detail: d.status_detail,
+      access_granted: d.status === 'approved' && belongsToVendedor24h
+    });
   } catch (e) {
     res.status(500).json({ error: String((e && e.message) || e) });
   }
