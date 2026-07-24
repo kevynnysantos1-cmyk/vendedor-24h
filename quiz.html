@@ -69,39 +69,8 @@
     border-radius: 50%; opacity: .5; pointer-events: none; z-index: 0;
   }
 
-  /* ===== HERO compacta ===== */
-  .hero { padding: 18px 22px 4px; text-align: center; position: relative; z-index: 1; }
-
-  .badge-vagas {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg, var(--v24-green) 0%, var(--v24-green-dark) 100%);
-    color: white; padding: 8px 18px; border-radius: 999px;
-    font-weight: 700; font-size: 12px; letter-spacing: .5px;
-    box-shadow: 0 6px 20px rgba(18, 163, 86, .35);
-    margin-bottom: 8px; animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(18,163,86,.35); }
-    50% { transform: scale(1.03); box-shadow: 0 8px 28px rgba(18,163,86,.5); }
-  }
-  .badge-vagas .wpp-dot {
-    width: 20px; height: 20px; background: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--v24-green); font-weight: 900; font-size: 12px;
-  }
-
-  .subtitle-line { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 2px 0 4px; }
-  .subtitle-line::before, .subtitle-line::after {
-    content: ''; width: 22px; height: 2px; background: var(--v24-green); border-radius: 2px;
-  }
-  .subtitle-line span { font-weight: 700; color: var(--text-dark); font-size: 14px; }
-
-  .hero-description {
-    color: var(--text-medium); font-size: 12px; line-height: 1.4;
-    max-width: 320px; margin: 0 auto; padding: 0 4px;
-  }
-
-  .hero-image-wrap { position: relative; max-width: 420px; margin: 6px auto 6px; z-index: 1; }
+  /* ===== Imagem de abertura ===== */
+  .hero-image-wrap { position: relative; max-width: 420px; margin: 14px auto 6px; z-index: 1; }
   .hero-image {
     width: 100%; height: auto; display: block; border-radius: 20px;
     box-shadow: 0 12px 34px rgba(10, 45, 26, .18);
@@ -241,9 +210,6 @@
   .bt-content p { font-size: 11px; color: var(--text-medium); line-height: 1.35; }
 
   @media (max-height: 740px) {
-    .hero { padding: 14px 22px 6px; }
-    .badge-vagas { margin-bottom: 10px; padding: 7px 16px; font-size: 11.5px; }
-    .hero-description { font-size: 12px; }
     .hero-image-wrap { margin: 8px auto 4px; max-width: 360px; }
     .cta-button { padding: 16px 22px; font-size: 16px; }
     .cta-micro { padding: 8px 22px 4px; }
@@ -613,23 +579,7 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
 <body>
 <div class="container">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="badge-vagas">
-      <div class="wpp-dot">✓</div>
-      <span>FUNÇÃO DISPONÍVEL NO SEU WHATSAPP</span>
-    </div>
-
-    <div class="subtitle-line">
-      <span>Descubra se a função está disponível</span>
-    </div>
-
-    <p class="hero-description">
-      Responda em 1 minuto, sem cadastro.
-    </p>
-  </section>
-
-  <!-- IMAGEM -->
+  <!-- IMAGEM DE ABERTURA -->
   <div class="hero-image-wrap">
     <span class="hero-image-live" id="liveCount">87 fazendo o teste agora</span>
     <img class="hero-image" src="img/quiz-hero-beneficios-v7.webp" width="1024" height="1536" alt="Vendedora mostrando no WhatsApp um atendimento 24h que gera mais vendas e mais tempo" fetchpriority="high">
@@ -639,17 +589,17 @@ fbq('init','2017200229157886',{country:'br'});fbq('track','PageView');
   <div class="cta-wrap hero-cta">
     <button class="cta-button" onclick="startQuiz()">
       <span class="whatsapp-circle" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.8 6.5L3 29l6.7-1.8A13 13 0 1 0 16 3Zm0 23.6a10.5 10.5 0 0 1-5.4-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4A10.5 10.5 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.4.3-.4.9-1.3.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5 0-.1-.3-.2-.6-.4Z"/></svg></span>
-      <span>FAZER TESTE GRATUITO</span>
+      <span>COMEÇAR MEU DIAGNÓSTICO GRÁTIS</span>
       <span class="arrow">›</span>
     </button>
   </div>
 
   <div class="cta-micro">
-    <span>✓ 100% gratuito</span>
+    <span>✓ Leva menos de 1 minuto</span>
+    <span class="dot-sep"></span>
+    <span>✓ Resultado personalizado</span>
     <span class="dot-sep"></span>
     <span>✓ Sem cadastro</span>
-    <span class="dot-sep"></span>
-    <span>✓ Resultado na hora</span>
   </div>
 
   <!-- BENEFITS -->
